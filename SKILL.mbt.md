@@ -1,13 +1,13 @@
 ---
 name: moongrep
-description: Create MoonBit AST matchers for structural search.
+description: Create structural code search tool for MoonBit language.
 ---
 
 # Moongrep
 
 ## Overview
 
-Use moongrep to search MoonBit source by matching AST JSON patterns. Follow the template -> JSON -> pattern -> traversal workflow in this guide.
+Use `moonbit-community/moongrep` to search MoonBit source by matching AST JSON patterns. Follow the template -> JSON -> pattern -> traversal workflow in this guide.
 
 ## Workflow
 
@@ -65,7 +65,7 @@ Use the traversal helpers to walk AST JSON and match your pattern:
 
 Within the callback, match on the JSON object and push `loc` into your results
 when it matches (see `identify_c99style_for_loop`, `identify_match_option_some_none`,
-and `identify_array_push_call` in [example](./traverse_ast_test.mbt)).
+and `identify_array_push_call` in `references/traverse_ast_test.mbt`).
 
 ## Notes
 
