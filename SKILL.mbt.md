@@ -1,6 +1,6 @@
 ---
 name: moongrep
-description: Create structural code search tool for MoonBit language.
+description: Use `moonbit-community/moongrep` to create structural code search tool for MoonBit language.
 ---
 
 # Moongrep
@@ -10,6 +10,26 @@ description: Create structural code search tool for MoonBit language.
 Use `moonbit-community/moongrep` to search MoonBit source by matching AST JSON patterns. Follow the template -> JSON -> pattern -> traversal workflow in this guide.
 
 ## Workflow
+
+### 0. Add dependencies and create a runnable package
+
+In the current project, add the required dependencies and create a standalone
+main package that can be executed with `moon run`.
+
+- Add dependencies:
+  - `moonbit-community/moongrep`
+  - `moonbitlang/x`
+- Create a new package directory `<source dir>/mbt_grep` with a `moon.pkg.json`
+  that sets `"is_main": true` and imports:
+  - `moonbit-community/moongrep`
+  - `moonbitlang/x/fs`
+  - `moonbitlang/x/sys`
+
+The main package should be runnable:
+
+```bash
+moon run <source dir>/mbt_grep
+```
 
 ### 1. Write a pattern template
 
@@ -67,7 +87,20 @@ Within the callback, match on the JSON object and push `loc` into your results
 when it matches (see `identify_c99style_for_loop`, `identify_match_option_some_none`,
 and `identify_array_push_call` in `references/traverse_ast_test.mbt`).
 
+### 5. Wire up a CLI tool that scans .mbt files
+
+In the `mbt_grep` main package, implement `main` that:
+
+- read a directory path from command-line arguments(use `@sys.get_cli_args` function).
+- Uses `@fs.read_dir` to list entries under that directory.
+- Filters entries to only `.mbt` files.
+- For each `.mbt` file, read the content with `@fs.read_file_to_string`.
+- Call your matcher function on the file content to collect structure locations.
+- Print all locations as JSON.
+
+This keeps the structural search logic reusable while providing a simple
+command-line entry point for scanning a directory.
+
 ## Notes
 
 - Use `json_inspect` snapshots as the source of truth for AST structure
-- re-run with `-u` whenever the template changes.
