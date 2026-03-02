@@ -195,6 +195,7 @@ test {
         },
       },
       "for_else": null,
+      "where_clause": null,
       "label": null,
     },
   })
@@ -211,143 +212,77 @@ fn identify_c99style_for_loop(
   //   $BODY
   // }
 
-  @moongrep.traverse_top_impls(name~, source, ast => match ast {
-    {
-      "kind": "Expr::For",
-      "loc": loc,
-      "children": {
-        "binders": {
-          "kind": "Expr::For::BindingList",
-          "children": [
-            {
-              "kind": "For::Binding",
-              "children": {
-                "binder": {
-                  "kind": "Binder",
-                  "children": { "name": count_1, .. },
-                  ..
-                },
-                "expr": start_idx,
-                ..
-              },
-              ..
-            },
-          ],
-          ..
-        },
-        "condition": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "<", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": {
-              "kind": "Expr::Ident",
-              "children": {
-                "id": {
-                  "kind": "Var",
-                  "children": {
-                    "name": {
-                      "kind": "LongIdent::Ident",
-                      "children": { "value": count_2, .. },
-                      ..
-                    },
+  @moongrep.traverse_top_impls(name~, source, ast => {
+    match ast {
+      {
+        "kind": "Expr::For",
+        "loc": loc,
+        "children": {
+          "binders": {
+            "kind": "Expr::For::BindingList",
+            "children": [
+              {
+                "kind": "For::Binding",
+                "children": {
+                  "binder": {
+                    "kind": "Binder",
+                    "children": { "name": count_1, .. },
                     ..
                   },
+                  "expr": start_idx,
                   ..
                 },
                 ..
               },
-              ..
-            },
-            "rhs": {
-              "kind": "Expr::DotApply",
-              "children": {
-                "self": {
-                  "kind": "Expr::Ident",
-                  "children": {
-                    "id": {
-                      "kind": "Var",
-                      "children": {
-                        "name": {
-                          "kind": "LongIdent::Ident",
-                          "children": { "value": String(array_name), .. },
-                          ..
-                        },
-                        ..
-                      },
-                      ..
-                    },
-                    ..
-                  },
-                  ..
-                },
-                "method_name": {
-                  "kind": "Label",
-                  "children": { "name": "length", .. },
-                  ..
-                },
-                "args": {
-                  "kind": "Expr::DotApply::ArgList",
-                  "children": [],
-                  ..
-                },
-                "return_self": false,
-                "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-                ..
-              },
-              ..
-            },
+            ],
             ..
           },
-          ..
-        },
-        "continue_block": {
-          "kind": "Expr::For::ContBindingList",
-          "children": [
-            {
-              "kind": "For::ContBinding",
-              "children": {
-                "binder": {
-                  "kind": "Binder",
-                  "children": { "name": count_3, .. },
+          "condition": {
+            "kind": "Expr::Infix",
+            "children": {
+              "op": {
+                "kind": "Var",
+                "children": {
+                  "name": {
+                    "kind": "LongIdent::Ident",
+                    "children": { "value": "<", .. },
+                    ..
+                  },
                   ..
                 },
-                "expr": {
-                  "kind": "Expr::Infix",
-                  "children": {
-                    "op": {
-                      "kind": "Var",
-                      "children": {
-                        "name": {
-                          "kind": "LongIdent::Ident",
-                          "children": { "value": "+", .. },
-                          ..
-                        },
+                ..
+              },
+              "lhs": {
+                "kind": "Expr::Ident",
+                "children": {
+                  "id": {
+                    "kind": "Var",
+                    "children": {
+                      "name": {
+                        "kind": "LongIdent::Ident",
+                        "children": { "value": count_2, .. },
                         ..
                       },
                       ..
                     },
-                    "lhs": {
-                      "kind": "Expr::Ident",
-                      "children": {
-                        "id": {
-                          "kind": "Var",
-                          "children": {
-                            "name": {
-                              "kind": "LongIdent::Ident",
-                              "children": { "value": count_4, .. },
-                              ..
-                            },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              "rhs": {
+                "kind": "Expr::DotApply",
+                "children": {
+                  "self": {
+                    "kind": "Expr::Ident",
+                    "children": {
+                      "id": {
+                        "kind": "Var",
+                        "children": {
+                          "name": {
+                            "kind": "LongIdent::Ident",
+                            "children": { "value": String(array_name), .. },
                             ..
                           },
                           ..
@@ -356,12 +291,85 @@ fn identify_c99style_for_loop(
                       },
                       ..
                     },
-                    "rhs": {
-                      "kind": "Expr::Constant",
-                      "children": {
-                        "constant": {
-                          "kind": "Constant::Int",
-                          "children": { "value": "1", .. },
+                    ..
+                  },
+                  "method_name": {
+                    "kind": "Label",
+                    "children": { "name": "length", .. },
+                    ..
+                  },
+                  "args": {
+                    "kind": "Expr::DotApply::ArgList",
+                    "children": [],
+                    ..
+                  },
+                  "return_self": false,
+                  "attr": {
+                    "kind": "ApplyAttr::NoAttr",
+                    "children": { .. },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          "continue_block": {
+            "kind": "Expr::For::ContBindingList",
+            "children": [
+              {
+                "kind": "For::ContBinding",
+                "children": {
+                  "binder": {
+                    "kind": "Binder",
+                    "children": { "name": count_3, .. },
+                    ..
+                  },
+                  "expr": {
+                    "kind": "Expr::Infix",
+                    "children": {
+                      "op": {
+                        "kind": "Var",
+                        "children": {
+                          "name": {
+                            "kind": "LongIdent::Ident",
+                            "children": { "value": "+", .. },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      "lhs": {
+                        "kind": "Expr::Ident",
+                        "children": {
+                          "id": {
+                            "kind": "Var",
+                            "children": {
+                              "name": {
+                                "kind": "LongIdent::Ident",
+                                "children": { "value": count_4, .. },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      "rhs": {
+                        "kind": "Expr::Constant",
+                        "children": {
+                          "constant": {
+                            "kind": "Constant::Int",
+                            "children": { "value": "1", .. },
+                            ..
+                          },
                           ..
                         },
                         ..
@@ -374,29 +382,28 @@ fn identify_c99style_for_loop(
                 },
                 ..
               },
-              ..
-            },
-          ],
+            ],
+            ..
+          },
+          "body": body,
+          "for_else": for_else,
+          "label": label,
           ..
         },
-        "body": body,
-        "for_else": for_else,
-        "label": label,
         ..
-      },
-      ..
-    } => {
-      ignore(array_name)
-      ignore(start_idx)
-      ignore(body)
-      ignore(for_else)
-      ignore(label)
-      if count_1 == count_2 && count_2 == count_3 && count_3 == count_4 {
-        locations.push(loc)
+      } => {
+        ignore(array_name)
+        ignore(start_idx)
+        ignore(body)
+        ignore(for_else)
+        ignore(label)
+        if count_1 == count_2 && count_2 == count_3 && count_3 == count_4 {
+          locations.push(loc)
+        }
+        true
       }
-      true
+      _ => true
     }
-    _ => true
   })
 }
 
@@ -677,29 +684,31 @@ fn identify_match_option_some_none(
     }
   }
 
-  @moongrep.traverse_top_impls(name~, source, ast => match ast {
-    {
-      "kind": "Expr::Match",
-      "loc": loc,
-      "children": {
-        "expr": expr,
-        "cases": {
-          "kind": "Expr::Match::CaseList",
-          "children": [case_1, case_2],
+  @moongrep.traverse_top_impls(name~, source, ast => {
+    match ast {
+      {
+        "kind": "Expr::Match",
+        "loc": loc,
+        "children": {
+          "expr": expr,
+          "cases": {
+            "kind": "Expr::Match::CaseList",
+            "children": [case_1, case_2],
+            ..
+          },
           ..
         },
         ..
-      },
-      ..
-    } => {
-      ignore(expr)
-      if (is_option_some_case(case_1) && is_option_none_case(case_2)) ||
-        (is_option_none_case(case_1) && is_option_some_case(case_2)) {
-        locations.push(loc)
+      } => {
+        ignore(expr)
+        if (is_option_some_case(case_1) && is_option_none_case(case_2)) ||
+          (is_option_none_case(case_1) && is_option_some_case(case_2)) {
+          locations.push(loc)
+        }
+        true
       }
-      true
+      _ => true
     }
-    _ => true
   })
 }
 
@@ -781,46 +790,48 @@ fn identify_array_push_call(
 ) -> Unit raise {
   // pattern:
   // $ARRAY.push($VALUE)
-  @moongrep.traverse_top_impls(name~, source, ast => match ast {
-    {
-      "kind": "Expr::DotApply",
-      "loc": loc,
-      "children": {
-        "self": self_expr,
-        "method_name": {
-          "kind": "Label",
-          "children": { "name": "push", .. },
-          ..
-        },
-        "args": {
-          "kind": "Expr::DotApply::ArgList",
-          "children": [
-            {
-              "kind": "Argument",
-              "children": {
-                "value": arg,
-                "kind": {
-                  "kind": "ArgumentKind::Positional",
-                  "children": { .. },
+  @moongrep.traverse_top_impls(name~, source, ast => {
+    match ast {
+      {
+        "kind": "Expr::DotApply",
+        "loc": loc,
+        "children": {
+          "self": self_expr,
+          "method_name": {
+            "kind": "Label",
+            "children": { "name": "push", .. },
+            ..
+          },
+          "args": {
+            "kind": "Expr::DotApply::ArgList",
+            "children": [
+              {
+                "kind": "Argument",
+                "children": {
+                  "value": arg,
+                  "kind": {
+                    "kind": "ArgumentKind::Positional",
+                    "children": { .. },
+                    ..
+                  },
                   ..
                 },
                 ..
               },
-              ..
-            },
-          ],
+            ],
+            ..
+          },
           ..
         },
         ..
-      },
-      ..
-    } => {
-      ignore(self_expr)
-      ignore(arg)
-      locations.push(loc)
-      true
+      } => {
+        ignore(self_expr)
+        ignore(arg)
+        locations.push(loc)
+        true
+      }
+      _ => true
     }
-    _ => true
   })
 }
 

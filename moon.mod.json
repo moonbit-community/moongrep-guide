@@ -2,7 +2,7 @@
   "name": "moonbit-community/moongrep-skill",
   "version": "0.1.2",
   "deps": {
-    "moonbit-community/moongrep": "0.1.2"
+    "moonbit-community/moongrep": "0.1.3"
   },
   "readme": "",
   "repository": "https://github.com/moonbit-community/moongrep-guide",
