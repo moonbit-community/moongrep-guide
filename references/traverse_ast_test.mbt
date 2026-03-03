@@ -4,7 +4,7 @@ test {
     #| for _COUNT = _N; _COUNT < _ARRAY.length(); _COUNT = _COUNT + 1 {
     #|   _BODY
     #| }
-  json_inspect(@moongrep.dump_expr_json_repr(c99style_for_loop), content={
+  json_inspect(@dump_expr.dump_expr_json_repr(c99style_for_loop), content={
     "kind": "Expr::For",
     "loc": null,
     "children": {
@@ -212,7 +212,7 @@ fn identify_c99style_for_loop(
   //   $BODY
   // }
 
-  @moongrep.traverse_top_impls(name~, source, ast => {
+  traverse_top_impls(name~, source, ast => {
     match ast {
       {
         "kind": "Expr::For",
@@ -414,7 +414,7 @@ test {
     #|   Some(_ITEM) => _SOME_BODY
     #|   None => _NONE_BODY
     #| }
-  json_inspect(@moongrep.dump_expr_json_repr(match_option_some_none), content={
+  json_inspect(@dump_expr.dump_expr_json_repr(match_option_some_none), content={
     "kind": "Expr::Match",
     "loc": null,
     "children": {
@@ -684,7 +684,7 @@ fn identify_match_option_some_none(
     }
   }
 
-  @moongrep.traverse_top_impls(name~, source, ast => {
+  traverse_top_impls(name~, source, ast => {
     match ast {
       {
         "kind": "Expr::Match",
@@ -716,7 +716,7 @@ fn identify_match_option_some_none(
 test {
   let array_push_call =
     #| _ARRAY.push(_VALUE)
-  json_inspect(@moongrep.dump_expr_json_repr(array_push_call), content={
+  json_inspect(@dump_expr.dump_expr_json_repr(array_push_call), content={
     "kind": "Expr::DotApply",
     "loc": null,
     "children": {
@@ -790,7 +790,7 @@ fn identify_array_push_call(
 ) -> Unit raise {
   // pattern:
   // $ARRAY.push($VALUE)
-  @moongrep.traverse_top_impls(name~, source, ast => {
+  traverse_top_impls(name~, source, ast => {
     match ast {
       {
         "kind": "Expr::DotApply",
