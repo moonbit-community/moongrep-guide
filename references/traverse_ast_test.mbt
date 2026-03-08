@@ -1,207 +1,7 @@
 ///|
-test {
-  let c99style_for_loop =
-    #| for _COUNT = _N; _COUNT < _ARRAY.length(); _COUNT = _COUNT + 1 {
-    #|   _BODY
-    #| }
-  json_inspect(@dump_expr.dump_expr_json_repr(c99style_for_loop), content={
-    "kind": "Expr::For",
-    "loc": null,
-    "children": {
-      "binders": {
-        "kind": "Expr::For::BindingList",
-        "loc": null,
-        "children": [
-          {
-            "kind": "For::Binding",
-            "loc": null,
-            "children": {
-              "binder": {
-                "kind": "Binder",
-                "loc": null,
-                "children": { "name": "_COUNT" },
-              },
-              "expr": {
-                "kind": "Expr::Ident",
-                "loc": null,
-                "children": {
-                  "id": {
-                    "kind": "Var",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "LongIdent::Ident",
-                        "loc": null,
-                        "children": { "value": "_N" },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        ],
-      },
-      "condition": {
-        "kind": "Expr::Infix",
-        "loc": null,
-        "children": {
-          "op": {
-            "kind": "Var",
-            "loc": null,
-            "children": {
-              "name": {
-                "kind": "LongIdent::Ident",
-                "loc": null,
-                "children": { "value": "<" },
-              },
-            },
-          },
-          "lhs": {
-            "kind": "Expr::Ident",
-            "loc": null,
-            "children": {
-              "id": {
-                "kind": "Var",
-                "loc": null,
-                "children": {
-                  "name": {
-                    "kind": "LongIdent::Ident",
-                    "loc": null,
-                    "children": { "value": "_COUNT" },
-                  },
-                },
-              },
-            },
-          },
-          "rhs": {
-            "kind": "Expr::DotApply",
-            "loc": null,
-            "children": {
-              "self": {
-                "kind": "Expr::Ident",
-                "loc": null,
-                "children": {
-                  "id": {
-                    "kind": "Var",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "LongIdent::Ident",
-                        "loc": null,
-                        "children": { "value": "_ARRAY" },
-                      },
-                    },
-                  },
-                },
-              },
-              "method_name": {
-                "kind": "Label",
-                "loc": null,
-                "children": { "name": "length" },
-              },
-              "args": {
-                "kind": "Expr::DotApply::ArgList",
-                "loc": null,
-                "children": [],
-              },
-              "return_self": false,
-              "attr": {
-                "kind": "ApplyAttr::NoAttr",
-                "loc": null,
-                "children": {},
-              },
-            },
-          },
-        },
-      },
-      "continue_block": {
-        "kind": "Expr::For::ContBindingList",
-        "loc": null,
-        "children": [
-          {
-            "kind": "For::ContBinding",
-            "loc": null,
-            "children": {
-              "binder": {
-                "kind": "Binder",
-                "loc": null,
-                "children": { "name": "_COUNT" },
-              },
-              "expr": {
-                "kind": "Expr::Infix",
-                "loc": null,
-                "children": {
-                  "op": {
-                    "kind": "Var",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "LongIdent::Ident",
-                        "loc": null,
-                        "children": { "value": "+" },
-                      },
-                    },
-                  },
-                  "lhs": {
-                    "kind": "Expr::Ident",
-                    "loc": null,
-                    "children": {
-                      "id": {
-                        "kind": "Var",
-                        "loc": null,
-                        "children": {
-                          "name": {
-                            "kind": "LongIdent::Ident",
-                            "loc": null,
-                            "children": { "value": "_COUNT" },
-                          },
-                        },
-                      },
-                    },
-                  },
-                  "rhs": {
-                    "kind": "Expr::Constant",
-                    "loc": null,
-                    "children": {
-                      "constant": {
-                        "kind": "Constant::Int",
-                        "loc": null,
-                        "children": { "value": "1" },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        ],
-      },
-      "body": {
-        "kind": "Expr::Ident",
-        "loc": null,
-        "children": {
-          "id": {
-            "kind": "Var",
-            "loc": null,
-            "children": {
-              "name": {
-                "kind": "LongIdent::Ident",
-                "loc": null,
-                "children": { "value": "_BODY" },
-              },
-            },
-          },
-        },
-      },
-      "for_else": null,
-      "where_clause": null,
-      "label": null,
-    },
-  })
-}
-
-///|
+// Pattern assets:
+// - references/patterns/c99style_for_loop.pattern.mbt
+// - references/patterns/c99style_for_loop.pattern.json
 fn identify_c99style_for_loop(
   source : String,
   name~ : String,
@@ -386,8 +186,9 @@ fn identify_c99style_for_loop(
             ..
           },
           "body": body,
-          "for_else": for_else,
-          "label": label,
+          "for_else": Null,
+          "where_clause": Null,
+          "label": Null,
           ..
         },
         ..
@@ -395,8 +196,6 @@ fn identify_c99style_for_loop(
         ignore(array_name)
         ignore(start_idx)
         ignore(body)
-        ignore(for_else)
-        ignore(label)
         if count_1 == count_2 && count_2 == count_3 && count_3 == count_4 {
           locations.push(loc)
         }
@@ -408,181 +207,23 @@ fn identify_c99style_for_loop(
 }
 
 ///|
-test {
-  let match_option_some_none =
-    #| match _VALUE {
-    #|   Some(_ITEM) => _SOME_BODY
-    #|   None => _NONE_BODY
-    #| }
-  json_inspect(@dump_expr.dump_expr_json_repr(match_option_some_none), content={
-    "kind": "Expr::Match",
-    "loc": null,
-    "children": {
-      "expr": {
-        "kind": "Expr::Ident",
-        "loc": null,
-        "children": {
-          "id": {
-            "kind": "Var",
-            "loc": null,
-            "children": {
-              "name": {
-                "kind": "LongIdent::Ident",
-                "loc": null,
-                "children": { "value": "_VALUE" },
-              },
-            },
-          },
-        },
-      },
-      "cases": {
-        "kind": "Expr::Match::CaseList",
-        "loc": null,
-        "children": [
-          {
-            "kind": "Case",
-            "loc": null,
-            "children": {
-              "pattern": {
-                "kind": "Pattern::Constr",
-                "loc": null,
-                "children": {
-                  "constr": {
-                    "kind": "Constructor",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "ConstrName",
-                        "loc": null,
-                        "children": { "name": "Some" },
-                      },
-                      "extra_info": {
-                        "kind": "ConstructorExtraInfo::NoExtraInfo",
-                        "loc": null,
-                        "children": {},
-                      },
-                    },
-                  },
-                  "args": {
-                    "kind": "Pattern::Constr::ArgList",
-                    "loc": null,
-                    "children": [
-                      {
-                        "kind": "ConstrPatArg",
-                        "loc": null,
-                        "children": {
-                          "pat": {
-                            "kind": "Pattern::Var",
-                            "loc": null,
-                            "children": {
-                              "value": {
-                                "kind": "Binder",
-                                "loc": null,
-                                "children": { "name": "_ITEM" },
-                              },
-                            },
-                          },
-                          "kind": {
-                            "kind": "ArgumentKind::Positional",
-                            "loc": null,
-                            "children": {},
-                          },
-                        },
-                      },
-                    ],
-                  },
-                  "is_open": false,
-                },
-              },
-              "guard": null,
-              "body": {
-                "kind": "Expr::Ident",
-                "loc": null,
-                "children": {
-                  "id": {
-                    "kind": "Var",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "LongIdent::Ident",
-                        "loc": null,
-                        "children": { "value": "_SOME_BODY" },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          {
-            "kind": "Case",
-            "loc": null,
-            "children": {
-              "pattern": {
-                "kind": "Pattern::Constr",
-                "loc": null,
-                "children": {
-                  "constr": {
-                    "kind": "Constructor",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "ConstrName",
-                        "loc": null,
-                        "children": { "name": "None" },
-                      },
-                      "extra_info": {
-                        "kind": "ConstructorExtraInfo::NoExtraInfo",
-                        "loc": null,
-                        "children": {},
-                      },
-                    },
-                  },
-                  "args": null,
-                  "is_open": false,
-                },
-              },
-              "guard": null,
-              "body": {
-                "kind": "Expr::Ident",
-                "loc": null,
-                "children": {
-                  "id": {
-                    "kind": "Var",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "LongIdent::Ident",
-                        "loc": null,
-                        "children": { "value": "_NONE_BODY" },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        ],
-      },
-    },
-  })
-}
-
-///|
+// Pattern assets:
+// - references/patterns/match_option_some_none.pattern.mbt
+// - references/patterns/match_option_some_none.pattern.json
 fn identify_match_option_some_none(
   name~ : String,
   source : String,
   locations : Array[Json],
 ) -> Unit raise {
   // pattern:
-  // 
+  //
   // match $VALUE {
   //   Some($ITEM) => $SOME_BODY
   //   None => $NONE_BODY
   // }
-  // 
+  //
   // or:
-  // 
+  //
   // match $VALUE {
   //   None => $NONE_BODY
   //   Some($ITEM) => $SOME_BODY
@@ -713,76 +354,9 @@ fn identify_match_option_some_none(
 }
 
 ///|
-test {
-  let array_push_call =
-    #| _ARRAY.push(_VALUE)
-  json_inspect(@dump_expr.dump_expr_json_repr(array_push_call), content={
-    "kind": "Expr::DotApply",
-    "loc": null,
-    "children": {
-      "self": {
-        "kind": "Expr::Ident",
-        "loc": null,
-        "children": {
-          "id": {
-            "kind": "Var",
-            "loc": null,
-            "children": {
-              "name": {
-                "kind": "LongIdent::Ident",
-                "loc": null,
-                "children": { "value": "_ARRAY" },
-              },
-            },
-          },
-        },
-      },
-      "method_name": {
-        "kind": "Label",
-        "loc": null,
-        "children": { "name": "push" },
-      },
-      "args": {
-        "kind": "Expr::DotApply::ArgList",
-        "loc": null,
-        "children": [
-          {
-            "kind": "Argument",
-            "loc": null,
-            "children": {
-              "value": {
-                "kind": "Expr::Ident",
-                "loc": null,
-                "children": {
-                  "id": {
-                    "kind": "Var",
-                    "loc": null,
-                    "children": {
-                      "name": {
-                        "kind": "LongIdent::Ident",
-                        "loc": null,
-                        "children": { "value": "_VALUE" },
-                      },
-                    },
-                  },
-                },
-              },
-              "kind": {
-                "kind": "ArgumentKind::Positional",
-                "loc": null,
-                "children": {},
-              },
-            },
-          },
-        ],
-      },
-      "return_self": false,
-      "attr": { "kind": "ApplyAttr::NoAttr", "loc": null, "children": {} },
-    },
-  })
-}
-
-///|
+// Pattern assets:
+// - references/patterns/array_push_call.pattern.mbt
+// - references/patterns/array_push_call.pattern.json
 fn identify_array_push_call(
   name~ : String,
   source : String,
@@ -966,7 +540,7 @@ test {
 test {
   let program =
     #|fn foo(arr : Array[Int], other : Array[Int], nested : Array[Array[Int]]) -> Unit {
-    #| 
+    #|
     #| arr.push(1)
     #| arr.push(2)
     #| arr.pop()
