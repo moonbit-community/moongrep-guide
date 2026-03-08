@@ -1,0 +1,164 @@
+{
+  "kind": "Expr::Match",
+  "loc": null,
+  "children": {
+    "expr": {
+      "kind": "Expr::Ident",
+      "loc": null,
+      "children": {
+        "id": {
+          "kind": "Var",
+          "loc": null,
+          "children": {
+            "name": {
+              "kind": "LongIdent::Ident",
+              "loc": null,
+              "children": {
+                "value": "_VALUE"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cases": {
+      "kind": "Expr::Match::CaseList",
+      "loc": null,
+      "children": [
+        {
+          "kind": "Case",
+          "loc": null,
+          "children": {
+            "pattern": {
+              "kind": "Pattern::Constr",
+              "loc": null,
+              "children": {
+                "constr": {
+                  "kind": "Constructor",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "ConstrName",
+                      "loc": null,
+                      "children": {
+                        "name": "Some"
+                      }
+                    },
+                    "extra_info": {
+                      "kind": "ConstructorExtraInfo::NoExtraInfo",
+                      "loc": null,
+                      "children": {}
+                    }
+                  }
+                },
+                "args": {
+                  "kind": "Pattern::Constr::ArgList",
+                  "loc": null,
+                  "children": [
+                    {
+                      "kind": "ConstrPatArg",
+                      "loc": null,
+                      "children": {
+                        "pat": {
+                          "kind": "Pattern::Var",
+                          "loc": null,
+                          "children": {
+                            "value": {
+                              "kind": "Binder",
+                              "loc": null,
+                              "children": {
+                                "name": "_ITEM"
+                              }
+                            }
+                          }
+                        },
+                        "kind": {
+                          "kind": "ArgumentKind::Positional",
+                          "loc": null,
+                          "children": {}
+                        }
+                      }
+                    }
+                  ]
+                },
+                "is_open": false
+              }
+            },
+            "guard": null,
+            "body": {
+              "kind": "Expr::Ident",
+              "loc": null,
+              "children": {
+                "id": {
+                  "kind": "Var",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Ident",
+                      "loc": null,
+                      "children": {
+                        "value": "_SOME_BODY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "kind": "Case",
+          "loc": null,
+          "children": {
+            "pattern": {
+              "kind": "Pattern::Constr",
+              "loc": null,
+              "children": {
+                "constr": {
+                  "kind": "Constructor",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "ConstrName",
+                      "loc": null,
+                      "children": {
+                        "name": "None"
+                      }
+                    },
+                    "extra_info": {
+                      "kind": "ConstructorExtraInfo::NoExtraInfo",
+                      "loc": null,
+                      "children": {}
+                    }
+                  }
+                },
+                "args": null,
+                "is_open": false
+              }
+            },
+            "guard": null,
+            "body": {
+              "kind": "Expr::Ident",
+              "loc": null,
+              "children": {
+                "id": {
+                  "kind": "Var",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Ident",
+                      "loc": null,
+                      "children": {
+                        "value": "_NONE_BODY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

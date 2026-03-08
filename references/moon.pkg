@@ -4,7 +4,3 @@ import {
   "moonbitlang/parser/lexer",
   "moonbitlang/parser/handrolled_parser",
 }
-
-import {
-  "moonbit-community/moongrep-guide/dump_expr",
-} for "test"

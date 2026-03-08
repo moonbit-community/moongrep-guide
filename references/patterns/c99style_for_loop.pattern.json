@@ -1,0 +1,217 @@
+{
+  "kind": "Expr::For",
+  "loc": null,
+  "children": {
+    "binders": {
+      "kind": "Expr::For::BindingList",
+      "loc": null,
+      "children": [
+        {
+          "kind": "For::Binding",
+          "loc": null,
+          "children": {
+            "binder": {
+              "kind": "Binder",
+              "loc": null,
+              "children": {
+                "name": "_COUNT"
+              }
+            },
+            "expr": {
+              "kind": "Expr::Ident",
+              "loc": null,
+              "children": {
+                "id": {
+                  "kind": "Var",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Ident",
+                      "loc": null,
+                      "children": {
+                        "value": "_N"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "condition": {
+      "kind": "Expr::Infix",
+      "loc": null,
+      "children": {
+        "op": {
+          "kind": "Var",
+          "loc": null,
+          "children": {
+            "name": {
+              "kind": "LongIdent::Ident",
+              "loc": null,
+              "children": {
+                "value": "<"
+              }
+            }
+          }
+        },
+        "lhs": {
+          "kind": "Expr::Ident",
+          "loc": null,
+          "children": {
+            "id": {
+              "kind": "Var",
+              "loc": null,
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "loc": null,
+                  "children": {
+                    "value": "_COUNT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "rhs": {
+          "kind": "Expr::DotApply",
+          "loc": null,
+          "children": {
+            "self": {
+              "kind": "Expr::Ident",
+              "loc": null,
+              "children": {
+                "id": {
+                  "kind": "Var",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Ident",
+                      "loc": null,
+                      "children": {
+                        "value": "_ARRAY"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "method_name": {
+              "kind": "Label",
+              "loc": null,
+              "children": {
+                "name": "length"
+              }
+            },
+            "args": {
+              "kind": "Expr::DotApply::ArgList",
+              "loc": null,
+              "children": []
+            },
+            "return_self": false,
+            "attr": {
+              "kind": "ApplyAttr::NoAttr",
+              "loc": null,
+              "children": {}
+            }
+          }
+        }
+      }
+    },
+    "continue_block": {
+      "kind": "Expr::For::ContBindingList",
+      "loc": null,
+      "children": [
+        {
+          "kind": "For::ContBinding",
+          "loc": null,
+          "children": {
+            "binder": {
+              "kind": "Binder",
+              "loc": null,
+              "children": {
+                "name": "_COUNT"
+              }
+            },
+            "expr": {
+              "kind": "Expr::Infix",
+              "loc": null,
+              "children": {
+                "op": {
+                  "kind": "Var",
+                  "loc": null,
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Ident",
+                      "loc": null,
+                      "children": {
+                        "value": "+"
+                      }
+                    }
+                  }
+                },
+                "lhs": {
+                  "kind": "Expr::Ident",
+                  "loc": null,
+                  "children": {
+                    "id": {
+                      "kind": "Var",
+                      "loc": null,
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "loc": null,
+                          "children": {
+                            "value": "_COUNT"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "rhs": {
+                  "kind": "Expr::Constant",
+                  "loc": null,
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Int",
+                      "loc": null,
+                      "children": {
+                        "value": "1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "body": {
+      "kind": "Expr::Ident",
+      "loc": null,
+      "children": {
+        "id": {
+          "kind": "Var",
+          "loc": null,
+          "children": {
+            "name": {
+              "kind": "LongIdent::Ident",
+              "loc": null,
+              "children": {
+                "value": "_BODY"
+              }
+            }
+          }
+        }
+      }
+    },
+    "for_else": null,
+    "where_clause": null,
+    "label": null
+  }
+}
