@@ -40,10 +40,10 @@ Example `.mbtx` import block:
 ```moonbit
 import {
   "moonbitlang/core/env",
-  "moonbitlang/parser@0.2.1/basic",
-  "moonbitlang/parser@0.2.1/syntax",
-  "moonbitlang/parser@0.2.1/lexer",
-  "moonbitlang/parser@0.2.1/handrolled_parser",
+  "moonbitlang/parser@0.2.2/basic",
+  "moonbitlang/parser@0.2.2/syntax",
+  "moonbitlang/parser@0.2.2/lexer",
+  "moonbitlang/parser@0.2.2/handrolled_parser",
   "moonbitlang/x@0.4.40/fs",
   "moonbitlang/x@0.4.40/sys",
 }
@@ -162,7 +162,7 @@ simple command-line tool that you can run with `moon run <path/to/moongrep.mbtx>
 - `references/traverse_ast_test.mbt` is the best reference for how raw dumped
   JSON becomes a practical matcher pattern
 - `references/traverse_ast.mbt` depends on the versioned
-  `moonbitlang/parser@0.2.1/...` imports shown above
+  `moonbitlang/parser@0.2.2/...` imports shown above
 - in an `.mbtx` script, keep the import block at the top and put the copied
   helper plus your matcher logic underneath
 - use `moon run <path/to/moongrep.mbtx>` to verify that the copied helper and
