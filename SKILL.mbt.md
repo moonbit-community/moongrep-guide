@@ -86,6 +86,12 @@ shapes and final matcher patterns.
 
 ### 2. Dump JSON from the template
 
+first install `dump_expr`:
+
+```bash
+moon install https://github.com/moonbit-community/moongrep-guide.git
+```
+
 Run:
 
 ```bash
@@ -147,6 +153,7 @@ script:
 
 - read a directory path from `@sys.get_cli_args()`
 - use `@fs.read_dir` to list entries
+- skip directories named `_build`, `.mooncakes`, or `target`
 - keep only `.mbt` files
 - read each file with `@fs.read_file_to_string`
 - call your matcher on each file's source
