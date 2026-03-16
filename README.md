@@ -2,7 +2,7 @@
 
 `moongrep-guide` is an Agent Skill that shows how to build structural MoonBit code search script.
 
-## Use
+## Install
 
 + Codex
 
