@@ -5,9 +5,9 @@
     "moonbitlang/parser": "0.2.2",
     "moonbitlang/x": "0.4.40"
   },
-  "readme": "",
+  "readme": "README.md",
   "repository": "https://github.com/moonbit-community/moongrep-guide",
   "license": "Apache-2.0",
   "keywords": [],
-  "description": ""
+  "description": "Guide and helper utilities for building structural code search tools for MoonBit by matching parser AST JSON."
 }
