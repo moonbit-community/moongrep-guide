@@ -1,0 +1,15 @@
+package: moonbit-community/rabbita/html
+description: |
+  These HTML link builders accept raw `href` values. Without scheme and domain
+  validation they can create `javascript:` links or phishing redirects.
+patterns:
+  - shape: |
+      @html.a(href=url, text)
+    metavars:
+      - url
+      - text
+  - shape: |
+      @html.node("a", @html.Attrs::build().href(url), children)
+    metavars:
+      - url
+      - children

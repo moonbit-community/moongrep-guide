@@ -1,0 +1,20 @@
+package: moonbit-community/rabbita/js
+description: |
+  These `js.Value` getters expose arbitrary property reads. With untrusted
+  keys, they become the first hop to dangerous JavaScript gadgets.
+patterns:
+  - shape: |
+      value.get_with_string(key)
+    metavars:
+      - value
+      - key
+  - shape: |
+      value.get_with_index(index)
+    metavars:
+      - value
+      - index
+  - shape: |
+      value.get_with_symbol(symbol)
+    metavars:
+      - value
+      - symbol

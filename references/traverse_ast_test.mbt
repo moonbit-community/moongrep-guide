@@ -7,12 +7,7 @@ fn identify_c99style_for_loop(
   name~ : String,
   locations : Array[Json],
 ) -> Unit raise {
-  // pattern:
-  // for $COUNT = $N; $COUNT < $ARRAY.length(); $COUNT = $COUNT + 1 {
-  //   $BODY
-  // }
-
-  traverse_top_impls(name~, source, ast => {
+  traverse_top_impls(name~, source, context=locations, (locations, ast) => {
     match ast {
       {
         "kind": "Expr::For",
@@ -215,19 +210,6 @@ fn identify_match_option_some_none(
   source : String,
   locations : Array[Json],
 ) -> Unit raise {
-  // pattern:
-  //
-  // match $VALUE {
-  //   Some($ITEM) => $SOME_BODY
-  //   None => $NONE_BODY
-  // }
-  //
-  // or:
-  //
-  // match $VALUE {
-  //   None => $NONE_BODY
-  //   Some($ITEM) => $SOME_BODY
-  // }
   fn is_option_some_case(ast : Json) -> Bool {
     match ast {
       {
@@ -325,7 +307,7 @@ fn identify_match_option_some_none(
     }
   }
 
-  traverse_top_impls(name~, source, ast => {
+  traverse_top_impls(name~, source, context=locations, (locations, ast) => {
     match ast {
       {
         "kind": "Expr::Match",
@@ -362,9 +344,7 @@ fn identify_array_push_call(
   source : String,
   locations : Array[Json],
 ) -> Unit raise {
-  // pattern:
-  // $ARRAY.push($VALUE)
-  traverse_top_impls(name~, source, ast => {
+  traverse_top_impls(name~, source, context=locations, (locations, ast) => {
     match ast {
       {
         "kind": "Expr::DotApply",

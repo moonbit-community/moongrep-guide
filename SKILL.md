@@ -130,9 +130,9 @@ Compare the raw `dump_expr` output with the hand-written JSON patterns in
 After the import block, paste in the helper from `references/traverse_ast.mbt`.
 That helper gives you two entry points:
 
-- `traverse_top_impls(name~, source, callback)` parses a source string and walks
+- `traverse_top_impls` parses a source string and walks
   each top-level impl
-- `traverse_ast_json_repr(ast, callback)` walks an AST JSON tree you already
+- `traverse_ast_json_repr` walks an AST JSON tree you already
   have
 
 The callback returns:
@@ -140,11 +140,9 @@ The callback returns:
 - `true` to keep traversing children
 - `false` to stop descending into the current subtree
 
-Inside the callback, `match` on the JSON object and push `loc` into your result
-array when a pattern matches.
+Inside the callback, `match` on the JSON object and record needed information into context argument when a pattern matches.
 
-See `identify_c99style_for_loop`, `identify_match_option_some_none`, and
-`identify_array_push_call` in `references/traverse_ast_test.mbt`.
+See `references/traverse_ast_test.mbt`.
 
 ### 5. Wire up the script so it scans `.mbt` files
 

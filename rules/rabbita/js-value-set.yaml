@@ -1,0 +1,24 @@
+package: moonbit-community/rabbita/js
+description: |
+  These `js.Value` setters perform arbitrary property writes. Untrusted keys
+  or values can mutate globals, DOM objects, or even trigger prototype
+  pollution.
+patterns:
+  - shape: |
+      value.set_with_string(key, payload)
+    metavars:
+      - value
+      - key
+      - payload
+  - shape: |
+      value.set_with_index(index, payload)
+    metavars:
+      - value
+      - index
+      - payload
+  - shape: |
+      value.set_with_symbol(symbol, payload)
+    metavars:
+      - value
+      - symbol
+      - payload

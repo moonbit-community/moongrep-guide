@@ -1,0 +1,23 @@
+package: moonbit-community/rabbita/svg
+description: |
+  These SVG APIs accept raw URLs for navigation or external resource loading.
+  Untrusted values can trigger dangerous links, tracking beacons, or cross-site
+  requests.
+patterns:
+  - shape: |
+      @svg.node("a", @svg.Attrs::build().href(url), children)
+    metavars:
+      - url
+      - children
+  - shape: |
+      @svg.image(href=url, x=x, y=y)
+    metavars:
+      - url
+      - x
+      - y
+  - shape: |
+      @svg.svg_use(href=url, x=x, y=y)
+    metavars:
+      - url
+      - x
+      - y

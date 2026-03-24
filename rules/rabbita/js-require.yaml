@@ -1,0 +1,10 @@
+package: moonbit-community/rabbita/js
+description: |
+  Passing untrusted module or export names into `@js.require(...)` exposes raw
+  Node or host module loading capability.
+patterns:
+  - shape: |
+      @js.require(module_name, keys=[export_name])
+    metavars:
+      - module_name
+      - export_name

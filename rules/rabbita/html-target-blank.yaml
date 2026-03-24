@@ -1,0 +1,15 @@
+package: moonbit-community/rabbita/html
+description: |
+  Opening untrusted URLs in a new tab without also setting
+  `rel="noopener noreferrer"` allows reverse tabnabbing via `window.opener`.
+patterns:
+  - shape: |
+      @html.a(href=url, target=Blank, text)
+    metavars:
+      - url
+      - text
+  - shape: |
+      @html.node("a", @html.Attrs::build().href(url).target(Blank), children)
+    metavars:
+      - url
+      - children

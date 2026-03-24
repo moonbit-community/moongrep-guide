@@ -1,0 +1,10 @@
+package: moonbitlang/async/socket
+description: |
+  Enabling `reuse_addr=true` can cause a restarted listener to receive traffic
+  left behind by a previous process, which is unsafe for protocols without
+  strong session validation.
+patterns:
+  - shape: |
+      @socket.TcpServer::new(addr, reuse_addr=true)
+    metavars:
+      - addr

@@ -1,0 +1,25 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moongrep-guide/moongrep"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub(all) struct MatchHit {
+  file : String
+  rule_id : String
+  package_name : String
+  description : String
+  pattern_index : Int
+  loc : Json
+  bindings : Json
+}
+pub impl Eq for MatchHit
+pub impl Show for MatchHit
+pub impl ToJson for MatchHit
+
+// Type aliases
+
+// Traits
+

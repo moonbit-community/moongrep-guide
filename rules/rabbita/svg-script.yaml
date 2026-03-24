@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/svg
+description: |
+  SVG `<script>` content is active script. Treat any untrusted payload passed
+  into `@svg.script(...)` as code execution.
+patterns:
+  - shape: |
+      @svg.script([@svg.text(script)])
+    metavars:
+      - script

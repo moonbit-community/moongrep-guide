@@ -1,0 +1,46 @@
+package: moonbit-community/rabbita/html
+description: |
+  These HTML builders create active content, inline documents, or page-wide URL
+  rewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,
+  dangerous navigation, or third-party content loading.
+patterns:
+  - shape: |
+      @html.script(src=src, children)
+    metavars:
+      - src
+      - children
+  - shape: |
+      @html.script(src~, children)
+    metavars:
+      - children
+  - shape: |
+      @html.Attrs::build().srcdoc(html)
+    metavars:
+      - html
+  - shape: |
+      @html.iframe(src=url)
+    metavars:
+      - url
+  - shape: |
+      @html.fencedframe(src=url)
+    metavars:
+      - url
+  - shape: |
+      @html.object(attrs=@html.Attrs::build().data(url).type_(mime), children)
+    metavars:
+      - url
+      - mime
+      - children
+  - shape: |
+      @html.embed(attrs=@html.Attrs::build().src(url).type_(mime))
+    metavars:
+      - url
+      - mime
+  - shape: |
+      @html.base(href=base)
+    metavars:
+      - base
+  - shape: |
+      @html.meta(http_equiv="refresh", content="0;url=" + url)
+    metavars:
+      - url

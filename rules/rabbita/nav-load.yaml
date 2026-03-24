@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/nav
+description: |
+  `@nav.load(...)` performs browser navigation. Untrusted URLs can become
+  open redirects or even `javascript:` execution.
+patterns:
+  - shape: |
+      @nav.load(url)
+    metavars:
+      - url

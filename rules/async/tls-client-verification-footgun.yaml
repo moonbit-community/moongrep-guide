@@ -1,0 +1,20 @@
+package: moonbitlang/async/tls
+description: |
+  These TLS client calls are easy to misuse: `verify=true` without `host`
+  skips hostname validation, and `verify=false` disables certificate checks
+  entirely.
+patterns:
+  - shape: |
+      @tls.Tls::client(stream, verify=true)
+    metavars:
+      - stream
+  - shape: |
+      @tls.Tls::client(stream, verify=false, host=host)
+    metavars:
+      - stream
+      - host
+  - shape: |
+      @tls.Tls::client_from_pair(reader, writer, verify=true)
+    metavars:
+      - reader
+      - writer

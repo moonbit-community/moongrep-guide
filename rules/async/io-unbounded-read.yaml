@@ -1,0 +1,14 @@
+package: moonbitlang/async/io
+description: |
+  These reader APIs keep buffering until EOF or until a delimiter appears. On
+  untrusted inputs they can grow memory without a configured upper bound.
+patterns:
+  - shape: |
+      reader.read_all()
+    metavars:
+      - reader
+  - shape: |
+      reader.read_until(delim)
+    metavars:
+      - reader
+      - delim

@@ -1,0 +1,73 @@
+package: moonbitlang/async/http
+description: |
+  Passing a user-controlled `Transfer-Encoding` header via `headers` or
+  `extra_headers` to `[@http.Client::new, @http.Client::request,
+  @http.Client::get, @http.Client::put, @http.Client::post, @http.get,
+  @http.put, @http.post, @http.get_stream, @http.put_stream,
+  @http.post_stream]` can create an ambiguous HTTP message and may enable
+  request smuggling.
+patterns:
+  - shape: |
+      @http.Client::new(url, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - value
+  - shape: |
+      client.request(method, path, extra_headers={ "Transfer-Encoding": value })
+    metavars:
+      - client
+      - method
+      - path
+      - value
+  - shape: |
+      client.get(path, extra_headers={ "Transfer-Encoding": value })
+    metavars:
+      - client
+      - path
+      - value
+  - shape: |
+      client.put(path, content, extra_headers={ "Transfer-Encoding": value })
+    metavars:
+      - client
+      - path
+      - content
+      - value
+  - shape: |
+      client.post(path, content, extra_headers={ "Transfer-Encoding": value })
+    metavars:
+      - client
+      - path
+      - content
+      - value
+  - shape: |
+      @http.get(url, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - value
+  - shape: |
+      @http.put(url, content, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - content
+      - value
+  - shape: |
+      @http.post(url, content, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - content
+      - value
+  - shape: |
+      @http.get_stream(url, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - value
+  - shape: |
+      @http.put_stream(url, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - value
+  - shape: |
+      @http.post_stream(url, headers={ "Transfer-Encoding": value })
+    metavars:
+      - url
+      - value

@@ -1,0 +1,14 @@
+package: moonbitlang/async/http
+description: |
+  These HTTP parser entrypoints accept messages where `Content-Length` and
+  `Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity
+  when a proxy and endpoint disagree on framing.
+patterns:
+  - shape: |
+      conn.read_request()
+    metavars:
+      - conn
+  - shape: |
+      client.end_request()
+    metavars:
+      - client

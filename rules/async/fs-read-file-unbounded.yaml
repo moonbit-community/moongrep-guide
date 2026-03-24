@@ -1,0 +1,9 @@
+package: moonbitlang/async/fs
+description: |
+  `@fs.read_file(...)` reads the full target into memory. If the path can point
+  to attacker-controlled large files or special files, this can exhaust memory.
+patterns:
+  - shape: |
+      @fs.read_file(path)
+    metavars:
+      - path

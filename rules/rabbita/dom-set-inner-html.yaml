@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/dom
+description: |
+  Writing untrusted HTML into `set_inner_html(...)` is a direct DOM XSS sink.
+patterns:
+  - shape: |
+      node.set_inner_html(html)
+    metavars:
+      - node
+      - html

@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/html
+description: |
+  Building HTML attrs with `inner_html(...)` bypasses normal escaping and turns
+  the provided string into raw DOM content.
+patterns:
+  - shape: |
+      @html.Attrs::build().inner_html(html)
+    metavars:
+      - html

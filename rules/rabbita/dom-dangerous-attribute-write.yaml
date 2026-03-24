@@ -1,0 +1,16 @@
+package: moonbit-community/rabbita/dom
+description: |
+  Writing untrusted content into dangerous DOM sinks such as `srcdoc` via
+  `set_attribute(...)` or `set_property(...)` can execute attacker-controlled
+  HTML or script.
+patterns:
+  - shape: |
+      node.set_attribute("srcdoc", html)
+    metavars:
+      - node
+      - html
+  - shape: |
+      node.set_property("srcdoc", value)
+    metavars:
+      - node
+      - value
