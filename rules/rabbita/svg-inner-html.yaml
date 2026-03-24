@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/svg
+description: |
+  Building SVG attrs with `inner_html(...)` injects raw markup and can execute
+  active content when the SVG string is untrusted.
+patterns:
+  - shape: |
+      @svg.Attrs::build().inner_html(svg)
+    metavars:
+      - svg

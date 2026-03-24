@@ -2,9 +2,9 @@
 package "moonbit-community/moongrep-guide/references"
 
 // Values
-pub fn traverse_ast_json_repr(Json, (Json) -> Bool raise) -> Unit raise
+pub fn[C] traverse_ast_json_repr(Json, (C, Json) -> Bool raise, context~ : C) -> Unit raise
 
-pub fn traverse_top_impls(name~ : String, String, (Json) -> Bool raise) -> Unit raise
+pub fn[C] traverse_top_impls(name~ : String, String, (C, Json) -> Bool raise, context~ : C) -> Unit raise
 
 // Errors
 pub suberror AstTraverseError {

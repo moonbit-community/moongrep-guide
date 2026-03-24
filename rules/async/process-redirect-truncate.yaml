@@ -1,0 +1,9 @@
+package: moonbitlang/async/process
+description: |
+  Redirecting process output to a user-controlled path with `truncate=true`
+  will eagerly clobber the target file before writing command output.
+patterns:
+  - shape: |
+      @process.redirect_to_file(path, truncate=true)
+    metavars:
+      - path

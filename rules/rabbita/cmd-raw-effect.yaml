@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/cmd
+description: |
+  `@cmd.raw_effect(...)` is a low-level escape hatch that can wrap arbitrary
+  host capabilities behind a normal-looking Rabbita command.
+patterns:
+  - shape: |
+      @cmd.raw_effect(effect)
+    metavars:
+      - effect

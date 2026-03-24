@@ -1,0 +1,10 @@
+package: moonbit-community/rabbita/svg
+description: |
+  SVG links opened with `target="_blank"` need the same `noopener noreferrer`
+  protection as HTML links to avoid reverse tabnabbing.
+patterns:
+  - shape: |
+      @svg.node("a", @svg.Attrs::build().href(url).target("_blank"), children)
+    metavars:
+      - url
+      - children

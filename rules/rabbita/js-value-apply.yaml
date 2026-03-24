@@ -1,0 +1,29 @@
+package: moonbit-community/rabbita/js
+description: |
+  These `js.Value` call helpers perform arbitrary JavaScript invocation. If the
+  callee or method name is user-controlled, they can turn into script
+  execution, navigation, or network requests.
+patterns:
+  - shape: |
+      value.apply(args)
+    metavars:
+      - value
+      - args
+  - shape: |
+      value.apply_with_string(name, args)
+    metavars:
+      - value
+      - name
+      - args
+  - shape: |
+      value.apply_with_index(index, args)
+    metavars:
+      - value
+      - index
+      - args
+  - shape: |
+      value.apply_with_symbol(symbol, args)
+    metavars:
+      - value
+      - symbol
+      - args

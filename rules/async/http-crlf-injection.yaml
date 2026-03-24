@@ -1,0 +1,51 @@
+package: moonbitlang/async/http
+description: |
+  Passing user-controlled request paths, URLs, header maps, or response
+  reasons into these HTTP APIs can become header injection, request smuggling,
+  or response splitting if the value contains `\r` or `\n`.
+patterns:
+  - shape: |
+      @http.Client::new(url, headers=headers)
+    metavars:
+      - url
+      - headers
+  - shape: |
+      client.request(method, path)
+    metavars:
+      - client
+      - method
+      - path
+  - shape: |
+      @http.get(url)
+    metavars:
+      - url
+  - shape: |
+      @http.post(url, content)
+    metavars:
+      - url
+      - content
+  - shape: |
+      @http.put(url, content)
+    metavars:
+      - url
+      - content
+  - shape: |
+      @http.get_stream(url)
+    metavars:
+      - url
+  - shape: |
+      @http.post_stream(url, headers=headers)
+    metavars:
+      - url
+      - headers
+  - shape: |
+      @http.put_stream(url, headers=headers)
+    metavars:
+      - url
+      - headers
+  - shape: |
+      conn.send_response(status, reason)
+    metavars:
+      - conn
+      - status
+      - reason

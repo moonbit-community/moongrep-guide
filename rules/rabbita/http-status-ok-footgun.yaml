@@ -1,0 +1,28 @@
+package: moonbit-community/rabbita/http
+description: |
+  These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as
+  synonymous with a successful HTTP status can mis-handle 4xx and 5xx
+  responses.
+patterns:
+  - shape: |
+      @http.get(url, expect=Text(handler))
+    metavars:
+      - url
+      - handler
+  - shape: |
+      @http.post(url, body, expect=Text(handler))
+    metavars:
+      - url
+      - body
+      - handler
+  - shape: |
+      @http.patch(url, body, expect=Text(handler))
+    metavars:
+      - url
+      - body
+      - handler
+  - shape: |
+      @http.delete(url, expect=Text(handler))
+    metavars:
+      - url
+      - handler

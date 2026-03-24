@@ -1,0 +1,16 @@
+package: moonbitlang/async/websocket
+description: |
+  Passing user-controlled WebSocket handshake URLs, paths, or header maps into
+  these APIs can inject raw HTTP bytes into the Upgrade request if the value
+  contains `\r` or `\n`.
+patterns:
+  - shape: |
+      @websocket.connect(url, headers=headers)
+    metavars:
+      - url
+      - headers
+  - shape: |
+      @websocket.from_http_client(client, path)
+    metavars:
+      - client
+      - path

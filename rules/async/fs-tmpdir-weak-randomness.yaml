@@ -1,0 +1,15 @@
+package: moonbitlang/async/fs
+description: |
+  `@fs.tmpdir(...)` does not generate cryptographically strong directory names.
+  Do not treat the returned path as a secret token or capability URL fragment.
+patterns:
+  - shape: |
+      @fs.tmpdir()
+    metavars: []
+  - shape: |
+      @fs.tmpdir(prefix=prefix)
+    metavars:
+      - prefix
+  - shape: |
+      @fs.tmpdir(prefix~)
+    metavars: []

@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/dom
+description: |
+  `load_url(...)` writes directly to `window.location.href`. Passing an
+  unvalidated URL here triggers immediate navigation.
+patterns:
+  - shape: |
+      @dom.window().load_url(url)
+    metavars:
+      - url

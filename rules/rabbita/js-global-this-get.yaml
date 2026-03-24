@@ -1,0 +1,9 @@
+package: moonbit-community/rabbita/js
+description: |
+  Looking up untrusted names from `@js.globalThis` can hand attackers direct
+  access to dangerous globals such as `eval`, `Function`, `open`, or `fetch`.
+patterns:
+  - shape: |
+      @js.globalThis.get_with_string(name)
+    metavars:
+      - name

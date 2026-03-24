@@ -1,0 +1,10 @@
+import {
+  "moonbit-community/moongrep-guide/dump_expr",
+  "moonbit-community/yaml",
+  "moonbitlang/x/fs",
+  "moonbitlang/x/sys",
+}
+
+options(
+  "is-main": true,
+)

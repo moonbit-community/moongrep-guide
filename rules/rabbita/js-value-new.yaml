@@ -1,0 +1,29 @@
+package: moonbit-community/rabbita/js
+description: |
+  These `js.Value` constructor helpers allow arbitrary runtime object creation.
+  When the constructor or payload is attacker-controlled, they can instantiate
+  dangerous builtins such as `Function`.
+patterns:
+  - shape: |
+      ctor.new(args)
+    metavars:
+      - ctor
+      - args
+  - shape: |
+      value.new_with_string(name, args)
+    metavars:
+      - value
+      - name
+      - args
+  - shape: |
+      value.new_with_index(index, args)
+    metavars:
+      - value
+      - index
+      - args
+  - shape: |
+      value.new_with_symbol(symbol, args)
+    metavars:
+      - value
+      - symbol
+      - args

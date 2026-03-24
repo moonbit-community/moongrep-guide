@@ -1,0 +1,11 @@
+package: moonbitlang/async/websocket
+description: |
+  `@websocket.from_http_server(...)` only performs the protocol upgrade. Code
+  that calls it without checking path, `Origin`, cookies, or auth is exposed to
+  cross-site WebSocket hijacking.
+patterns:
+  - shape: |
+      @websocket.from_http_server(request, conn)
+    metavars:
+      - request
+      - conn

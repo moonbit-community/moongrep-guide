@@ -1,0 +1,9 @@
+package: moonbitlang/async/websocket
+description: |
+  Calling `read_all()` on a received WebSocket message forfeits streaming and
+  buffers the entire payload in memory.
+patterns:
+  - shape: |
+      message.read_all()
+    metavars:
+      - message
