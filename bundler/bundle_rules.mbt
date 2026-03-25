@@ -257,18 +257,30 @@ fn emit_matcher_source(rules : Array[RuleSpec]) -> String raise {
     )
     builder.write_string("\n")
   }
-  builder.write_string("///|\n")
-  builder.write_string(
-    "fn apply_bundled_rules(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {\n",
-  )
-  builder.write_string("  let mut keep_traversing = true\n")
+  builder.write_string(emit_rules_table_source(rules, rule_function_names))
+  builder.to_string()
+}
+
+///|
+fn emit_rules_table_source(
+  rules : Array[RuleSpec],
+  rule_function_names : Array[String],
+) -> String {
+  let builder = StringBuilder::new()
+  let entries : Array[String] = []
   for rule_index in 0..<rules.length() {
-    let rule_function_name = rule_function_names[rule_index]
-    builder.write_string(
-      "  keep_traversing = \{rule_function_name}(file, ast, hits) && keep_traversing\n",
+    entries.push(
+      "  \{emit_string_literal(rules[rule_index].rule_id)}: \{rule_function_names[rule_index]}",
     )
   }
-  builder.write_string("  keep_traversing\n")
+  builder.write_string("///|\n")
+  builder.write_string(
+    "let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] = {\n",
+  )
+  if !entries.is_empty() {
+    builder.write_string(entries.join(",\n"))
+    builder.write_string("\n")
+  }
   builder.write_string("}\n")
   builder.to_string()
 }
@@ -597,12 +609,9 @@ test "emit bundle source builds package-local matcher file" {
   ])
   assert_false(source.has_prefix("import {\n"))
   assert_true(source.contains("fn example_test"))
-  assert_true(source.contains("fn apply_bundled_rules"))
-  assert_true(
-    source.contains(
-      "keep_traversing = example_test(file, ast, hits) && keep_traversing",
-    ),
-  )
+  assert_false(source.contains("fn apply_bundled_rules"))
+  assert_true(source.contains("let moongrep_rules_table"))
+  assert_true(source.contains("\"example/test\": example_test"))
   assert_false(source.contains("impl Show for MatchHit"))
   assert_false(source.contains("fn collect_source_files"))
   assert_false(source.contains("usage: moon run moongrep.mbtx [scan-root]"))
@@ -631,16 +640,9 @@ test "emit bundle source generates one matcher function per rule" {
   assert_true(source.contains("// bundled rule: example/second"))
   assert_true(source.contains("fn example_first"))
   assert_true(source.contains("fn example_second"))
-  assert_true(
-    source.contains(
-      "keep_traversing = example_first(file, ast, hits) && keep_traversing",
-    ),
-  )
-  assert_true(
-    source.contains(
-      "keep_traversing = example_second(file, ast, hits) && keep_traversing",
-    ),
-  )
+  assert_false(source.contains("fn apply_bundled_rules"))
+  assert_true(source.contains("\"example/first\": example_first"))
+  assert_true(source.contains("\"example/second\": example_second"))
 }
 
 ///|
