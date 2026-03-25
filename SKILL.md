@@ -151,7 +151,7 @@ script:
 
 - read a directory path from `@sys.get_cli_args()`
 - use `@fs.read_dir` to list entries
-- skip directories named `_build`, `.mooncakes`, or `target`
+- skip directories named `.git`, `_build`, `.mooncakes`, or `target`
 - keep only `.mbt` files
 - read each file with `@fs.read_file_to_string`
 - call your matcher on each file's source
