@@ -33,6 +33,7 @@ jobs:
 
       - name: format diff
         run: |
+          moon run bundler
           moon fmt
           git diff --exit-code
 
