@@ -1,0 +1,20 @@
+package: moonbitlang/core
+description: |
+  This C-style `for` loop updates a loop variable that the body never reads.
+  Prefer a construct that makes the unused counter explicit, such as a range
+  loop with `_`, or refactor the loop body to use the counter intentionally.
+patterns:
+  - shape: |
+      for counter = start; cond_counter < upper_limit; cont_counter = next {
+        body
+      }
+    metavars: [counter, start, cond_counter, upper_limit, cont_counter, next, body]
+    guard: |
+      @rules.is_cstyle_for_with_unused_loop_var(
+        counter,
+        cond_counter,
+        upper_limit,
+        cont_counter,
+        next,
+        body,
+      )

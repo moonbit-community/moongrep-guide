@@ -10,7 +10,14 @@ fn main {
     }
   }
   try {
-    let hits = collect_directory_hits(scan_root)
+    let scan_result = collect_directory_hits(scan_root)
+    for skipped in scan_result.skipped_files {
+      println(render_skipped_file_message(skipped))
+    }
+    if !scan_result.skipped_files.is_empty() && !scan_result.hits.is_empty() {
+      println("")
+    }
+    let hits = scan_result.hits
     if hits.is_empty() {
       println("no match hits")
     } else {
