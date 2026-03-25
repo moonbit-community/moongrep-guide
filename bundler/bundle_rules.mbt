@@ -7,6 +7,7 @@ suberror RuleBundleError {
 struct RulePatternSpec {
   shape : String
   metavars : Array[String]
+  pattern_guard : String?
 }
 
 ///|
@@ -27,6 +28,7 @@ struct BindingRecord {
 struct PatternEmitContext {
   declared_metavars : Array[String]
   bindings : Array[BindingRecord]
+  expose_metavar_names : Bool
 }
 
 ///|
@@ -125,7 +127,7 @@ fn parse_rule_source(
       raise InvalidRule(path~, info="patterns[\{index}] must be a mapping")
     }
     ensure_allowed_keys(path, "pattern[\{index}]", pattern_map, [
-      "shape", "metavars",
+      "shape", "metavars", "guard",
     ])
     let shape = expect_yaml_string(pattern_map, path, "shape")
     let metavars_yaml = expect_yaml_array(pattern_map, path, "metavars")
@@ -145,7 +147,8 @@ fn parse_rule_source(
       }
       metavars.push(meta_name)
     }
-    patterns.push({ shape, metavars })
+    let pattern_guard = expect_pattern_guard(pattern_map, path, index, metavars)
+    patterns.push({ shape, metavars, pattern_guard })
   }
   {
     rule_id: rule_id_from_path(path, rules_root),
@@ -213,6 +216,74 @@ fn expect_description(
         None =>
           raise InvalidRule(path~, info="missing required key description")
       }
+  }
+}
+
+///|
+fn expect_pattern_guard(
+  map : Map[String, @yaml.Yaml],
+  path : String,
+  pattern_index : Int,
+  metavars : Array[String],
+) -> String? raise {
+  match map.get("guard") {
+    None => None
+    Some(@yaml.Yaml::String(value)) => {
+      let guard_source = value.trim().to_string()
+      if guard_source == "" {
+        raise InvalidRule(
+          path~,
+          info="patterns[\{pattern_index}].guard must not be blank",
+        )
+      }
+      ensure_guard_metavars_safe(path, pattern_index, metavars)
+      validate_guard_source(path, pattern_index, guard_source)
+      Some(guard_source)
+    }
+    Some(_) =>
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}].guard must be a string",
+      )
+  }
+}
+
+///|
+fn ensure_guard_metavars_safe(
+  path : String,
+  pattern_index : Int,
+  metavars : Array[String],
+) -> Unit raise {
+  for meta_name in metavars {
+    if meta_name == "file" || meta_name == "hits" || meta_name == "loc" {
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}].guard cannot expose metavar \{meta_name} because it conflicts with generated matcher locals",
+      )
+    }
+  }
+}
+
+///|
+fn validate_guard_source(
+  path : String,
+  pattern_index : Int,
+  guard_source : String,
+) -> Unit raise {
+  let guard_wrapper = "fn _guard_check() -> Unit {\n" +
+    "  let _ = \{guard_source}\n" +
+    "}\n"
+  let (_program, reports) = @lexer.tokens_from_string(
+      guard_wrapper,
+      comment=true,
+      name="pattern guard",
+    ).tokens
+    |> @handrolled_parser.parse()
+  if reports is [err, ..] {
+    raise InvalidRule(
+      path~,
+      info="patterns[\{pattern_index}].guard is not a valid MoonBit expression: \{err.to_json().stringify(indent=2)}",
+    )
   }
 }
 
@@ -292,14 +363,19 @@ fn emit_rule_arm(
   pattern : RulePatternSpec,
 ) -> String raise {
   let ast = @dump_expr.dump_expr_json_repr(pattern.shape)
-  let ctx = { declared_metavars: pattern.metavars, bindings: [] }
+  let ctx = {
+    declared_metavars: pattern.metavars,
+    bindings: [],
+    expose_metavar_names: pattern.pattern_guard is Some(_),
+  }
   let pattern_source = emit_pattern_source(ast, ctx, root=true)
   ensure_all_metavars_bound(rule.rule_id, pattern_index, pattern.metavars, ctx)
   let builder = StringBuilder::new()
   builder.write_string(
     "      // rule: \{rule.rule_id} pattern \{pattern_index}\n",
   )
-  builder.write_string("      \{pattern_source} => {\n")
+  let arm_head = emit_rule_arm_head(pattern_source, pattern.pattern_guard)
+  builder.write_string("      \{arm_head} => {\n")
   let duplicate_condition = emit_duplicate_condition(ctx)
   let push_source = emit_push_source(rule, pattern_index, ctx)
   if duplicate_condition == "" {
@@ -362,6 +438,17 @@ fn emit_rule_matcher_function_names(
 ///|
 fn emit_rule_matcher_function_name(rule_id : String) -> String {
   rule_id.replace_all(old="/", new="_").replace_all(old="-", new="_")
+}
+
+///|
+fn emit_rule_arm_head(
+  pattern_source : String,
+  guard_source : String?,
+) -> String {
+  match guard_source {
+    Some(guard_source) => "\{pattern_source} if \{guard_source}"
+    None => pattern_source
+  }
 }
 
 ///|
@@ -549,14 +636,31 @@ fn record_binding(ctx : PatternEmitContext, meta_name : String) -> String {
   for index in 0..<ctx.bindings.length() {
     if ctx.bindings[index].meta_name == meta_name {
       let bind_names = ctx.bindings[index].bind_names
-      let bind_name = "\{sanitize_identifier(meta_name)}_\{bind_names.length() + 1}"
+      let bind_name = emit_binding_name(
+        meta_name,
+        bind_names.length() + 1,
+        ctx.expose_metavar_names,
+      )
       bind_names.push(bind_name)
       return bind_name
     }
   }
-  let bind_name = "\{sanitize_identifier(meta_name)}_1"
+  let bind_name = emit_binding_name(meta_name, 1, ctx.expose_metavar_names)
   ctx.bindings.push({ meta_name, bind_names: [bind_name] })
   bind_name
+}
+
+///|
+fn emit_binding_name(
+  meta_name : String,
+  occurrence : Int,
+  expose_metavar_names : Bool,
+) -> String {
+  if expose_metavar_names && occurrence == 1 {
+    meta_name
+  } else {
+    "\{sanitize_identifier(meta_name)}_\{occurrence}"
+  }
 }
 
 ///|
@@ -603,7 +707,11 @@ test "emit bundle source builds package-local matcher file" {
       package_name: "moonbit-community/example",
       description: "example rule",
       patterns: [
-        { shape: "node.set_inner_html(html)", metavars: ["node", "html"] },
+        {
+          shape: "node.set_inner_html(html)",
+          metavars: ["node", "html"],
+          pattern_guard: None,
+        },
       ],
     },
   ])
@@ -625,15 +733,29 @@ test "emit bundle source generates one matcher function per rule" {
       package_name: "moonbit-community/example",
       description: "first rule",
       patterns: [
-        { shape: "node.set_inner_html(html)", metavars: ["node", "html"] },
-        { shape: "node.set_outer_html(html)", metavars: ["node", "html"] },
+        {
+          shape: "node.set_inner_html(html)",
+          metavars: ["node", "html"],
+          pattern_guard: None,
+        },
+        {
+          shape: "node.set_outer_html(html)",
+          metavars: ["node", "html"],
+          pattern_guard: None,
+        },
       ],
     },
     {
       rule_id: "example/second",
       package_name: "moonbit-community/example",
       description: "second rule",
-      patterns: [{ shape: "value.apply(args)", metavars: ["value", "args"] }],
+      patterns: [
+        {
+          shape: "value.apply(args)",
+          metavars: ["value", "args"],
+          pattern_guard: None,
+        },
+      ],
     },
   ])
   assert_true(source.contains("// bundled rule: example/first"))
@@ -694,6 +816,27 @@ test "parse rule source supports describle" {
 }
 
 ///|
+test "parse rule source stores trimmed pattern guard" {
+  let source =
+    #|package: moonbit-community/example
+    #|description: guarded rule
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|    metavars:
+    #|      - foo
+    #|      - bar
+    #|    guard: |
+    #|      
+    #|      bar != foo
+    #|      
+  let rule = parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  inspect(rule.patterns[0].pattern_guard, content="Some(\"bar != foo\")")
+}
+
+///|
 test "reject duplicate metavars" {
   let source =
     #|package: moonbit-community/example
@@ -708,4 +851,103 @@ test "reject duplicate metavars" {
     "references/rules/example/test.yaml", "references/rules", source,
   )
   assert_true(result is Err(_))
+}
+
+///|
+test "reject non-string blank and invalid pattern guard" {
+  let non_string_source =
+    #|package: moonbit-community/example
+    #|description: guarded rule
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|    metavars:
+    #|      - foo
+    #|      - bar
+    #|    guard:
+    #|      value: nope
+  let blank_source =
+    #|package: moonbit-community/example
+    #|description: guarded rule
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|    metavars:
+    #|      - foo
+    #|      - bar
+    #|    guard: |
+    #|      
+  let invalid_source =
+    #|package: moonbit-community/example
+    #|description: guarded rule
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|    metavars:
+    #|      - foo
+    #|      - bar
+    #|    guard: |
+    #|      (foo +
+  let non_string_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", non_string_source,
+  )
+  let blank_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", blank_source,
+  )
+  let invalid_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", invalid_source,
+  )
+  assert_true(non_string_result is Err(_))
+  assert_true(blank_result is Err(_))
+  assert_true(invalid_result is Err(_))
+}
+
+///|
+test "emit matcher source uses pattern guard and keeps duplicate equality check" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/guarded",
+      package_name: "moonbit-community/example",
+      description: "guarded rule",
+      patterns: [
+        {
+          shape: "pair(left, left)",
+          metavars: ["pair", "left"],
+          pattern_guard: Some("left != pair"),
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("} if left != pair => {"))
+  assert_true(source.contains("if left == meta_left_2 {"))
+  assert_true(source.contains("\"pair\": pair"))
+  assert_true(source.contains("\"left\": left"))
+}
+
+///|
+test "reject guard metavars that conflict with generated locals" {
+  let source =
+    #|package: moonbit-community/example
+    #|description: guarded rule
+    #|patterns:
+    #|  - shape: |
+    #|      foo(file)
+    #|    metavars:
+    #|      - foo
+    #|      - file
+    #|    guard: |
+    #|      file != foo
+  let result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  match result {
+    Err(InvalidRule(path~, info~)) => {
+      inspect(path, content="references/rules/example/test.yaml")
+      inspect(
+        info,
+        content="patterns[0].guard cannot expose metavar file because it conflicts with generated matcher locals",
+      )
+    }
+    _ => fail("expected generated matcher local conflict")
+  }
 }
