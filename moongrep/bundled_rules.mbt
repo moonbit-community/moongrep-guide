@@ -8363,64 +8363,39 @@ fn async_websocket_server_upgrade_unchecked(
 }
 
 ///|
-fn apply_bundled_rules(
-  file : String,
-  ast : Json,
-  hits : Array[MatchHit],
-) -> Bool {
-  let mut keep_traversing = true
-  keep_traversing = rabbita_nav_load(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_js_require(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_svg_script(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_js_value_get(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_js_value_new(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_js_value_set(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_svg_href_url(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_html_href_url(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_cmd_raw_effect(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_js_value_apply(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_svg_inner_html(file, ast, hits) && keep_traversing
-  keep_traversing = async_io_unbounded_read(file, ast, hits) && keep_traversing
-  keep_traversing = async_socket_reuse_addr(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_html_inner_html(file, ast, hits) && keep_traversing
-  keep_traversing = rabbita_svg_target_blank(file, ast, hits) && keep_traversing
-  keep_traversing = async_http_crlf_injection(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_html_target_blank(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_http_cl_te_ambiguity(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_dom_set_inner_html(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_js_global_this_get(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_dom_window_load_url(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_html_active_content(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_fs_read_file_unbounded(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_fs_destructive_truncate(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_http_status_ok_footgun(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_fs_tmpdir_weak_randomness(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_process_redirect_truncate(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_process_unbounded_collect(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_websocket_message_read_all(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_websocket_http_handshake_crlf(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_http_request_transfer_encoding(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_tls_client_verification_footgun(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = rabbita_dom_dangerous_attribute_write(file, ast, hits) &&
-    keep_traversing
-  keep_traversing = async_websocket_server_upgrade_unchecked(file, ast, hits) &&
-    keep_traversing
-  keep_traversing
+let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] = {
+  "rabbita/nav-load": rabbita_nav_load,
+  "rabbita/js-require": rabbita_js_require,
+  "rabbita/svg-script": rabbita_svg_script,
+  "rabbita/js-value-get": rabbita_js_value_get,
+  "rabbita/js-value-new": rabbita_js_value_new,
+  "rabbita/js-value-set": rabbita_js_value_set,
+  "rabbita/svg-href-url": rabbita_svg_href_url,
+  "rabbita/html-href-url": rabbita_html_href_url,
+  "rabbita/cmd-raw-effect": rabbita_cmd_raw_effect,
+  "rabbita/js-value-apply": rabbita_js_value_apply,
+  "rabbita/svg-inner-html": rabbita_svg_inner_html,
+  "async/io-unbounded-read": async_io_unbounded_read,
+  "async/socket-reuse-addr": async_socket_reuse_addr,
+  "rabbita/html-inner-html": rabbita_html_inner_html,
+  "rabbita/svg-target-blank": rabbita_svg_target_blank,
+  "async/http-crlf-injection": async_http_crlf_injection,
+  "rabbita/html-target-blank": rabbita_html_target_blank,
+  "async/http-cl-te-ambiguity": async_http_cl_te_ambiguity,
+  "rabbita/dom-set-inner-html": rabbita_dom_set_inner_html,
+  "rabbita/js-global-this-get": rabbita_js_global_this_get,
+  "rabbita/dom-window-load-url": rabbita_dom_window_load_url,
+  "rabbita/html-active-content": rabbita_html_active_content,
+  "async/fs-read-file-unbounded": async_fs_read_file_unbounded,
+  "async/fs-destructive-truncate": async_fs_destructive_truncate,
+  "rabbita/http-status-ok-footgun": rabbita_http_status_ok_footgun,
+  "async/fs-tmpdir-weak-randomness": async_fs_tmpdir_weak_randomness,
+  "async/process-redirect-truncate": async_process_redirect_truncate,
+  "async/process-unbounded-collect": async_process_unbounded_collect,
+  "async/websocket-message-read-all": async_websocket_message_read_all,
+  "async/websocket-http-handshake-crlf": async_websocket_http_handshake_crlf,
+  "async/http-request-transfer-encoding": async_http_request_transfer_encoding,
+  "async/tls-client-verification-footgun": async_tls_client_verification_footgun,
+  "rabbita/dom-dangerous-attribute-write": rabbita_dom_dangerous_attribute_write,
+  "async/websocket-server-upgrade-unchecked": async_websocket_server_upgrade_unchecked,
 }
