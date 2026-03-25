@@ -1,5 +1,8 @@
 import {
   "moonbit-community/moongrep-guide/dump_expr",
+  "moonbitlang/parser/basic",
+  "moonbitlang/parser/lexer",
+  "moonbitlang/parser/handrolled_parser",
   "moonbit-community/yaml",
   "moonbitlang/x/fs",
   "moonbitlang/x/sys",
