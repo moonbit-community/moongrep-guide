@@ -5,5 +5,4 @@ description: |
 patterns:
   - shape: |
       @fs.read_file(path)
-    metavars:
-      - path
+    metavars: [path]

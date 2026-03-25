@@ -5,5 +5,4 @@ description: |
 patterns:
   - shape: |
       @dom.window().load_url(url)
-    metavars:
-      - url
+    metavars: [url]

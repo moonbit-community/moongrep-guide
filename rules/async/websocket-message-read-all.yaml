@@ -5,5 +5,4 @@ description: |
 patterns:
   - shape: |
       message.read_all()
-    metavars:
-      - message
+    metavars: [message]

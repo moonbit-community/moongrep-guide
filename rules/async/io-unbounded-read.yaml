@@ -5,10 +5,7 @@ description: |
 patterns:
   - shape: |
       reader.read_all()
-    metavars:
-      - reader
+    metavars: [reader]
   - shape: |
       reader.read_until(delim)
-    metavars:
-      - reader
-      - delim
+    metavars: [reader, delim]

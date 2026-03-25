@@ -5,6 +5,4 @@ description: |
 patterns:
   - shape: |
       @svg.node("a", @svg.Attrs::build().href(url).target("_blank"), children)
-    metavars:
-      - url
-      - children
+    metavars: [url, children]

@@ -6,24 +6,13 @@ description: |
 patterns:
   - shape: |
       value.apply(args)
-    metavars:
-      - value
-      - args
+    metavars: [value, args]
   - shape: |
       value.apply_with_string(name, args)
-    metavars:
-      - value
-      - name
-      - args
+    metavars: [value, name, args]
   - shape: |
       value.apply_with_index(index, args)
-    metavars:
-      - value
-      - index
-      - args
+    metavars: [value, index, args]
   - shape: |
       value.apply_with_symbol(symbol, args)
-    metavars:
-      - value
-      - symbol
-      - args
+    metavars: [value, symbol, args]

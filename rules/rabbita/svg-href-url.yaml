@@ -6,18 +6,10 @@ description: |
 patterns:
   - shape: |
       @svg.node("a", @svg.Attrs::build().href(url), children)
-    metavars:
-      - url
-      - children
+    metavars: [url, children]
   - shape: |
       @svg.image(href=url, x=x, y=y)
-    metavars:
-      - url
-      - x
-      - y
+    metavars: [url, x, y]
   - shape: |
       @svg.svg_use(href=url, x=x, y=y)
-    metavars:
-      - url
-      - x
-      - y
+    metavars: [url, x, y]

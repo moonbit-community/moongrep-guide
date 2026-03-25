@@ -6,15 +6,10 @@ description: |
 patterns:
   - shape: |
       @tls.Tls::client(stream, verify=true)
-    metavars:
-      - stream
+    metavars: [stream]
   - shape: |
       @tls.Tls::client(stream, verify=false, host=host)
-    metavars:
-      - stream
-      - host
+    metavars: [stream, host]
   - shape: |
       @tls.Tls::client_from_pair(reader, writer, verify=true)
-    metavars:
-      - reader
-      - writer
+    metavars: [reader, writer]

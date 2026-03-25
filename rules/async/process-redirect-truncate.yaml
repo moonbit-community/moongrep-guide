@@ -5,5 +5,4 @@ description: |
 patterns:
   - shape: |
       @process.redirect_to_file(path, truncate=true)
-    metavars:
-      - path
+    metavars: [path]

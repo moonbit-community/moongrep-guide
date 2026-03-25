@@ -6,16 +6,10 @@ description: |
 patterns:
   - shape: |
       @fs.open(path, mode=mode, truncate=true)
-    metavars:
-      - path
-      - mode
+    metavars: [path, mode]
   - shape: |
       @fs.write_file(path, content)
-    metavars:
-      - path
-      - content
+    metavars: [path, content]
   - shape: |
       @fs.write_file(path, content, truncate=true)
-    metavars:
-      - path
-      - content
+    metavars: [path, content]

@@ -5,5 +5,4 @@ description: |
 patterns:
   - shape: |
       @js.globalThis.get_with_string(name)
-    metavars:
-      - name
+    metavars: [name]

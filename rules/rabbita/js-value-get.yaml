@@ -5,16 +5,10 @@ description: |
 patterns:
   - shape: |
       value.get_with_string(key)
-    metavars:
-      - value
-      - key
+    metavars: [value, key]
   - shape: |
       value.get_with_index(index)
-    metavars:
-      - value
-      - index
+    metavars: [value, index]
   - shape: |
       value.get_with_symbol(symbol)
-    metavars:
-      - value
-      - symbol
+    metavars: [value, symbol]

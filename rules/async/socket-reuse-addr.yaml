@@ -6,5 +6,4 @@ description: |
 patterns:
   - shape: |
       @socket.TcpServer::new(addr, reuse_addr=true)
-    metavars:
-      - addr
+    metavars: [addr]

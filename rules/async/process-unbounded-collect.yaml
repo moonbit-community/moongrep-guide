@@ -5,21 +5,13 @@ description: |
 patterns:
   - shape: |
       @process.collect_stdout(command, args)
-    metavars:
-      - command
-      - args
+    metavars: [command, args]
   - shape: |
       @process.collect_stderr(command, args)
-    metavars:
-      - command
-      - args
+    metavars: [command, args]
   - shape: |
       @process.collect_output(command, args)
-    metavars:
-      - command
-      - args
+    metavars: [command, args]
   - shape: |
       @process.collect_output_merged(command, args)
-    metavars:
-      - command
-      - args
+    metavars: [command, args]

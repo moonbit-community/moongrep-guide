@@ -6,11 +6,7 @@ description: |
 patterns:
   - shape: |
       node.set_attribute("srcdoc", html)
-    metavars:
-      - node
-      - html
+    metavars: [node, html]
   - shape: |
       node.set_property("srcdoc", value)
-    metavars:
-      - node
-      - value
+    metavars: [node, value]

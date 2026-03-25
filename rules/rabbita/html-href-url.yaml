@@ -5,11 +5,7 @@ description: |
 patterns:
   - shape: |
       @html.a(href=url, text)
-    metavars:
-      - url
-      - text
+    metavars: [url, text]
   - shape: |
       @html.node("a", @html.Attrs::build().href(url), children)
-    metavars:
-      - url
-      - children
+    metavars: [url, children]

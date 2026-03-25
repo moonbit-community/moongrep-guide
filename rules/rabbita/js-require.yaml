@@ -5,6 +5,4 @@ description: |
 patterns:
   - shape: |
       @js.require(module_name, keys=[export_name])
-    metavars:
-      - module_name
-      - export_name
+    metavars: [module_name, export_name]

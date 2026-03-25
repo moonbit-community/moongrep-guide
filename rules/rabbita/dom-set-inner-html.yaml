@@ -4,6 +4,4 @@ description: |
 patterns:
   - shape: |
       node.set_inner_html(html)
-    metavars:
-      - node
-      - html
+    metavars: [node, html]
