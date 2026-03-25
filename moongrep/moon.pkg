@@ -1,5 +1,6 @@
 import {
   "moonbit-community/moongrep-guide/references",
+  "moonbit-community/moongrep-guide/rules",
   "moonbitlang/x/fs",
   "moonbitlang/x/sys",
 }

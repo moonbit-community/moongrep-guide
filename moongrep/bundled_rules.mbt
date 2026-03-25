@@ -6374,6 +6374,97 @@ fn async_process_unbounded_collect(
 }
 
 ///|
+// bundled rule: lang/cstyle-for-unused-loop-var
+fn lang_cstyle_for_unused_loop_var(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
+  match ast {
+    // rule: lang/cstyle-for-unused-loop-var pattern 0
+    {
+      "kind": "Expr::For",
+      "loc": loc,
+      "children": {
+        "body": body,
+        "label": Null,
+        "binders": {
+          "kind": "Expr::For::BindingList",
+          "children": [
+            {
+              "kind": "For::Binding",
+              "children": { "expr": start, "binder": counter, .. },
+              ..
+            },
+          ],
+          ..
+        },
+        "for_else": Null,
+        "condition": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "<", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": cond_counter,
+            "rhs": upper_limit,
+            ..
+          },
+          ..
+        },
+        "where_clause": Null,
+        "continue_block": {
+          "kind": "Expr::For::ContBindingList",
+          "children": [
+            {
+              "kind": "For::ContBinding",
+              "children": { "expr": next, "binder": cont_counter, .. },
+              ..
+            },
+          ],
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      if @rules.is_cstyle_for_with_unused_loop_var(
+          counter, cond_counter, upper_limit, cont_counter, next, body,
+        ) {
+        hits.push(MatchHit::{
+          file,
+          rule_id: "lang/cstyle-for-unused-loop-var",
+          package_name: "moonbitlang/core",
+          description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n",
+          pattern_index: 0,
+          loc,
+          bindings: {
+            "body": body,
+            "start": start,
+            "counter": counter,
+            "cond_counter": cond_counter,
+            "upper_limit": upper_limit,
+            "next": next,
+            "cont_counter": cont_counter,
+          },
+        })
+      }
+      true
+    }
+    _ => true
+  }
+}
+
+///|
 // bundled rule: async/websocket-message-read-all
 fn async_websocket_message_read_all(
   file : String,
@@ -8392,6 +8483,7 @@ let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] 
   "async/fs-tmpdir-weak-randomness": async_fs_tmpdir_weak_randomness,
   "async/process-redirect-truncate": async_process_redirect_truncate,
   "async/process-unbounded-collect": async_process_unbounded_collect,
+  "lang/cstyle-for-unused-loop-var": lang_cstyle_for_unused_loop_var,
   "async/websocket-message-read-all": async_websocket_message_read_all,
   "async/websocket-http-handshake-crlf": async_websocket_http_handshake_crlf,
   "async/http-request-transfer-encoding": async_http_request_transfer_encoding,

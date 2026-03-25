@@ -6,6 +6,9 @@ package "moonbit-community/moongrep-guide/moongrep"
 // Errors
 
 // Types and methods
+type DirectoryScanResult
+pub impl Eq for DirectoryScanResult
+
 pub(all) struct MatchHit {
   file : String
   rule_id : String
@@ -18,6 +21,9 @@ pub(all) struct MatchHit {
 pub impl Eq for MatchHit
 pub impl Show for MatchHit
 pub impl ToJson for MatchHit
+
+type SkippedFile
+pub impl Eq for SkippedFile
 
 // Type aliases
 

@@ -2,22 +2,10 @@
 package "moonbit-community/moongrep-guide/bundler"
 
 // Values
-pub fn generate_bundle_source(rules_root? : String) -> String raise
-
-pub fn write_bundle(rules_root? : String, output_path? : String) -> Unit raise
 
 // Errors
-type RuleBundleError
-pub impl Show for RuleBundleError
 
 // Types and methods
-type BindingRecord
-
-type PatternEmitContext
-
-type RulePatternSpec
-
-type RuleSpec
 
 // Type aliases
 
