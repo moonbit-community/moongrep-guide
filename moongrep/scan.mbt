@@ -1,6 +1,6 @@
 ///|
 fn should_skip_scan_dir(name : String) -> Bool {
-  name == "_build" || name == ".mooncakes" || name == "target"
+  name == ".git" || name == "_build" || name == ".mooncakes" || name == "target"
 }
 
 ///|
