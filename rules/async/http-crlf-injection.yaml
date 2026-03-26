@@ -8,8 +8,8 @@ patterns:
       @http.Client::new(url, headers=headers)
     metavars: [url, headers]
   - shape: |
-      client.request(method, path)
-    metavars: [client, method, path]
+      client.request(_method, path)
+    metavars: [client, _method, path]
   - shape: |
       @http.get(url)
     metavars: [url]

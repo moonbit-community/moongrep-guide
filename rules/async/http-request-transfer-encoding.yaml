@@ -11,8 +11,8 @@ patterns:
       @http.Client::new(url, headers={ "Transfer-Encoding": value })
     metavars: [url, value]
   - shape: |
-      client.request(method, path, extra_headers={ "Transfer-Encoding": value })
-    metavars: [client, method, path, value]
+      client.request(_method, path, extra_headers={ "Transfer-Encoding": value })
+    metavars: [client, _method, path, value]
   - shape: |
       client.get(path, extra_headers={ "Transfer-Encoding": value })
     metavars: [client, path, value]

@@ -67,6 +67,30 @@ test "emit bundle source generates one matcher function per rule" {
 }
 
 ///|
+test "emit matcher source exposes first metavar bindings without guard" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/test",
+      package_name: "moonbit-community/example",
+      description: "example rule",
+      patterns: [
+        {
+          shape: "node.set_inner_html(html)",
+          metavars: ["node", "html"],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"self\": node"))
+  assert_true(source.contains("\"value\": html"))
+  assert_true(source.contains("\"node\": node"))
+  assert_true(source.contains("\"html\": html"))
+  assert_false(source.contains("meta_node_1"))
+  assert_false(source.contains("meta_html_1"))
+}
+
+///|
 test "reject conflicting rule matcher function names" {
   let result = try? emit_rule_matcher_function_names([
     {

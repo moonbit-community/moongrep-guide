@@ -8,5 +8,4 @@ priv struct BindingRecord {
 priv struct PatternEmitContext {
   declared_metavars : Array[String]
   bindings : Array[BindingRecord]
-  expose_metavar_names : Bool
 }

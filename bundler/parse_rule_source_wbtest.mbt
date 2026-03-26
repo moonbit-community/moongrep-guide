@@ -106,18 +106,16 @@ test "reject non-string blank and invalid pattern guard" {
 }
 
 ///|
-test "reject guard metavars that conflict with generated locals" {
+test "reject reserved metavars that conflict with generated locals" {
   let source =
     #|package: moonbit-community/example
-    #|description: guarded rule
+    #|description: invalid metavar
     #|patterns:
     #|  - shape: |
     #|      foo(file)
     #|    metavars:
     #|      - foo
     #|      - file
-    #|    guard: |
-    #|      file != foo
   let result = try? parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
@@ -126,7 +124,7 @@ test "reject guard metavars that conflict with generated locals" {
       inspect(path, content="references/rules/example/test.yaml")
       inspect(
         info,
-        content="patterns[0].guard cannot expose metavar file because it conflicts with generated matcher locals",
+        content="patterns[0] cannot declare metavar file because it conflicts with generated matcher locals",
       )
     }
     _ => fail("expected generated matcher local conflict")

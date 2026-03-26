@@ -20,7 +20,7 @@ fn rabbita_nav_load(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -59,7 +59,7 @@ fn rabbita_nav_load(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
         description: "`@nav.load(...)` performs browser navigation. Untrusted URLs can become\nopen redirects or even `javascript:` execution.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -91,7 +91,7 @@ fn rabbita_js_require(
                   "children": { .. },
                   ..
                 },
-                "value": meta_module_name_1,
+                "value": module_name,
                 ..
               },
               ..
@@ -116,7 +116,7 @@ fn rabbita_js_require(
                   "children": {
                     "exprs": {
                       "kind": "Expr::Array::ExprList",
-                      "children": [meta_export_name_1],
+                      "children": [export_name],
                       ..
                     },
                     ..
@@ -161,10 +161,7 @@ fn rabbita_js_require(
         description: "Passing untrusted module or export names into `@js.require(...)` exposes raw\nNode or host module loading capability.\n",
         pattern_index: 0,
         loc,
-        bindings: {
-          "module_name": meta_module_name_1,
-          "export_name": meta_export_name_1,
-        },
+        bindings: { "module_name": module_name, "export_name": export_name },
       })
       true
     }
@@ -216,7 +213,7 @@ fn rabbita_svg_script(
                                       "children": { .. },
                                       ..
                                     },
-                                    "value": meta_script_1,
+                                    "value": script,
                                     ..
                                   },
                                   ..
@@ -301,7 +298,7 @@ fn rabbita_svg_script(
         description: "SVG `<script>` content is active script. Treat any untrusted payload passed\ninto `@svg.script(...)` as code execution.\n",
         pattern_index: 0,
         loc,
-        bindings: { "script": meta_script_1 },
+        bindings: { "script": script },
       })
       true
     }
@@ -333,7 +330,7 @@ fn rabbita_js_value_get(
                   "children": { .. },
                   ..
                 },
-                "value": meta_key_1,
+                "value": key,
                 ..
               },
               ..
@@ -342,7 +339,7 @@ fn rabbita_js_value_get(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get_with_string", .. },
@@ -360,7 +357,7 @@ fn rabbita_js_value_get(
         description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n",
         pattern_index: 0,
         loc,
-        bindings: { "key": meta_key_1, "value": meta_value_1 },
+        bindings: { "key": key, "value": value },
       })
       true
     }
@@ -380,7 +377,7 @@ fn rabbita_js_value_get(
                   "children": { .. },
                   ..
                 },
-                "value": meta_index_1,
+                "value": index,
                 ..
               },
               ..
@@ -389,7 +386,7 @@ fn rabbita_js_value_get(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get_with_index", .. },
@@ -407,7 +404,7 @@ fn rabbita_js_value_get(
         description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n",
         pattern_index: 1,
         loc,
-        bindings: { "index": meta_index_1, "value": meta_value_1 },
+        bindings: { "index": index, "value": value },
       })
       true
     }
@@ -427,7 +424,7 @@ fn rabbita_js_value_get(
                   "children": { .. },
                   ..
                 },
-                "value": meta_symbol_1,
+                "value": symbol,
                 ..
               },
               ..
@@ -436,7 +433,7 @@ fn rabbita_js_value_get(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get_with_symbol", .. },
@@ -454,7 +451,7 @@ fn rabbita_js_value_get(
         description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n",
         pattern_index: 2,
         loc,
-        bindings: { "symbol": meta_symbol_1, "value": meta_value_1 },
+        bindings: { "symbol": symbol, "value": value },
       })
       true
     }
@@ -486,7 +483,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -495,7 +492,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_ctor_1,
+        "self": ctor,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new", .. },
@@ -513,7 +510,7 @@ fn rabbita_js_value_new(
         description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
         pattern_index: 0,
         loc,
-        bindings: { "args": meta_args_1, "ctor": meta_ctor_1 },
+        bindings: { "args": args, "ctor": ctor },
       })
       true
     }
@@ -533,7 +530,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_name_1,
+                "value": name,
                 ..
               },
               ..
@@ -546,7 +543,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -555,7 +552,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new_with_string", .. },
@@ -573,11 +570,7 @@ fn rabbita_js_value_new(
         description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
         pattern_index: 1,
         loc,
-        bindings: {
-          "name": meta_name_1,
-          "args": meta_args_1,
-          "value": meta_value_1,
-        },
+        bindings: { "name": name, "args": args, "value": value },
       })
       true
     }
@@ -597,7 +590,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_index_1,
+                "value": index,
                 ..
               },
               ..
@@ -610,7 +603,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -619,7 +612,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new_with_index", .. },
@@ -637,11 +630,7 @@ fn rabbita_js_value_new(
         description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
         pattern_index: 2,
         loc,
-        bindings: {
-          "index": meta_index_1,
-          "args": meta_args_1,
-          "value": meta_value_1,
-        },
+        bindings: { "index": index, "args": args, "value": value },
       })
       true
     }
@@ -661,7 +650,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_symbol_1,
+                "value": symbol,
                 ..
               },
               ..
@@ -674,7 +663,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -683,7 +672,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new_with_symbol", .. },
@@ -701,11 +690,7 @@ fn rabbita_js_value_new(
         description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
         pattern_index: 3,
         loc,
-        bindings: {
-          "symbol": meta_symbol_1,
-          "args": meta_args_1,
-          "value": meta_value_1,
-        },
+        bindings: { "symbol": symbol, "args": args, "value": value },
       })
       true
     }
@@ -737,7 +722,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": meta_key_1,
+                "value": key,
                 ..
               },
               ..
@@ -750,7 +735,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": meta_payload_1,
+                "value": payload,
                 ..
               },
               ..
@@ -759,7 +744,7 @@ fn rabbita_js_value_set(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_with_string", .. },
@@ -777,11 +762,7 @@ fn rabbita_js_value_set(
         description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n",
         pattern_index: 0,
         loc,
-        bindings: {
-          "key": meta_key_1,
-          "payload": meta_payload_1,
-          "value": meta_value_1,
-        },
+        bindings: { "key": key, "payload": payload, "value": value },
       })
       true
     }
@@ -801,7 +782,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": meta_index_1,
+                "value": index,
                 ..
               },
               ..
@@ -814,7 +795,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": meta_payload_1,
+                "value": payload,
                 ..
               },
               ..
@@ -823,7 +804,7 @@ fn rabbita_js_value_set(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_with_index", .. },
@@ -841,11 +822,7 @@ fn rabbita_js_value_set(
         description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n",
         pattern_index: 1,
         loc,
-        bindings: {
-          "index": meta_index_1,
-          "payload": meta_payload_1,
-          "value": meta_value_1,
-        },
+        bindings: { "index": index, "payload": payload, "value": value },
       })
       true
     }
@@ -865,7 +842,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": meta_symbol_1,
+                "value": symbol,
                 ..
               },
               ..
@@ -878,7 +855,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": meta_payload_1,
+                "value": payload,
                 ..
               },
               ..
@@ -887,7 +864,7 @@ fn rabbita_js_value_set(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_with_symbol", .. },
@@ -905,11 +882,7 @@ fn rabbita_js_value_set(
         description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n",
         pattern_index: 2,
         loc,
-        bindings: {
-          "symbol": meta_symbol_1,
-          "payload": meta_payload_1,
-          "value": meta_value_1,
-        },
+        bindings: { "symbol": symbol, "payload": payload, "value": value },
       })
       true
     }
@@ -979,7 +952,7 @@ fn rabbita_svg_href_url(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_url_1,
+                            "value": url,
                             ..
                           },
                           ..
@@ -1060,7 +1033,7 @@ fn rabbita_svg_href_url(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -1099,7 +1072,7 @@ fn rabbita_svg_href_url(
         description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "children": meta_children_1 },
+        bindings: { "url": url, "children": children },
       })
       true
     }
@@ -1126,7 +1099,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -1146,7 +1119,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": meta_x_1,
+                "value": x,
                 ..
               },
               ..
@@ -1166,7 +1139,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": meta_y_1,
+                "value": y,
                 ..
               },
               ..
@@ -1205,7 +1178,7 @@ fn rabbita_svg_href_url(
         description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n",
         pattern_index: 1,
         loc,
-        bindings: { "url": meta_url_1, "x": meta_x_1, "y": meta_y_1 },
+        bindings: { "url": url, "x": x, "y": y },
       })
       true
     }
@@ -1232,7 +1205,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -1252,7 +1225,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": meta_x_1,
+                "value": x,
                 ..
               },
               ..
@@ -1272,7 +1245,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": meta_y_1,
+                "value": y,
                 ..
               },
               ..
@@ -1311,7 +1284,7 @@ fn rabbita_svg_href_url(
         description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n",
         pattern_index: 2,
         loc,
-        bindings: { "url": meta_url_1, "x": meta_x_1, "y": meta_y_1 },
+        bindings: { "url": url, "x": x, "y": y },
       })
       true
     }
@@ -1350,7 +1323,7 @@ fn rabbita_html_href_url(
                   },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -1363,7 +1336,7 @@ fn rabbita_html_href_url(
                   "children": { .. },
                   ..
                 },
-                "value": meta_text_1,
+                "value": text,
                 ..
               },
               ..
@@ -1402,7 +1375,7 @@ fn rabbita_html_href_url(
         description: "These HTML link builders accept raw `href` values. Without scheme and domain\nvalidation they can create `javascript:` links or phishing redirects.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "text": meta_text_1 },
+        bindings: { "url": url, "text": text },
       })
       true
     }
@@ -1460,7 +1433,7 @@ fn rabbita_html_href_url(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_url_1,
+                            "value": url,
                             ..
                           },
                           ..
@@ -1541,7 +1514,7 @@ fn rabbita_html_href_url(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -1580,7 +1553,7 @@ fn rabbita_html_href_url(
         description: "These HTML link builders accept raw `href` values. Without scheme and domain\nvalidation they can create `javascript:` links or phishing redirects.\n",
         pattern_index: 1,
         loc,
-        bindings: { "url": meta_url_1, "children": meta_children_1 },
+        bindings: { "url": url, "children": children },
       })
       true
     }
@@ -1612,7 +1585,7 @@ fn rabbita_cmd_raw_effect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_effect_1,
+                "value": effect,
                 ..
               },
               ..
@@ -1651,7 +1624,7 @@ fn rabbita_cmd_raw_effect(
         description: "`@cmd.raw_effect(...)` is a low-level escape hatch that can wrap arbitrary\nhost capabilities behind a normal-looking Rabbita command.\n",
         pattern_index: 0,
         loc,
-        bindings: { "effect": meta_effect_1 },
+        bindings: { "effect": effect },
       })
       true
     }
@@ -1683,7 +1656,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -1692,7 +1665,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply", .. },
@@ -1710,7 +1683,7 @@ fn rabbita_js_value_apply(
         description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
         pattern_index: 0,
         loc,
-        bindings: { "args": meta_args_1, "value": meta_value_1 },
+        bindings: { "args": args, "value": value },
       })
       true
     }
@@ -1730,7 +1703,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_name_1,
+                "value": name,
                 ..
               },
               ..
@@ -1743,7 +1716,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -1752,7 +1725,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply_with_string", .. },
@@ -1770,11 +1743,7 @@ fn rabbita_js_value_apply(
         description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
         pattern_index: 1,
         loc,
-        bindings: {
-          "name": meta_name_1,
-          "args": meta_args_1,
-          "value": meta_value_1,
-        },
+        bindings: { "name": name, "args": args, "value": value },
       })
       true
     }
@@ -1794,7 +1763,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_index_1,
+                "value": index,
                 ..
               },
               ..
@@ -1807,7 +1776,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -1816,7 +1785,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply_with_index", .. },
@@ -1834,11 +1803,7 @@ fn rabbita_js_value_apply(
         description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
         pattern_index: 2,
         loc,
-        bindings: {
-          "index": meta_index_1,
-          "args": meta_args_1,
-          "value": meta_value_1,
-        },
+        bindings: { "index": index, "args": args, "value": value },
       })
       true
     }
@@ -1858,7 +1823,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_symbol_1,
+                "value": symbol,
                 ..
               },
               ..
@@ -1871,7 +1836,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -1880,7 +1845,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_value_1,
+        "self": value,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply_with_symbol", .. },
@@ -1898,11 +1863,7 @@ fn rabbita_js_value_apply(
         description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
         pattern_index: 3,
         loc,
-        bindings: {
-          "symbol": meta_symbol_1,
-          "args": meta_args_1,
-          "value": meta_value_1,
-        },
+        bindings: { "symbol": symbol, "args": args, "value": value },
       })
       true
     }
@@ -1934,7 +1895,7 @@ fn rabbita_svg_inner_html(
                   "children": { .. },
                   ..
                 },
-                "value": meta_svg_1,
+                "value": svg,
                 ..
               },
               ..
@@ -1994,7 +1955,7 @@ fn rabbita_svg_inner_html(
         description: "Building SVG attrs with `inner_html(...)` injects raw markup and can execute\nactive content when the SVG string is untrusted.\n",
         pattern_index: 0,
         loc,
-        bindings: { "svg": meta_svg_1 },
+        bindings: { "svg": svg },
       })
       true
     }
@@ -2017,7 +1978,7 @@ fn async_io_unbounded_read(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_reader_1,
+        "self": reader,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_all", .. },
@@ -2035,7 +1996,7 @@ fn async_io_unbounded_read(
         description: "These reader APIs keep buffering until EOF or until a delimiter appears. On\nuntrusted inputs they can grow memory without a configured upper bound.\n",
         pattern_index: 0,
         loc,
-        bindings: { "reader": meta_reader_1 },
+        bindings: { "reader": reader },
       })
       true
     }
@@ -2055,7 +2016,7 @@ fn async_io_unbounded_read(
                   "children": { .. },
                   ..
                 },
-                "value": meta_delim_1,
+                "value": delim,
                 ..
               },
               ..
@@ -2064,7 +2025,7 @@ fn async_io_unbounded_read(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_reader_1,
+        "self": reader,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_until", .. },
@@ -2082,7 +2043,7 @@ fn async_io_unbounded_read(
         description: "These reader APIs keep buffering until EOF or until a delimiter appears. On\nuntrusted inputs they can grow memory without a configured upper bound.\n",
         pattern_index: 1,
         loc,
-        bindings: { "delim": meta_delim_1, "reader": meta_reader_1 },
+        bindings: { "delim": delim, "reader": reader },
       })
       true
     }
@@ -2114,7 +2075,7 @@ fn async_socket_reuse_addr(
                   "children": { .. },
                   ..
                 },
-                "value": meta_addr_1,
+                "value": addr,
                 ..
               },
               ..
@@ -2190,7 +2151,7 @@ fn async_socket_reuse_addr(
         description: "Enabling `reuse_addr=true` can cause a restarted listener to receive traffic\nleft behind by a previous process, which is unsafe for protocols without\nstrong session validation.\n",
         pattern_index: 0,
         loc,
-        bindings: { "addr": meta_addr_1 },
+        bindings: { "addr": addr },
       })
       true
     }
@@ -2222,7 +2183,7 @@ fn rabbita_html_inner_html(
                   "children": { .. },
                   ..
                 },
-                "value": meta_html_1,
+                "value": html,
                 ..
               },
               ..
@@ -2282,7 +2243,7 @@ fn rabbita_html_inner_html(
         description: "Building HTML attrs with `inner_html(...)` bypasses normal escaping and turns\nthe provided string into raw DOM content.\n",
         pattern_index: 0,
         loc,
-        bindings: { "html": meta_html_1 },
+        bindings: { "html": html },
       })
       true
     }
@@ -2390,7 +2351,7 @@ fn rabbita_svg_target_blank(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": meta_url_1,
+                                "value": url,
                                 ..
                               },
                               ..
@@ -2481,7 +2442,7 @@ fn rabbita_svg_target_blank(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -2520,7 +2481,7 @@ fn rabbita_svg_target_blank(
         description: "SVG links opened with `target=\"_blank\"` need the same `noopener noreferrer`\nprotection as HTML links to avoid reverse tabnabbing.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "children": meta_children_1 },
+        bindings: { "url": url, "children": children },
       })
       true
     }
@@ -2552,7 +2513,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -2572,7 +2533,7 @@ fn async_http_crlf_injection(
                   },
                   ..
                 },
-                "value": meta_headers_1,
+                "value": headers,
                 ..
               },
               ..
@@ -2617,7 +2578,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "headers": meta_headers_1 },
+        bindings: { "url": url, "headers": headers },
       })
       true
     }
@@ -2637,7 +2598,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_method_1,
+                "value": _method,
                 ..
               },
               ..
@@ -2650,7 +2611,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -2659,7 +2620,7 @@ fn async_http_crlf_injection(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_client_1,
+        "self": client,
         "method_name": {
           "kind": "Label",
           "children": { "name": "request", .. },
@@ -2677,11 +2638,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 1,
         loc,
-        bindings: {
-          "method": meta_method_1,
-          "path": meta_path_1,
-          "client": meta_client_1,
-        },
+        bindings: { "_method": _method, "path": path, "client": client },
       })
       true
     }
@@ -2701,7 +2658,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -2740,7 +2697,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 2,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -2760,7 +2717,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -2773,7 +2730,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -2812,7 +2769,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 3,
         loc,
-        bindings: { "url": meta_url_1, "content": meta_content_1 },
+        bindings: { "url": url, "content": content },
       })
       true
     }
@@ -2832,7 +2789,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -2845,7 +2802,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -2884,7 +2841,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 4,
         loc,
-        bindings: { "url": meta_url_1, "content": meta_content_1 },
+        bindings: { "url": url, "content": content },
       })
       true
     }
@@ -2904,7 +2861,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -2943,7 +2900,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 5,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -2963,7 +2920,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -2983,7 +2940,7 @@ fn async_http_crlf_injection(
                   },
                   ..
                 },
-                "value": meta_headers_1,
+                "value": headers,
                 ..
               },
               ..
@@ -3022,7 +2979,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 6,
         loc,
-        bindings: { "url": meta_url_1, "headers": meta_headers_1 },
+        bindings: { "url": url, "headers": headers },
       })
       true
     }
@@ -3042,7 +2999,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -3062,7 +3019,7 @@ fn async_http_crlf_injection(
                   },
                   ..
                 },
-                "value": meta_headers_1,
+                "value": headers,
                 ..
               },
               ..
@@ -3101,7 +3058,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 7,
         loc,
-        bindings: { "url": meta_url_1, "headers": meta_headers_1 },
+        bindings: { "url": url, "headers": headers },
       })
       true
     }
@@ -3121,7 +3078,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_status_1,
+                "value": status,
                 ..
               },
               ..
@@ -3134,7 +3091,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": meta_reason_1,
+                "value": reason,
                 ..
               },
               ..
@@ -3143,7 +3100,7 @@ fn async_http_crlf_injection(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_conn_1,
+        "self": conn,
         "method_name": {
           "kind": "Label",
           "children": { "name": "send_response", .. },
@@ -3161,11 +3118,7 @@ fn async_http_crlf_injection(
         description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
         pattern_index: 8,
         loc,
-        bindings: {
-          "status": meta_status_1,
-          "reason": meta_reason_1,
-          "conn": meta_conn_1,
-        },
+        bindings: { "status": status, "reason": reason, "conn": conn },
       })
       true
     }
@@ -3204,7 +3157,7 @@ fn rabbita_html_target_blank(
                   },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -3260,7 +3213,7 @@ fn rabbita_html_target_blank(
                   "children": { .. },
                   ..
                 },
-                "value": meta_text_1,
+                "value": text,
                 ..
               },
               ..
@@ -3299,7 +3252,7 @@ fn rabbita_html_target_blank(
         description: "Opening untrusted URLs in a new tab without also setting\n`rel=\"noopener noreferrer\"` allows reverse tabnabbing via `window.opener`.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "text": meta_text_1 },
+        bindings: { "url": url, "text": text },
       })
       true
     }
@@ -3407,7 +3360,7 @@ fn rabbita_html_target_blank(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": meta_url_1,
+                                "value": url,
                                 ..
                               },
                               ..
@@ -3498,7 +3451,7 @@ fn rabbita_html_target_blank(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -3537,7 +3490,7 @@ fn rabbita_html_target_blank(
         description: "Opening untrusted URLs in a new tab without also setting\n`rel=\"noopener noreferrer\"` allows reverse tabnabbing via `window.opener`.\n",
         pattern_index: 1,
         loc,
-        bindings: { "url": meta_url_1, "children": meta_children_1 },
+        bindings: { "url": url, "children": children },
       })
       true
     }
@@ -3560,7 +3513,7 @@ fn async_http_cl_te_ambiguity(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_conn_1,
+        "self": conn,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_request", .. },
@@ -3578,7 +3531,7 @@ fn async_http_cl_te_ambiguity(
         description: "These HTTP parser entrypoints accept messages where `Content-Length` and\n`Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity\nwhen a proxy and endpoint disagree on framing.\n",
         pattern_index: 0,
         loc,
-        bindings: { "conn": meta_conn_1 },
+        bindings: { "conn": conn },
       })
       true
     }
@@ -3589,7 +3542,7 @@ fn async_http_cl_te_ambiguity(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_client_1,
+        "self": client,
         "method_name": {
           "kind": "Label",
           "children": { "name": "end_request", .. },
@@ -3607,7 +3560,7 @@ fn async_http_cl_te_ambiguity(
         description: "These HTTP parser entrypoints accept messages where `Content-Length` and\n`Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity\nwhen a proxy and endpoint disagree on framing.\n",
         pattern_index: 1,
         loc,
-        bindings: { "client": meta_client_1 },
+        bindings: { "client": client },
       })
       true
     }
@@ -3639,7 +3592,7 @@ fn rabbita_dom_set_inner_html(
                   "children": { .. },
                   ..
                 },
-                "value": meta_html_1,
+                "value": html,
                 ..
               },
               ..
@@ -3648,7 +3601,7 @@ fn rabbita_dom_set_inner_html(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_node_1,
+        "self": node,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_inner_html", .. },
@@ -3666,7 +3619,7 @@ fn rabbita_dom_set_inner_html(
         description: "Writing untrusted HTML into `set_inner_html(...)` is a direct DOM XSS sink.\n",
         pattern_index: 0,
         loc,
-        bindings: { "html": meta_html_1, "node": meta_node_1 },
+        bindings: { "html": html, "node": node },
       })
       true
     }
@@ -3698,7 +3651,7 @@ fn rabbita_js_global_this_get(
                   "children": { .. },
                   ..
                 },
-                "value": meta_name_1,
+                "value": name,
                 ..
               },
               ..
@@ -3743,7 +3696,7 @@ fn rabbita_js_global_this_get(
         description: "Looking up untrusted names from `@js.globalThis` can hand attackers direct\naccess to dangerous globals such as `eval`, `Function`, `open`, or `fetch`.\n",
         pattern_index: 0,
         loc,
-        bindings: { "name": meta_name_1 },
+        bindings: { "name": name },
       })
       true
     }
@@ -3775,7 +3728,7 @@ fn rabbita_dom_window_load_url(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -3829,7 +3782,7 @@ fn rabbita_dom_window_load_url(
         description: "`load_url(...)` writes directly to `window.location.href`. Passing an\nunvalidated URL here triggers immediate navigation.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -3868,7 +3821,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": meta_src_1,
+                "value": src,
                 ..
               },
               ..
@@ -3881,7 +3834,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -3920,7 +3873,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 0,
         loc,
-        bindings: { "src": meta_src_1, "children": meta_children_1 },
+        bindings: { "src": src, "children": children },
       })
       true
     }
@@ -3978,7 +3931,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -4017,7 +3970,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 1,
         loc,
-        bindings: { "children": meta_children_1 },
+        bindings: { "children": children },
       })
       true
     }
@@ -4037,7 +3990,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": meta_html_1,
+                "value": html,
                 ..
               },
               ..
@@ -4097,7 +4050,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 2,
         loc,
-        bindings: { "html": meta_html_1 },
+        bindings: { "html": html },
       })
       true
     }
@@ -4124,7 +4077,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -4163,7 +4116,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 3,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -4190,7 +4143,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -4229,7 +4182,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 4,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -4270,7 +4223,7 @@ fn rabbita_html_active_content(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_mime_1,
+                            "value": mime,
                             ..
                           },
                           ..
@@ -4297,7 +4250,7 @@ fn rabbita_html_active_content(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": meta_url_1,
+                                "value": url,
                                 ..
                               },
                               ..
@@ -4388,7 +4341,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": meta_children_1,
+                "value": children,
                 ..
               },
               ..
@@ -4427,11 +4380,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 5,
         loc,
-        bindings: {
-          "mime": meta_mime_1,
-          "url": meta_url_1,
-          "children": meta_children_1,
-        },
+        bindings: { "mime": mime, "url": url, "children": children },
       })
       true
     }
@@ -4472,7 +4421,7 @@ fn rabbita_html_active_content(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_mime_1,
+                            "value": mime,
                             ..
                           },
                           ..
@@ -4499,7 +4448,7 @@ fn rabbita_html_active_content(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": meta_url_1,
+                                "value": url,
                                 ..
                               },
                               ..
@@ -4616,7 +4565,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 6,
         loc,
-        bindings: { "mime": meta_mime_1, "url": meta_url_1 },
+        bindings: { "mime": mime, "url": url },
       })
       true
     }
@@ -4643,7 +4592,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": meta_base_1,
+                "value": base,
                 ..
               },
               ..
@@ -4682,7 +4631,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 7,
         loc,
-        bindings: { "base": meta_base_1 },
+        bindings: { "base": base },
       })
       true
     }
@@ -4767,7 +4716,7 @@ fn rabbita_html_active_content(
                       },
                       ..
                     },
-                    "rhs": meta_url_1,
+                    "rhs": url,
                     ..
                   },
                   ..
@@ -4810,7 +4759,7 @@ fn rabbita_html_active_content(
         description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
         pattern_index: 8,
         loc,
-        bindings: { "url": meta_url_1 },
+        bindings: { "url": url },
       })
       true
     }
@@ -4842,7 +4791,7 @@ fn async_fs_read_file_unbounded(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -4881,7 +4830,7 @@ fn async_fs_read_file_unbounded(
         description: "`@fs.read_file(...)` reads the full target into memory. If the path can point\nto attacker-controlled large files or special files, this can exhaust memory.\n",
         pattern_index: 0,
         loc,
-        bindings: { "path": meta_path_1 },
+        bindings: { "path": path },
       })
       true
     }
@@ -4913,7 +4862,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -4933,7 +4882,7 @@ fn async_fs_destructive_truncate(
                   },
                   ..
                 },
-                "value": meta_mode_1,
+                "value": mode,
                 ..
               },
               ..
@@ -5003,7 +4952,7 @@ fn async_fs_destructive_truncate(
         description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
         pattern_index: 0,
         loc,
-        bindings: { "path": meta_path_1, "mode": meta_mode_1 },
+        bindings: { "path": path, "mode": mode },
       })
       true
     }
@@ -5023,7 +4972,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -5036,7 +4985,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -5075,7 +5024,7 @@ fn async_fs_destructive_truncate(
         description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
         pattern_index: 1,
         loc,
-        bindings: { "path": meta_path_1, "content": meta_content_1 },
+        bindings: { "path": path, "content": content },
       })
       true
     }
@@ -5095,7 +5044,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -5108,7 +5057,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -5178,7 +5127,7 @@ fn async_fs_destructive_truncate(
         description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
         pattern_index: 2,
         loc,
-        bindings: { "path": meta_path_1, "content": meta_content_1 },
+        bindings: { "path": path, "content": content },
       })
       true
     }
@@ -5210,7 +5159,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -5244,7 +5193,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_handler_1,
+                            "value": handler,
                             ..
                           },
                           ..
@@ -5323,7 +5272,7 @@ fn rabbita_http_status_ok_footgun(
         description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "handler": meta_handler_1 },
+        bindings: { "url": url, "handler": handler },
       })
       true
     }
@@ -5343,7 +5292,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -5356,7 +5305,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_body_1,
+                "value": body,
                 ..
               },
               ..
@@ -5390,7 +5339,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_handler_1,
+                            "value": handler,
                             ..
                           },
                           ..
@@ -5469,11 +5418,7 @@ fn rabbita_http_status_ok_footgun(
         description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
         pattern_index: 1,
         loc,
-        bindings: {
-          "url": meta_url_1,
-          "body": meta_body_1,
-          "handler": meta_handler_1,
-        },
+        bindings: { "url": url, "body": body, "handler": handler },
       })
       true
     }
@@ -5493,7 +5438,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -5506,7 +5451,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_body_1,
+                "value": body,
                 ..
               },
               ..
@@ -5540,7 +5485,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_handler_1,
+                            "value": handler,
                             ..
                           },
                           ..
@@ -5619,11 +5564,7 @@ fn rabbita_http_status_ok_footgun(
         description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
         pattern_index: 2,
         loc,
-        bindings: {
-          "url": meta_url_1,
-          "body": meta_body_1,
-          "handler": meta_handler_1,
-        },
+        bindings: { "url": url, "body": body, "handler": handler },
       })
       true
     }
@@ -5643,7 +5584,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -5677,7 +5618,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": meta_handler_1,
+                            "value": handler,
                             ..
                           },
                           ..
@@ -5756,7 +5697,7 @@ fn rabbita_http_status_ok_footgun(
         description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
         pattern_index: 3,
         loc,
-        bindings: { "url": meta_url_1, "handler": meta_handler_1 },
+        bindings: { "url": url, "handler": handler },
       })
       true
     }
@@ -5836,7 +5777,7 @@ fn async_fs_tmpdir_weak_randomness(
                   },
                   ..
                 },
-                "value": meta_prefix_1,
+                "value": prefix,
                 ..
               },
               ..
@@ -5875,7 +5816,7 @@ fn async_fs_tmpdir_weak_randomness(
         description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n",
         pattern_index: 1,
         loc,
-        bindings: { "prefix": meta_prefix_1 },
+        bindings: { "prefix": prefix },
       })
       true
     }
@@ -5991,7 +5932,7 @@ fn async_process_redirect_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -6061,7 +6002,7 @@ fn async_process_redirect_truncate(
         description: "Redirecting process output to a user-controlled path with `truncate=true`\nwill eagerly clobber the target file before writing command output.\n",
         pattern_index: 0,
         loc,
-        bindings: { "path": meta_path_1 },
+        bindings: { "path": path },
       })
       true
     }
@@ -6093,7 +6034,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_command_1,
+                "value": command,
                 ..
               },
               ..
@@ -6106,7 +6047,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -6145,7 +6086,7 @@ fn async_process_unbounded_collect(
         description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
         pattern_index: 0,
         loc,
-        bindings: { "command": meta_command_1, "args": meta_args_1 },
+        bindings: { "command": command, "args": args },
       })
       true
     }
@@ -6165,7 +6106,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_command_1,
+                "value": command,
                 ..
               },
               ..
@@ -6178,7 +6119,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -6217,7 +6158,7 @@ fn async_process_unbounded_collect(
         description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
         pattern_index: 1,
         loc,
-        bindings: { "command": meta_command_1, "args": meta_args_1 },
+        bindings: { "command": command, "args": args },
       })
       true
     }
@@ -6237,7 +6178,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_command_1,
+                "value": command,
                 ..
               },
               ..
@@ -6250,7 +6191,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -6289,7 +6230,7 @@ fn async_process_unbounded_collect(
         description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
         pattern_index: 2,
         loc,
-        bindings: { "command": meta_command_1, "args": meta_args_1 },
+        bindings: { "command": command, "args": args },
       })
       true
     }
@@ -6309,7 +6250,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_command_1,
+                "value": command,
                 ..
               },
               ..
@@ -6322,7 +6263,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": meta_args_1,
+                "value": args,
                 ..
               },
               ..
@@ -6365,7 +6306,7 @@ fn async_process_unbounded_collect(
         description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
         pattern_index: 3,
         loc,
-        bindings: { "command": meta_command_1, "args": meta_args_1 },
+        bindings: { "command": command, "args": args },
       })
       true
     }
@@ -6479,7 +6420,7 @@ fn async_websocket_message_read_all(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_message_1,
+        "self": message,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_all", .. },
@@ -6497,7 +6438,7 @@ fn async_websocket_message_read_all(
         description: "Calling `read_all()` on a received WebSocket message forfeits streaming and\nbuffers the entire payload in memory.\n",
         pattern_index: 0,
         loc,
-        bindings: { "message": meta_message_1 },
+        bindings: { "message": message },
       })
       true
     }
@@ -6529,7 +6470,7 @@ fn async_websocket_http_handshake_crlf(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -6549,7 +6490,7 @@ fn async_websocket_http_handshake_crlf(
                   },
                   ..
                 },
-                "value": meta_headers_1,
+                "value": headers,
                 ..
               },
               ..
@@ -6588,7 +6529,7 @@ fn async_websocket_http_handshake_crlf(
         description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "headers": meta_headers_1 },
+        bindings: { "url": url, "headers": headers },
       })
       true
     }
@@ -6608,7 +6549,7 @@ fn async_websocket_http_handshake_crlf(
                   "children": { .. },
                   ..
                 },
-                "value": meta_client_1,
+                "value": client,
                 ..
               },
               ..
@@ -6621,7 +6562,7 @@ fn async_websocket_http_handshake_crlf(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -6664,7 +6605,7 @@ fn async_websocket_http_handshake_crlf(
         description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n",
         pattern_index: 1,
         loc,
-        bindings: { "client": meta_client_1, "path": meta_path_1 },
+        bindings: { "client": client, "path": path },
       })
       true
     }
@@ -6696,7 +6637,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -6730,7 +6671,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -6786,7 +6727,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 0,
         loc,
-        bindings: { "url": meta_url_1, "value": meta_value_1 },
+        bindings: { "url": url, "value": value },
       })
       true
     }
@@ -6806,7 +6747,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_method_1,
+                "value": _method,
                 ..
               },
               ..
@@ -6819,7 +6760,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -6853,7 +6794,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -6873,7 +6814,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_client_1,
+        "self": client,
         "method_name": {
           "kind": "Label",
           "children": { "name": "request", .. },
@@ -6892,10 +6833,10 @@ fn async_http_request_transfer_encoding(
         pattern_index: 1,
         loc,
         bindings: {
-          "method": meta_method_1,
-          "path": meta_path_1,
-          "value": meta_value_1,
-          "client": meta_client_1,
+          "_method": _method,
+          "path": path,
+          "value": value,
+          "client": client,
         },
       })
       true
@@ -6916,7 +6857,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -6950,7 +6891,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -6970,7 +6911,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_client_1,
+        "self": client,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get", .. },
@@ -6988,11 +6929,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 2,
         loc,
-        bindings: {
-          "path": meta_path_1,
-          "value": meta_value_1,
-          "client": meta_client_1,
-        },
+        bindings: { "path": path, "value": value, "client": client },
       })
       true
     }
@@ -7012,7 +6949,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -7025,7 +6962,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -7059,7 +6996,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7079,7 +7016,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_client_1,
+        "self": client,
         "method_name": {
           "kind": "Label",
           "children": { "name": "put", .. },
@@ -7098,10 +7035,10 @@ fn async_http_request_transfer_encoding(
         pattern_index: 3,
         loc,
         bindings: {
-          "path": meta_path_1,
-          "content": meta_content_1,
-          "value": meta_value_1,
-          "client": meta_client_1,
+          "path": path,
+          "content": content,
+          "value": value,
+          "client": client,
         },
       })
       true
@@ -7122,7 +7059,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_path_1,
+                "value": path,
                 ..
               },
               ..
@@ -7135,7 +7072,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -7169,7 +7106,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7189,7 +7126,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_client_1,
+        "self": client,
         "method_name": {
           "kind": "Label",
           "children": { "name": "post", .. },
@@ -7208,10 +7145,10 @@ fn async_http_request_transfer_encoding(
         pattern_index: 4,
         loc,
         bindings: {
-          "path": meta_path_1,
-          "content": meta_content_1,
-          "value": meta_value_1,
-          "client": meta_client_1,
+          "path": path,
+          "content": content,
+          "value": value,
+          "client": client,
         },
       })
       true
@@ -7232,7 +7169,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -7266,7 +7203,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7316,7 +7253,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 5,
         loc,
-        bindings: { "url": meta_url_1, "value": meta_value_1 },
+        bindings: { "url": url, "value": value },
       })
       true
     }
@@ -7336,7 +7273,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -7349,7 +7286,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -7383,7 +7320,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7433,11 +7370,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 6,
         loc,
-        bindings: {
-          "url": meta_url_1,
-          "content": meta_content_1,
-          "value": meta_value_1,
-        },
+        bindings: { "url": url, "content": content, "value": value },
       })
       true
     }
@@ -7457,7 +7390,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -7470,7 +7403,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_content_1,
+                "value": content,
                 ..
               },
               ..
@@ -7504,7 +7437,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7554,11 +7487,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 7,
         loc,
-        bindings: {
-          "url": meta_url_1,
-          "content": meta_content_1,
-          "value": meta_value_1,
-        },
+        bindings: { "url": url, "content": content, "value": value },
       })
       true
     }
@@ -7578,7 +7507,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -7612,7 +7541,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7662,7 +7591,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 8,
         loc,
-        bindings: { "url": meta_url_1, "value": meta_value_1 },
+        bindings: { "url": url, "value": value },
       })
       true
     }
@@ -7682,7 +7611,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -7716,7 +7645,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7766,7 +7695,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 9,
         loc,
-        bindings: { "url": meta_url_1, "value": meta_value_1 },
+        bindings: { "url": url, "value": value },
       })
       true
     }
@@ -7786,7 +7715,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": meta_url_1,
+                "value": url,
                 ..
               },
               ..
@@ -7820,7 +7749,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": meta_value_1,
+                            "expr": value,
                             ..
                           },
                           ..
@@ -7870,7 +7799,7 @@ fn async_http_request_transfer_encoding(
         description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
         pattern_index: 10,
         loc,
-        bindings: { "url": meta_url_1, "value": meta_value_1 },
+        bindings: { "url": url, "value": value },
       })
       true
     }
@@ -7902,7 +7831,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_stream_1,
+                "value": stream,
                 ..
               },
               ..
@@ -7978,7 +7907,7 @@ fn async_tls_client_verification_footgun(
         description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n",
         pattern_index: 0,
         loc,
-        bindings: { "stream": meta_stream_1 },
+        bindings: { "stream": stream },
       })
       true
     }
@@ -7998,7 +7927,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_stream_1,
+                "value": stream,
                 ..
               },
               ..
@@ -8049,7 +7978,7 @@ fn async_tls_client_verification_footgun(
                   },
                   ..
                 },
-                "value": meta_host_1,
+                "value": host,
                 ..
               },
               ..
@@ -8094,7 +8023,7 @@ fn async_tls_client_verification_footgun(
         description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n",
         pattern_index: 1,
         loc,
-        bindings: { "stream": meta_stream_1, "host": meta_host_1 },
+        bindings: { "stream": stream, "host": host },
       })
       true
     }
@@ -8114,7 +8043,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_reader_1,
+                "value": reader,
                 ..
               },
               ..
@@ -8127,7 +8056,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": meta_writer_1,
+                "value": writer,
                 ..
               },
               ..
@@ -8203,7 +8132,7 @@ fn async_tls_client_verification_footgun(
         description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n",
         pattern_index: 2,
         loc,
-        bindings: { "reader": meta_reader_1, "writer": meta_writer_1 },
+        bindings: { "reader": reader, "writer": writer },
       })
       true
     }
@@ -8259,7 +8188,7 @@ fn rabbita_dom_dangerous_attribute_write(
                   "children": { .. },
                   ..
                 },
-                "value": meta_html_1,
+                "value": html,
                 ..
               },
               ..
@@ -8268,7 +8197,7 @@ fn rabbita_dom_dangerous_attribute_write(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_node_1,
+        "self": node,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_attribute", .. },
@@ -8286,7 +8215,7 @@ fn rabbita_dom_dangerous_attribute_write(
         description: "Writing untrusted content into dangerous DOM sinks such as `srcdoc` via\n`set_attribute(...)` or `set_property(...)` can execute attacker-controlled\nHTML or script.\n",
         pattern_index: 0,
         loc,
-        bindings: { "html": meta_html_1, "node": meta_node_1 },
+        bindings: { "html": html, "node": node },
       })
       true
     }
@@ -8330,7 +8259,7 @@ fn rabbita_dom_dangerous_attribute_write(
                   "children": { .. },
                   ..
                 },
-                "value": meta_value_1,
+                "value": value,
                 ..
               },
               ..
@@ -8339,7 +8268,7 @@ fn rabbita_dom_dangerous_attribute_write(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": meta_node_1,
+        "self": node,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_property", .. },
@@ -8357,7 +8286,7 @@ fn rabbita_dom_dangerous_attribute_write(
         description: "Writing untrusted content into dangerous DOM sinks such as `srcdoc` via\n`set_attribute(...)` or `set_property(...)` can execute attacker-controlled\nHTML or script.\n",
         pattern_index: 1,
         loc,
-        bindings: { "value": meta_value_1, "node": meta_node_1 },
+        bindings: { "value": value, "node": node },
       })
       true
     }
@@ -8389,7 +8318,7 @@ fn async_websocket_server_upgrade_unchecked(
                   "children": { .. },
                   ..
                 },
-                "value": meta_request_1,
+                "value": request,
                 ..
               },
               ..
@@ -8402,7 +8331,7 @@ fn async_websocket_server_upgrade_unchecked(
                   "children": { .. },
                   ..
                 },
-                "value": meta_conn_1,
+                "value": conn,
                 ..
               },
               ..
@@ -8445,7 +8374,7 @@ fn async_websocket_server_upgrade_unchecked(
         description: "`@websocket.from_http_server(...)` only performs the protocol upgrade. Code\nthat calls it without checking path, `Origin`, cookies, or auth is exposed to\ncross-site WebSocket hijacking.\n",
         pattern_index: 0,
         loc,
-        bindings: { "request": meta_request_1, "conn": meta_conn_1 },
+        bindings: { "request": request, "conn": conn },
       })
       true
     }

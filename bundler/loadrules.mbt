@@ -91,7 +91,8 @@ fn parse_rule_source(
       }
       metavars.push(meta_name)
     }
-    let pattern_guard = expect_pattern_guard(pattern_map, path, index, metavars)
+    ensure_metavars_safe(path, index, metavars)
+    let pattern_guard = expect_pattern_guard(pattern_map, path, index)
     patterns.push({ shape, metavars, pattern_guard })
   }
   {
@@ -168,7 +169,6 @@ fn expect_pattern_guard(
   map : Map[String, @yaml.Yaml],
   path : String,
   pattern_index : Int,
-  metavars : Array[String],
 ) -> String? raise {
   match map.get("guard") {
     None => None
@@ -180,7 +180,6 @@ fn expect_pattern_guard(
           info="patterns[\{pattern_index}].guard must not be blank",
         )
       }
-      ensure_guard_metavars_safe(path, pattern_index, metavars)
       validate_guard_source(path, pattern_index, guard_source)
       Some(guard_source)
     }
@@ -193,7 +192,7 @@ fn expect_pattern_guard(
 }
 
 ///|
-fn ensure_guard_metavars_safe(
+fn ensure_metavars_safe(
   path : String,
   pattern_index : Int,
   metavars : Array[String],
@@ -202,7 +201,7 @@ fn ensure_guard_metavars_safe(
     if meta_name == "file" || meta_name == "hits" || meta_name == "loc" {
       raise InvalidRule(
         path~,
-        info="patterns[\{pattern_index}].guard cannot expose metavar \{meta_name} because it conflicts with generated matcher locals",
+        info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because it conflicts with generated matcher locals",
       )
     }
   }

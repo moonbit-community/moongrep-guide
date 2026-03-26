@@ -86,27 +86,19 @@ fn record_binding(ctx : PatternEmitContext, meta_name : String) -> String {
   for index in 0..<ctx.bindings.length() {
     if ctx.bindings[index].meta_name == meta_name {
       let bind_names = ctx.bindings[index].bind_names
-      let bind_name = emit_binding_name(
-        meta_name,
-        bind_names.length() + 1,
-        ctx.expose_metavar_names,
-      )
+      let bind_name = emit_binding_name(meta_name, bind_names.length() + 1)
       bind_names.push(bind_name)
       return bind_name
     }
   }
-  let bind_name = emit_binding_name(meta_name, 1, ctx.expose_metavar_names)
+  let bind_name = emit_binding_name(meta_name, 1)
   ctx.bindings.push({ meta_name, bind_names: [bind_name] })
   bind_name
 }
 
 ///|
-fn emit_binding_name(
-  meta_name : String,
-  occurrence : Int,
-  expose_metavar_names : Bool,
-) -> String {
-  if expose_metavar_names && occurrence == 1 {
+fn emit_binding_name(meta_name : String, occurrence : Int) -> String {
+  if occurrence == 1 {
     meta_name
   } else {
     "\{sanitize_identifier(meta_name)}_\{occurrence}"
@@ -206,11 +198,7 @@ fn emit_rule_arm(
   pattern : RulePatternSpec,
 ) -> String raise {
   let ast = @dump_expr.dump_expr_json_repr(pattern.shape)
-  let ctx = {
-    declared_metavars: pattern.metavars,
-    bindings: [],
-    expose_metavar_names: pattern.pattern_guard is Some(_),
-  }
+  let ctx = { declared_metavars: pattern.metavars, bindings: [] }
   let pattern_source = emit_pattern_source(ast, ctx, root=true)
   ensure_all_metavars_bound(rule.rule_id, pattern_index, pattern.metavars, ctx)
   let builder = StringBuilder::new()
