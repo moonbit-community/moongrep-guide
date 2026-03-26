@@ -5,14 +5,14 @@ description: |
   responses.
 patterns:
   - shape: |
-      @http.get(url, expect=Text(handler))
-    metavars: [url, handler]
+      @http.get(_url, expect=Text(_handler))
+    metavars: [_url, _handler]
   - shape: |
-      @http.post(url, body, expect=Text(handler))
-    metavars: [url, body, handler]
+      @http.post(_url, _body, expect=Text(_handler))
+    metavars: [_url, _body, _handler]
   - shape: |
-      @http.patch(url, body, expect=Text(handler))
-    metavars: [url, body, handler]
+      @http.patch(_url, _body, expect=Text(_handler))
+    metavars: [_url, _body, _handler]
   - shape: |
-      @http.delete(url, expect=Text(handler))
-    metavars: [url, handler]
+      @http.delete(_url, expect=Text(_handler))
+    metavars: [_url, _handler]

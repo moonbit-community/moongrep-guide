@@ -5,11 +5,11 @@ description: |
   requests.
 patterns:
   - shape: |
-      @svg.node("a", @svg.Attrs::build().href(url), children)
-    metavars: [url, children]
+      @svg.node("a", @svg.Attrs::build().href(_url), _children)
+    metavars: [_url, _children]
   - shape: |
-      @svg.image(href=url, x=x, y=y)
-    metavars: [url, x, y]
+      @svg.image(href=_url, x=_x, y=_y)
+    metavars: [_url, _x, _y]
   - shape: |
-      @svg.svg_use(href=url, x=x, y=y)
-    metavars: [url, x, y]
+      @svg.svg_use(href=_url, x=_x, y=_y)
+    metavars: [_url, _x, _y]

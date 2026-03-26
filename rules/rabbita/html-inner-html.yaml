@@ -4,5 +4,5 @@ description: |
   the provided string into raw DOM content.
 patterns:
   - shape: |
-      @html.Attrs::build().inner_html(html)
-    metavars: [html]
+      @html.Attrs::build().inner_html(_html)
+    metavars: [_html]

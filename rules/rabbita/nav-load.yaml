@@ -4,5 +4,5 @@ description: |
   open redirects or even `javascript:` execution.
 patterns:
   - shape: |
-      @nav.load(url)
-    metavars: [url]
+      @nav.load(_url)
+    metavars: [_url]

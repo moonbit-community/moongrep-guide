@@ -4,5 +4,5 @@ description: |
   buffers the entire payload in memory.
 patterns:
   - shape: |
-      message.read_all()
-    metavars: [message]
+      _message.read_all()
+    metavars: [_message]

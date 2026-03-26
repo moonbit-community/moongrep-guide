@@ -5,11 +5,11 @@ description: |
   entirely.
 patterns:
   - shape: |
-      @tls.Tls::client(stream, verify=true)
-    metavars: [stream]
+      @tls.Tls::client(_stream, verify=true)
+    metavars: [_stream]
   - shape: |
-      @tls.Tls::client(stream, verify=false, host=host)
-    metavars: [stream, host]
+      @tls.Tls::client(_stream, verify=false, host=_host)
+    metavars: [_stream, _host]
   - shape: |
-      @tls.Tls::client_from_pair(reader, writer, verify=true)
-    metavars: [reader, writer]
+      @tls.Tls::client_from_pair(_reader, _writer, verify=true)
+    metavars: [_reader, _writer]

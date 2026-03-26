@@ -5,8 +5,8 @@ description: |
   contains `\r` or `\n`.
 patterns:
   - shape: |
-      @websocket.connect(url, headers=headers)
-    metavars: [url, headers]
+      @websocket.connect(_url, headers=_headers)
+    metavars: [_url, _headers]
   - shape: |
-      @websocket.from_http_client(client, path)
-    metavars: [client, path]
+      @websocket.from_http_client(_client, _path)
+    metavars: [_client, _path]

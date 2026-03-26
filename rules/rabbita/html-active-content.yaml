@@ -5,29 +5,29 @@ description: |
   dangerous navigation, or third-party content loading.
 patterns:
   - shape: |
-      @html.script(src=src, children)
-    metavars: [src, children]
+      @html.script(src=_src, _children)
+    metavars: [_src, _children]
   - shape: |
-      @html.script(src~, children)
-    metavars: [children]
+      @html.script(src~, _children)
+    metavars: [_children]
   - shape: |
-      @html.Attrs::build().srcdoc(html)
-    metavars: [html]
+      @html.Attrs::build().srcdoc(_html)
+    metavars: [_html]
   - shape: |
-      @html.iframe(src=url)
-    metavars: [url]
+      @html.iframe(src=_url)
+    metavars: [_url]
   - shape: |
-      @html.fencedframe(src=url)
-    metavars: [url]
+      @html.fencedframe(src=_url)
+    metavars: [_url]
   - shape: |
-      @html.object(attrs=@html.Attrs::build().data(url).type_(mime), children)
-    metavars: [url, mime, children]
+      @html.object(attrs=@html.Attrs::build().data(_url).type_(_mime), _children)
+    metavars: [_url, _mime, _children]
   - shape: |
-      @html.embed(attrs=@html.Attrs::build().src(url).type_(mime))
-    metavars: [url, mime]
+      @html.embed(attrs=@html.Attrs::build().src(_url).type_(_mime))
+    metavars: [_url, _mime]
   - shape: |
-      @html.base(href=base)
-    metavars: [base]
+      @html.base(href=_base)
+    metavars: [_base]
   - shape: |
-      @html.meta(http_equiv="refresh", content="0;url=" + url)
-    metavars: [url]
+      @html.meta(http_equiv="refresh", content="0;url=" + _url)
+    metavars: [_url]

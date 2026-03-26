@@ -4,5 +4,5 @@ description: |
   Node or host module loading capability.
 patterns:
   - shape: |
-      @js.require(module_name, keys=[export_name])
-    metavars: [module_name, export_name]
+      @js.require(_module_name, keys=[_export_name])
+    metavars: [_module_name, _export_name]

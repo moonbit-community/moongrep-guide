@@ -3,5 +3,5 @@ description: |
   Writing untrusted HTML into `set_inner_html(...)` is a direct DOM XSS sink.
 patterns:
   - shape: |
-      node.set_inner_html(html)
-    metavars: [node, html]
+      _node.set_inner_html(_html)
+    metavars: [_node, _html]

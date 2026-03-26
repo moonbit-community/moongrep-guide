@@ -5,29 +5,29 @@ description: |
   or response splitting if the value contains `\r` or `\n`.
 patterns:
   - shape: |
-      @http.Client::new(url, headers=headers)
-    metavars: [url, headers]
+      @http.Client::new(_url, headers=_headers)
+    metavars: [_url, _headers]
   - shape: |
-      client.request(_method, path)
-    metavars: [client, _method, path]
+      _client.request(_method, _path)
+    metavars: [_client, _method, _path]
   - shape: |
-      @http.get(url)
-    metavars: [url]
+      @http.get(_url)
+    metavars: [_url]
   - shape: |
-      @http.post(url, content)
-    metavars: [url, content]
+      @http.post(_url, _content)
+    metavars: [_url, _content]
   - shape: |
-      @http.put(url, content)
-    metavars: [url, content]
+      @http.put(_url, _content)
+    metavars: [_url, _content]
   - shape: |
-      @http.get_stream(url)
-    metavars: [url]
+      @http.get_stream(_url)
+    metavars: [_url]
   - shape: |
-      @http.post_stream(url, headers=headers)
-    metavars: [url, headers]
+      @http.post_stream(_url, headers=_headers)
+    metavars: [_url, _headers]
   - shape: |
-      @http.put_stream(url, headers=headers)
-    metavars: [url, headers]
+      @http.put_stream(_url, headers=_headers)
+    metavars: [_url, _headers]
   - shape: |
-      conn.send_response(status, reason)
-    metavars: [conn, status, reason]
+      _conn.send_response(_status, _reason)
+    metavars: [_conn, _status, _reason]

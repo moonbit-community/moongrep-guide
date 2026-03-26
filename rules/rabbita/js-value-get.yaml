@@ -4,11 +4,11 @@ description: |
   keys, they become the first hop to dangerous JavaScript gadgets.
 patterns:
   - shape: |
-      value.get_with_string(key)
-    metavars: [value, key]
+      _value.get_with_string(_key)
+    metavars: [_value, _key]
   - shape: |
-      value.get_with_index(index)
-    metavars: [value, index]
+      _value.get_with_index(_index)
+    metavars: [_value, _index]
   - shape: |
-      value.get_with_symbol(symbol)
-    metavars: [value, symbol]
+      _value.get_with_symbol(_symbol)
+    metavars: [_value, _symbol]

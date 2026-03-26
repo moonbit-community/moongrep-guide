@@ -8,35 +8,35 @@ description: |
   request smuggling.
 patterns:
   - shape: |
-      @http.Client::new(url, headers={ "Transfer-Encoding": value })
-    metavars: [url, value]
+      @http.Client::new(_url, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _value]
   - shape: |
-      client.request(_method, path, extra_headers={ "Transfer-Encoding": value })
-    metavars: [client, _method, path, value]
+      _client.request(_method, _path, extra_headers={ "Transfer-Encoding": _value })
+    metavars: [_client, _method, _path, _value]
   - shape: |
-      client.get(path, extra_headers={ "Transfer-Encoding": value })
-    metavars: [client, path, value]
+      _client.get(_path, extra_headers={ "Transfer-Encoding": _value })
+    metavars: [_client, _path, _value]
   - shape: |
-      client.put(path, content, extra_headers={ "Transfer-Encoding": value })
-    metavars: [client, path, content, value]
+      _client.put(_path, _content, extra_headers={ "Transfer-Encoding": _value })
+    metavars: [_client, _path, _content, _value]
   - shape: |
-      client.post(path, content, extra_headers={ "Transfer-Encoding": value })
-    metavars: [client, path, content, value]
+      _client.post(_path, _content, extra_headers={ "Transfer-Encoding": _value })
+    metavars: [_client, _path, _content, _value]
   - shape: |
-      @http.get(url, headers={ "Transfer-Encoding": value })
-    metavars: [url, value]
+      @http.get(_url, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _value]
   - shape: |
-      @http.put(url, content, headers={ "Transfer-Encoding": value })
-    metavars: [url, content, value]
+      @http.put(_url, _content, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _content, _value]
   - shape: |
-      @http.post(url, content, headers={ "Transfer-Encoding": value })
-    metavars: [url, content, value]
+      @http.post(_url, _content, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _content, _value]
   - shape: |
-      @http.get_stream(url, headers={ "Transfer-Encoding": value })
-    metavars: [url, value]
+      @http.get_stream(_url, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _value]
   - shape: |
-      @http.put_stream(url, headers={ "Transfer-Encoding": value })
-    metavars: [url, value]
+      @http.put_stream(_url, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _value]
   - shape: |
-      @http.post_stream(url, headers={ "Transfer-Encoding": value })
-    metavars: [url, value]
+      @http.post_stream(_url, headers={ "Transfer-Encoding": _value })
+    metavars: [_url, _value]

@@ -7,8 +7,8 @@ patterns:
       @fs.tmpdir()
     metavars: []
   - shape: |
-      @fs.tmpdir(prefix=prefix)
-    metavars: [prefix]
+      @fs.tmpdir(prefix=_prefix)
+    metavars: [_prefix]
   - shape: |
       @fs.tmpdir(prefix~)
     metavars: []

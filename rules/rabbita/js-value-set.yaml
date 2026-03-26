@@ -5,11 +5,11 @@ description: |
   pollution.
 patterns:
   - shape: |
-      value.set_with_string(key, payload)
-    metavars: [value, key, payload]
+      _value.set_with_string(_key, _payload)
+    metavars: [_value, _key, _payload]
   - shape: |
-      value.set_with_index(index, payload)
-    metavars: [value, index, payload]
+      _value.set_with_index(_index, _payload)
+    metavars: [_value, _index, _payload]
   - shape: |
-      value.set_with_symbol(symbol, payload)
-    metavars: [value, symbol, payload]
+      _value.set_with_symbol(_symbol, _payload)
+    metavars: [_value, _symbol, _payload]

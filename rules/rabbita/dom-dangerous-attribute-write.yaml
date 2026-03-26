@@ -5,8 +5,8 @@ description: |
   HTML or script.
 patterns:
   - shape: |
-      node.set_attribute("srcdoc", html)
-    metavars: [node, html]
+      _node.set_attribute("srcdoc", _html)
+    metavars: [_node, _html]
   - shape: |
-      node.set_property("srcdoc", value)
-    metavars: [node, value]
+      _node.set_property("srcdoc", _value)
+    metavars: [_node, _value]

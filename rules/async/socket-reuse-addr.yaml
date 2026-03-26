@@ -5,5 +5,5 @@ description: |
   strong session validation.
 patterns:
   - shape: |
-      @socket.TcpServer::new(addr, reuse_addr=true)
-    metavars: [addr]
+      @socket.TcpServer::new(_addr, reuse_addr=true)
+    metavars: [_addr]

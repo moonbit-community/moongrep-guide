@@ -4,5 +4,5 @@ description: |
   unvalidated URL here triggers immediate navigation.
 patterns:
   - shape: |
-      @dom.window().load_url(url)
-    metavars: [url]
+      @dom.window().load_url(_url)
+    metavars: [_url]

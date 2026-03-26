@@ -4,8 +4,8 @@ description: |
   validation they can create `javascript:` links or phishing redirects.
 patterns:
   - shape: |
-      @html.a(href=url, text)
-    metavars: [url, text]
+      @html.a(href=_url, _text)
+    metavars: [_url, _text]
   - shape: |
-      @html.node("a", @html.Attrs::build().href(url), children)
-    metavars: [url, children]
+      @html.node("a", @html.Attrs::build().href(_url), _children)
+    metavars: [_url, _children]

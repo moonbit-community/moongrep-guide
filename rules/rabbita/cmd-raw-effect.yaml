@@ -4,5 +4,5 @@ description: |
   host capabilities behind a normal-looking Rabbita command.
 patterns:
   - shape: |
-      @cmd.raw_effect(effect)
-    metavars: [effect]
+      @cmd.raw_effect(_effect)
+    metavars: [_effect]
