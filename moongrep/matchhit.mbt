@@ -6,7 +6,6 @@ pub(all) struct MatchHit {
   description : String
   pattern_index : Int
   loc : Json
-  bindings : Json
 } derive(Eq)
 
 ///|
@@ -62,6 +61,5 @@ pub impl ToJson for MatchHit with to_json(self) {
     "description": self.description,
     "pattern_index": self.pattern_index,
     "loc": self.loc,
-    "bindings": self.bindings,
   }
 }

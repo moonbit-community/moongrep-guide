@@ -67,7 +67,7 @@ test "emit bundle source generates one matcher function per rule" {
 }
 
 ///|
-test "emit matcher source exposes first metavar bindings without guard" {
+test "emit matcher source does not capture metavars in match hits" {
   let source = emit_matcher_source([
     {
       rule_id: "example/test",
@@ -84,8 +84,9 @@ test "emit matcher source exposes first metavar bindings without guard" {
   ])
   assert_true(source.contains("\"self\": node"))
   assert_true(source.contains("\"value\": html"))
-  assert_true(source.contains("\"node\": node"))
-  assert_true(source.contains("\"html\": html"))
+  assert_false(source.contains("\"node\": node"))
+  assert_false(source.contains("\"html\": html"))
+  assert_false(source.contains("bindings:"))
   assert_false(source.contains("meta_node_1"))
   assert_false(source.contains("meta_html_1"))
 }
@@ -140,6 +141,7 @@ test "emit matcher source checks duplicate equality before guard" {
   assert_true(
     source.contains("if left == meta_left_2 {\n          if left != pair {"),
   )
-  assert_true(source.contains("\"pair\": pair"))
-  assert_true(source.contains("\"left\": left"))
+  assert_false(source.contains("\"pair\": pair"))
+  assert_false(source.contains("\"left\": left"))
+  assert_false(source.contains("bindings:"))
 }

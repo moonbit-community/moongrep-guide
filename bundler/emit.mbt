@@ -292,23 +292,8 @@ fn emit_push_source(
   pattern_index : Int,
   ctx : PatternEmitContext,
 ) -> String {
-  let bindings_expr = emit_bindings_expr(ctx)
-  "hits.push(MatchHit::{ file, rule_id: \{emit_string_literal(rule.rule_id)}, package_name: \{emit_string_literal(rule.package_name)}, description: \{emit_string_literal(rule.description)}, pattern_index: \{pattern_index}, loc, bindings: \{bindings_expr} })"
-}
-
-///|
-fn emit_bindings_expr(ctx : PatternEmitContext) -> String {
-  if ctx.bindings.is_empty() {
-    return "Json::object(Map::of([]))"
-  }
-  let entries : Array[String] = []
-  for binding in ctx.bindings {
-    entries.push(
-      "\{emit_string_literal(binding.meta_name)}: \{binding.bind_names[0]}",
-    )
-  }
-  let joined_entries = entries.join(", ")
-  "{ \{joined_entries} }"
+  ignore(ctx)
+  "hits.push(MatchHit::{ file, rule_id: \{emit_string_literal(rule.rule_id)}, package_name: \{emit_string_literal(rule.package_name)}, description: \{emit_string_literal(rule.description)}, pattern_index: \{pattern_index}, loc })"
 }
 
 ///|

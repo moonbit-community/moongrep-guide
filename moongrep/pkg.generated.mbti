@@ -16,7 +16,6 @@ pub(all) struct MatchHit {
   description : String
   pattern_index : Int
   loc : Json
-  bindings : Json
 }
 pub impl Eq for MatchHit
 pub impl Show for MatchHit

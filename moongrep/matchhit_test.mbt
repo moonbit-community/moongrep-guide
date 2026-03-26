@@ -11,7 +11,6 @@ test "show match hit prints file with decoded location" {
       "start": { "line": 2, "column": 10 },
       "end": { "line": 2, "column": 24 },
     },
-    bindings: { "value": "ignored" },
   }
   let expected =
     #|sample.mbt:2:10-2:24
