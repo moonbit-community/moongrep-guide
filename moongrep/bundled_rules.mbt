@@ -4,747 +4,8393 @@
 // bundled rule: rabbita/nav-load
 fn rabbita_nav_load(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
   match ast {
-      // rule: rabbita/nav-load pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "load", "pkg": "nav", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/nav-load", package_name: "moonbit-community/rabbita/nav", description: "`@nav.load(...)` performs browser navigation. Untrusted URLs can become\nopen redirects or even `javascript:` execution.\n", pattern_index: 0, loc, bindings: { "_url": _url } })
-        true
-      }
+    // rule: rabbita/nav-load pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "load", "pkg": "nav", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/nav-load",
+        package_name: "moonbit-community/rabbita/nav",
+        description: "`@nav.load(...)` performs browser navigation. Untrusted URLs can become\nopen redirects or even `javascript:` execution.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/js-require
-fn rabbita_js_require(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_js_require(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/js-require pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _module_name, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "keys", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Array", "children": { "exprs": { "kind": "Expr::Array::ExprList", "children": [_export_name], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "require", "pkg": "js", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-require", package_name: "moonbit-community/rabbita/js", description: "Passing untrusted module or export names into `@js.require(...)` exposes raw\nNode or host module loading capability.\n", pattern_index: 0, loc, bindings: { "_module_name": _module_name, "_export_name": _export_name } })
-        true
-      }
+    // rule: rabbita/js-require pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _module_name,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "keys", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Array",
+                  "children": {
+                    "exprs": {
+                      "kind": "Expr::Array::ExprList",
+                      "children": [_export_name],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "require", "pkg": "js", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-require",
+        package_name: "moonbit-community/rabbita/js",
+        description: "Passing untrusted module or export names into `@js.require(...)` exposes raw\nNode or host module loading capability.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/svg-script
-fn rabbita_svg_script(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_svg_script(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/svg-script pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Array", "children": { "exprs": { "kind": "Expr::Array::ExprList", "children": [{ "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _script, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "text", "pkg": "svg", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "script", "pkg": "svg", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/svg-script", package_name: "moonbit-community/rabbita/svg", description: "SVG `<script>` content is active script. Treat any untrusted payload passed\ninto `@svg.script(...)` as code execution.\n", pattern_index: 0, loc, bindings: { "_script": _script } })
-        true
-      }
+    // rule: rabbita/svg-script pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Array",
+                  "children": {
+                    "exprs": {
+                      "kind": "Expr::Array::ExprList",
+                      "children": [
+                        {
+                          "kind": "Expr::Apply",
+                          "children": {
+                            "args": {
+                              "kind": "Expr::Apply::ArgumentList",
+                              "children": [
+                                {
+                                  "kind": "Argument",
+                                  "children": {
+                                    "kind": {
+                                      "kind": "ArgumentKind::Positional",
+                                      "children": { .. },
+                                      ..
+                                    },
+                                    "value": _script,
+                                    ..
+                                  },
+                                  ..
+                                },
+                              ],
+                              ..
+                            },
+                            "attr": {
+                              "kind": "ApplyAttr::NoAttr",
+                              "children": { .. },
+                              ..
+                            },
+                            "func": {
+                              "kind": "Expr::Ident",
+                              "children": {
+                                "id": {
+                                  "kind": "Var",
+                                  "children": {
+                                    "name": {
+                                      "kind": "LongIdent::Dot",
+                                      "children": {
+                                        "id": "text",
+                                        "pkg": "svg",
+                                        ..
+                                      },
+                                      ..
+                                    },
+                                    ..
+                                  },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "script", "pkg": "svg", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/svg-script",
+        package_name: "moonbit-community/rabbita/svg",
+        description: "SVG `<script>` content is active script. Treat any untrusted payload passed\ninto `@svg.script(...)` as code execution.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/js-value-get
-fn rabbita_js_value_get(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_js_value_get(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/js-value-get pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _key, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "get_with_string", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-get", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n", pattern_index: 0, loc, bindings: { "_key": _key, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-get pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _index, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "get_with_index", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-get", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n", pattern_index: 1, loc, bindings: { "_index": _index, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-get pattern 2
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _symbol, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "get_with_symbol", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-get", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n", pattern_index: 2, loc, bindings: { "_symbol": _symbol, "_value": _value } })
-        true
-      }
+    // rule: rabbita/js-value-get pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _key,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "get_with_string", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-get",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-get pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _index,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "get_with_index", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-get",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-get pattern 2
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _symbol,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "get_with_symbol", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-get",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` getters expose arbitrary property reads. With untrusted\nkeys, they become the first hop to dangerous JavaScript gadgets.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/js-value-new
-fn rabbita_js_value_new(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_js_value_new(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/js-value-new pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _ctor, "method_name": { "kind": "Label", "children": { "name": "new", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-new", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n", pattern_index: 0, loc, bindings: { "_args": _args, "_ctor": _ctor } })
-        true
-      }
-      // rule: rabbita/js-value-new pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _name, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "new_with_string", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-new", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n", pattern_index: 1, loc, bindings: { "_name": _name, "_args": _args, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-new pattern 2
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _index, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "new_with_index", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-new", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n", pattern_index: 2, loc, bindings: { "_index": _index, "_args": _args, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-new pattern 3
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _symbol, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "new_with_symbol", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-new", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n", pattern_index: 3, loc, bindings: { "_symbol": _symbol, "_args": _args, "_value": _value } })
-        true
-      }
+    // rule: rabbita/js-value-new pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _ctor,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "new", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-new",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-new pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _name,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "new_with_string", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-new",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-new pattern 2
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _index,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "new_with_index", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-new",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-new pattern 3
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _symbol,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "new_with_symbol", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-new",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` constructor helpers allow arbitrary runtime object creation.\nWhen the constructor or payload is attacker-controlled, they can instantiate\ndangerous builtins such as `Function`.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/js-value-set
-fn rabbita_js_value_set(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_js_value_set(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/js-value-set pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _key, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _payload, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "set_with_string", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-set", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n", pattern_index: 0, loc, bindings: { "_key": _key, "_payload": _payload, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-set pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _index, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _payload, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "set_with_index", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-set", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n", pattern_index: 1, loc, bindings: { "_index": _index, "_payload": _payload, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-set pattern 2
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _symbol, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _payload, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "set_with_symbol", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-set", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n", pattern_index: 2, loc, bindings: { "_symbol": _symbol, "_payload": _payload, "_value": _value } })
-        true
-      }
+    // rule: rabbita/js-value-set pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _key,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _payload,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "set_with_string", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-set",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-set pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _index,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _payload,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "set_with_index", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-set",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-set pattern 2
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _symbol,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _payload,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "set_with_symbol", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-set",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` setters perform arbitrary property writes. Untrusted keys\nor values can mutate globals, DOM objects, or even trigger prototype\npollution.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/svg-href-url
-fn rabbita_svg_href_url(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_svg_href_url(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/svg-href-url pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "a", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "svg", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "href", .. }, .. }, "return_self": false, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "node", "pkg": "svg", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/svg-href-url", package_name: "moonbit-community/rabbita/svg", description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_children": _children } })
-        true
-      }
-      // rule: rabbita/svg-href-url pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "href", .. }, .. }, .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "x", .. }, .. }, .. }, .. }, "value": _x, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "y", .. }, .. }, .. }, .. }, "value": _y, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "image", "pkg": "svg", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/svg-href-url", package_name: "moonbit-community/rabbita/svg", description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n", pattern_index: 1, loc, bindings: { "_url": _url, "_x": _x, "_y": _y } })
-        true
-      }
-      // rule: rabbita/svg-href-url pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "href", .. }, .. }, .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "x", .. }, .. }, .. }, .. }, "value": _x, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "y", .. }, .. }, .. }, .. }, "value": _y, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "svg_use", "pkg": "svg", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/svg-href-url", package_name: "moonbit-community/rabbita/svg", description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n", pattern_index: 2, loc, bindings: { "_url": _url, "_x": _x, "_y": _y } })
-        true
-      }
+    // rule: rabbita/svg-href-url pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "a", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::DotApply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::DotApply::ArgList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _url,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "self": {
+                      "kind": "Expr::Apply",
+                      "children": {
+                        "args": {
+                          "kind": "Expr::Apply::ArgumentList",
+                          "children": [],
+                          ..
+                        },
+                        "attr": {
+                          "kind": "ApplyAttr::NoAttr",
+                          "children": { .. },
+                          ..
+                        },
+                        "func": {
+                          "kind": "Expr::Method",
+                          "children": {
+                            "type_name": {
+                              "kind": "TypeName",
+                              "children": {
+                                "name": {
+                                  "kind": "LongIdent::Dot",
+                                  "children": {
+                                    "id": "Attrs",
+                                    "pkg": "svg",
+                                    ..
+                                  },
+                                  ..
+                                },
+                                "is_object": false,
+                                ..
+                              },
+                              ..
+                            },
+                            "method_name": {
+                              "kind": "Label",
+                              "children": { "name": "build", .. },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    "method_name": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    "return_self": false,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "node", "pkg": "svg", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/svg-href-url",
+        package_name: "moonbit-community/rabbita/svg",
+        description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/svg-href-url pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "x", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _x,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "y", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _y,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "image", "pkg": "svg", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/svg-href-url",
+        package_name: "moonbit-community/rabbita/svg",
+        description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/svg-href-url pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "x", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _x,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "y", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _y,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "svg_use", "pkg": "svg", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/svg-href-url",
+        package_name: "moonbit-community/rabbita/svg",
+        description: "These SVG APIs accept raw URLs for navigation or external resource loading.\nUntrusted values can trigger dangerous links, tracking beacons, or cross-site\nrequests.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/html-href-url
-fn rabbita_html_href_url(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_html_href_url(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/html-href-url pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "href", .. }, .. }, .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _text, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "a", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-href-url", package_name: "moonbit-community/rabbita/html", description: "These HTML link builders accept raw `href` values. Without scheme and domain\nvalidation they can create `javascript:` links or phishing redirects.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_text": _text } })
-        true
-      }
-      // rule: rabbita/html-href-url pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "a", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "html", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "href", .. }, .. }, "return_self": false, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "node", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-href-url", package_name: "moonbit-community/rabbita/html", description: "These HTML link builders accept raw `href` values. Without scheme and domain\nvalidation they can create `javascript:` links or phishing redirects.\n", pattern_index: 1, loc, bindings: { "_url": _url, "_children": _children } })
-        true
-      }
+    // rule: rabbita/html-href-url pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _text,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "a", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-href-url",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML link builders accept raw `href` values. Without scheme and domain\nvalidation they can create `javascript:` links or phishing redirects.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-href-url pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "a", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::DotApply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::DotApply::ArgList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _url,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "self": {
+                      "kind": "Expr::Apply",
+                      "children": {
+                        "args": {
+                          "kind": "Expr::Apply::ArgumentList",
+                          "children": [],
+                          ..
+                        },
+                        "attr": {
+                          "kind": "ApplyAttr::NoAttr",
+                          "children": { .. },
+                          ..
+                        },
+                        "func": {
+                          "kind": "Expr::Method",
+                          "children": {
+                            "type_name": {
+                              "kind": "TypeName",
+                              "children": {
+                                "name": {
+                                  "kind": "LongIdent::Dot",
+                                  "children": {
+                                    "id": "Attrs",
+                                    "pkg": "html",
+                                    ..
+                                  },
+                                  ..
+                                },
+                                "is_object": false,
+                                ..
+                              },
+                              ..
+                            },
+                            "method_name": {
+                              "kind": "Label",
+                              "children": { "name": "build", .. },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    "method_name": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    "return_self": false,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "node", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-href-url",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML link builders accept raw `href` values. Without scheme and domain\nvalidation they can create `javascript:` links or phishing redirects.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/cmd-raw-effect
-fn rabbita_cmd_raw_effect(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_cmd_raw_effect(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/cmd-raw-effect pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _effect, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "raw_effect", "pkg": "cmd", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/cmd-raw-effect", package_name: "moonbit-community/rabbita/cmd", description: "`@cmd.raw_effect(...)` is a low-level escape hatch that can wrap arbitrary\nhost capabilities behind a normal-looking Rabbita command.\n", pattern_index: 0, loc, bindings: { "_effect": _effect } })
-        true
-      }
+    // rule: rabbita/cmd-raw-effect pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _effect,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "raw_effect", "pkg": "cmd", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/cmd-raw-effect",
+        package_name: "moonbit-community/rabbita/cmd",
+        description: "`@cmd.raw_effect(...)` is a low-level escape hatch that can wrap arbitrary\nhost capabilities behind a normal-looking Rabbita command.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/js-value-apply
-fn rabbita_js_value_apply(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_js_value_apply(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/js-value-apply pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "apply", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-apply", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n", pattern_index: 0, loc, bindings: { "_args": _args, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-apply pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _name, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "apply_with_string", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-apply", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n", pattern_index: 1, loc, bindings: { "_name": _name, "_args": _args, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-apply pattern 2
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _index, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "apply_with_index", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-apply", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n", pattern_index: 2, loc, bindings: { "_index": _index, "_args": _args, "_value": _value } })
-        true
-      }
-      // rule: rabbita/js-value-apply pattern 3
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _symbol, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _value, "method_name": { "kind": "Label", "children": { "name": "apply_with_symbol", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-value-apply", package_name: "moonbit-community/rabbita/js", description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n", pattern_index: 3, loc, bindings: { "_symbol": _symbol, "_args": _args, "_value": _value } })
-        true
-      }
+    // rule: rabbita/js-value-apply pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "apply", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-apply",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-apply pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _name,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "apply_with_string", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-apply",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-apply pattern 2
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _index,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "apply_with_index", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-apply",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/js-value-apply pattern 3
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _symbol,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _value,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "apply_with_symbol", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-value-apply",
+        package_name: "moonbit-community/rabbita/js",
+        description: "These `js.Value` call helpers perform arbitrary JavaScript invocation. If the\ncallee or method name is user-controlled, they can turn into script\nexecution, navigation, or network requests.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/svg-inner-html
-fn rabbita_svg_inner_html(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_svg_inner_html(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/svg-inner-html pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _svg, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "svg", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "inner_html", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/svg-inner-html", package_name: "moonbit-community/rabbita/svg", description: "Building SVG attrs with `inner_html(...)` injects raw markup and can execute\nactive content when the SVG string is untrusted.\n", pattern_index: 0, loc, bindings: { "_svg": _svg } })
-        true
-      }
+    // rule: rabbita/svg-inner-html pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _svg,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": {
+          "kind": "Expr::Apply",
+          "children": {
+            "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. },
+            "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+            "func": {
+              "kind": "Expr::Method",
+              "children": {
+                "type_name": {
+                  "kind": "TypeName",
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Dot",
+                      "children": { "id": "Attrs", "pkg": "svg", .. },
+                      ..
+                    },
+                    "is_object": false,
+                    ..
+                  },
+                  ..
+                },
+                "method_name": {
+                  "kind": "Label",
+                  "children": { "name": "build", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "inner_html", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/svg-inner-html",
+        package_name: "moonbit-community/rabbita/svg",
+        description: "Building SVG attrs with `inner_html(...)` injects raw markup and can execute\nactive content when the SVG string is untrusted.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/io-unbounded-read
-fn async_io_unbounded_read(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_io_unbounded_read(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/io-unbounded-read pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _reader, "method_name": { "kind": "Label", "children": { "name": "read_all", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/io-unbounded-read", package_name: "moonbitlang/async/io", description: "These reader APIs keep buffering until EOF or until a delimiter appears. On\nuntrusted inputs they can grow memory without a configured upper bound.\n", pattern_index: 0, loc, bindings: { "_reader": _reader } })
-        true
-      }
-      // rule: async/io-unbounded-read pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _delim, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _reader, "method_name": { "kind": "Label", "children": { "name": "read_until", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/io-unbounded-read", package_name: "moonbitlang/async/io", description: "These reader APIs keep buffering until EOF or until a delimiter appears. On\nuntrusted inputs they can grow memory without a configured upper bound.\n", pattern_index: 1, loc, bindings: { "_delim": _delim, "_reader": _reader } })
-        true
-      }
+    // rule: async/io-unbounded-read pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _reader,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "read_all", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/io-unbounded-read",
+        package_name: "moonbitlang/async/io",
+        description: "These reader APIs keep buffering until EOF or until a delimiter appears. On\nuntrusted inputs they can grow memory without a configured upper bound.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/io-unbounded-read pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _delim,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _reader,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "read_until", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/io-unbounded-read",
+        package_name: "moonbitlang/async/io",
+        description: "These reader APIs keep buffering until EOF or until a delimiter appears. On\nuntrusted inputs they can grow memory without a configured upper bound.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/socket-reuse-addr
-fn async_socket_reuse_addr(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_socket_reuse_addr(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/socket-reuse-addr pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _addr, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "reuse_addr", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "TcpServer", "pkg": "socket", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "new", .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/socket-reuse-addr", package_name: "moonbitlang/async/socket", description: "Enabling `reuse_addr=true` can cause a restarted listener to receive traffic\nleft behind by a previous process, which is unsafe for protocols without\nstrong session validation.\n", pattern_index: 0, loc, bindings: { "_addr": _addr } })
-        true
-      }
+    // rule: async/socket-reuse-addr pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _addr,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "reuse_addr", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Method",
+          "children": {
+            "type_name": {
+              "kind": "TypeName",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "TcpServer", "pkg": "socket", .. },
+                  ..
+                },
+                "is_object": false,
+                ..
+              },
+              ..
+            },
+            "method_name": {
+              "kind": "Label",
+              "children": { "name": "new", .. },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/socket-reuse-addr",
+        package_name: "moonbitlang/async/socket",
+        description: "Enabling `reuse_addr=true` can cause a restarted listener to receive traffic\nleft behind by a previous process, which is unsafe for protocols without\nstrong session validation.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/html-inner-html
-fn rabbita_html_inner_html(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_html_inner_html(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/html-inner-html pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _html, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "html", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "inner_html", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-inner-html", package_name: "moonbit-community/rabbita/html", description: "Building HTML attrs with `inner_html(...)` bypasses normal escaping and turns\nthe provided string into raw DOM content.\n", pattern_index: 0, loc, bindings: { "_html": _html } })
-        true
-      }
+    // rule: rabbita/html-inner-html pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _html,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": {
+          "kind": "Expr::Apply",
+          "children": {
+            "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. },
+            "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+            "func": {
+              "kind": "Expr::Method",
+              "children": {
+                "type_name": {
+                  "kind": "TypeName",
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Dot",
+                      "children": { "id": "Attrs", "pkg": "html", .. },
+                      ..
+                    },
+                    "is_object": false,
+                    ..
+                  },
+                  ..
+                },
+                "method_name": {
+                  "kind": "Label",
+                  "children": { "name": "build", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "inner_html", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-inner-html",
+        package_name: "moonbit-community/rabbita/html",
+        description: "Building HTML attrs with `inner_html(...)` bypasses normal escaping and turns\nthe provided string into raw DOM content.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/svg-target-blank
-fn rabbita_svg_target_blank(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_svg_target_blank(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/svg-target-blank pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "a", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "_blank", .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "svg", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "href", .. }, .. }, "return_self": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "target", .. }, .. }, "return_self": false, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "node", "pkg": "svg", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/svg-target-blank", package_name: "moonbit-community/rabbita/svg", description: "SVG links opened with `target=\"_blank\"` need the same `noopener noreferrer`\nprotection as HTML links to avoid reverse tabnabbing.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_children": _children } })
-        true
-      }
+    // rule: rabbita/svg-target-blank pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "a", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::DotApply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::DotApply::ArgList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": {
+                              "kind": "Expr::Constant",
+                              "children": {
+                                "constant": {
+                                  "kind": "Constant::String",
+                                  "children": { "value": "_blank", .. },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "self": {
+                      "kind": "Expr::DotApply",
+                      "children": {
+                        "args": {
+                          "kind": "Expr::DotApply::ArgList",
+                          "children": [
+                            {
+                              "kind": "Argument",
+                              "children": {
+                                "kind": {
+                                  "kind": "ArgumentKind::Positional",
+                                  "children": { .. },
+                                  ..
+                                },
+                                "value": _url,
+                                ..
+                              },
+                              ..
+                            },
+                          ],
+                          ..
+                        },
+                        "attr": {
+                          "kind": "ApplyAttr::NoAttr",
+                          "children": { .. },
+                          ..
+                        },
+                        "self": {
+                          "kind": "Expr::Apply",
+                          "children": {
+                            "args": {
+                              "kind": "Expr::Apply::ArgumentList",
+                              "children": [],
+                              ..
+                            },
+                            "attr": {
+                              "kind": "ApplyAttr::NoAttr",
+                              "children": { .. },
+                              ..
+                            },
+                            "func": {
+                              "kind": "Expr::Method",
+                              "children": {
+                                "type_name": {
+                                  "kind": "TypeName",
+                                  "children": {
+                                    "name": {
+                                      "kind": "LongIdent::Dot",
+                                      "children": {
+                                        "id": "Attrs",
+                                        "pkg": "svg",
+                                        ..
+                                      },
+                                      ..
+                                    },
+                                    "is_object": false,
+                                    ..
+                                  },
+                                  ..
+                                },
+                                "method_name": {
+                                  "kind": "Label",
+                                  "children": { "name": "build", .. },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        "method_name": {
+                          "kind": "Label",
+                          "children": { "name": "href", .. },
+                          ..
+                        },
+                        "return_self": false,
+                        ..
+                      },
+                      ..
+                    },
+                    "method_name": {
+                      "kind": "Label",
+                      "children": { "name": "target", .. },
+                      ..
+                    },
+                    "return_self": false,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "node", "pkg": "svg", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/svg-target-blank",
+        package_name: "moonbit-community/rabbita/svg",
+        description: "SVG links opened with `target=\"_blank\"` need the same `noopener noreferrer`\nprotection as HTML links to avoid reverse tabnabbing.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/http-crlf-injection
-fn async_http_crlf_injection(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_http_crlf_injection(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/http-crlf-injection pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": _headers, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Client", "pkg": "http", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "new", .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_headers": _headers } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _method, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _client, "method_name": { "kind": "Label", "children": { "name": "request", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 1, loc, bindings: { "_method": _method, "_path": _path, "_client": _client } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "get", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 2, loc, bindings: { "_url": _url } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 3
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "post", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 3, loc, bindings: { "_url": _url, "_content": _content } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 4
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "put", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 4, loc, bindings: { "_url": _url, "_content": _content } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 5
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "get_stream", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 5, loc, bindings: { "_url": _url } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 6
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": _headers, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "post_stream", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 6, loc, bindings: { "_url": _url, "_headers": _headers } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 7
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": _headers, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "put_stream", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 7, loc, bindings: { "_url": _url, "_headers": _headers } })
-        true
-      }
-      // rule: async/http-crlf-injection pattern 8
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _status, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _reason, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _conn, "method_name": { "kind": "Label", "children": { "name": "send_response", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-crlf-injection", package_name: "moonbitlang/async/http", description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n", pattern_index: 8, loc, bindings: { "_status": _status, "_reason": _reason, "_conn": _conn } })
-        true
-      }
+    // rule: async/http-crlf-injection pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _headers,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Method",
+          "children": {
+            "type_name": {
+              "kind": "TypeName",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "Client", "pkg": "http", .. },
+                  ..
+                },
+                "is_object": false,
+                ..
+              },
+              ..
+            },
+            "method_name": {
+              "kind": "Label",
+              "children": { "name": "new", .. },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _method,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _client,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "request", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "get", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 3
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "post", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 4
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "put", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 4,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 5
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "get_stream", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 5,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 6
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _headers,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "post_stream", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 6,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 7
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _headers,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "put_stream", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 7,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-crlf-injection pattern 8
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _status,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _reason,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _conn,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "send_response", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-crlf-injection",
+        package_name: "moonbitlang/async/http",
+        description: "Passing user-controlled request paths, URLs, header maps, or response\nreasons into these HTTP APIs can become header injection, request smuggling,\nor response splitting if the value contains `\\r` or `\\n`.\n",
+        pattern_index: 8,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/html-target-blank
-fn rabbita_html_target_blank(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_html_target_blank(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/html-target-blank pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "href", .. }, .. }, .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "target", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constr", "children": { "constr": { "kind": "Constructor", "children": { "name": { "kind": "ConstrName", "children": { "name": "Blank", .. }, .. }, "extra_info": { "kind": "ConstructorExtraInfo::NoExtraInfo", "children": { .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _text, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "a", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-target-blank", package_name: "moonbit-community/rabbita/html", description: "Opening untrusted URLs in a new tab without also setting\n`rel=\"noopener noreferrer\"` allows reverse tabnabbing via `window.opener`.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_text": _text } })
-        true
-      }
-      // rule: rabbita/html-target-blank pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "a", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constr", "children": { "constr": { "kind": "Constructor", "children": { "name": { "kind": "ConstrName", "children": { "name": "Blank", .. }, .. }, "extra_info": { "kind": "ConstructorExtraInfo::NoExtraInfo", "children": { .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "html", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "href", .. }, .. }, "return_self": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "target", .. }, .. }, "return_self": false, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "node", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-target-blank", package_name: "moonbit-community/rabbita/html", description: "Opening untrusted URLs in a new tab without also setting\n`rel=\"noopener noreferrer\"` allows reverse tabnabbing via `window.opener`.\n", pattern_index: 1, loc, bindings: { "_url": _url, "_children": _children } })
-        true
-      }
+    // rule: rabbita/html-target-blank pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "target", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constr",
+                  "children": {
+                    "constr": {
+                      "kind": "Constructor",
+                      "children": {
+                        "name": {
+                          "kind": "ConstrName",
+                          "children": { "name": "Blank", .. },
+                          ..
+                        },
+                        "extra_info": {
+                          "kind": "ConstructorExtraInfo::NoExtraInfo",
+                          "children": { .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _text,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "a", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-target-blank",
+        package_name: "moonbit-community/rabbita/html",
+        description: "Opening untrusted URLs in a new tab without also setting\n`rel=\"noopener noreferrer\"` allows reverse tabnabbing via `window.opener`.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-target-blank pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "a", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::DotApply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::DotApply::ArgList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": {
+                              "kind": "Expr::Constr",
+                              "children": {
+                                "constr": {
+                                  "kind": "Constructor",
+                                  "children": {
+                                    "name": {
+                                      "kind": "ConstrName",
+                                      "children": { "name": "Blank", .. },
+                                      ..
+                                    },
+                                    "extra_info": {
+                                      "kind": "ConstructorExtraInfo::NoExtraInfo",
+                                      "children": { .. },
+                                      ..
+                                    },
+                                    ..
+                                  },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "self": {
+                      "kind": "Expr::DotApply",
+                      "children": {
+                        "args": {
+                          "kind": "Expr::DotApply::ArgList",
+                          "children": [
+                            {
+                              "kind": "Argument",
+                              "children": {
+                                "kind": {
+                                  "kind": "ArgumentKind::Positional",
+                                  "children": { .. },
+                                  ..
+                                },
+                                "value": _url,
+                                ..
+                              },
+                              ..
+                            },
+                          ],
+                          ..
+                        },
+                        "attr": {
+                          "kind": "ApplyAttr::NoAttr",
+                          "children": { .. },
+                          ..
+                        },
+                        "self": {
+                          "kind": "Expr::Apply",
+                          "children": {
+                            "args": {
+                              "kind": "Expr::Apply::ArgumentList",
+                              "children": [],
+                              ..
+                            },
+                            "attr": {
+                              "kind": "ApplyAttr::NoAttr",
+                              "children": { .. },
+                              ..
+                            },
+                            "func": {
+                              "kind": "Expr::Method",
+                              "children": {
+                                "type_name": {
+                                  "kind": "TypeName",
+                                  "children": {
+                                    "name": {
+                                      "kind": "LongIdent::Dot",
+                                      "children": {
+                                        "id": "Attrs",
+                                        "pkg": "html",
+                                        ..
+                                      },
+                                      ..
+                                    },
+                                    "is_object": false,
+                                    ..
+                                  },
+                                  ..
+                                },
+                                "method_name": {
+                                  "kind": "Label",
+                                  "children": { "name": "build", .. },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        "method_name": {
+                          "kind": "Label",
+                          "children": { "name": "href", .. },
+                          ..
+                        },
+                        "return_self": false,
+                        ..
+                      },
+                      ..
+                    },
+                    "method_name": {
+                      "kind": "Label",
+                      "children": { "name": "target", .. },
+                      ..
+                    },
+                    "return_self": false,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "node", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-target-blank",
+        package_name: "moonbit-community/rabbita/html",
+        description: "Opening untrusted URLs in a new tab without also setting\n`rel=\"noopener noreferrer\"` allows reverse tabnabbing via `window.opener`.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/http-cl-te-ambiguity
-fn async_http_cl_te_ambiguity(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_http_cl_te_ambiguity(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/http-cl-te-ambiguity pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _conn, "method_name": { "kind": "Label", "children": { "name": "read_request", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-cl-te-ambiguity", package_name: "moonbitlang/async/http", description: "These HTTP parser entrypoints accept messages where `Content-Length` and\n`Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity\nwhen a proxy and endpoint disagree on framing.\n", pattern_index: 0, loc, bindings: { "_conn": _conn } })
-        true
-      }
-      // rule: async/http-cl-te-ambiguity pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _client, "method_name": { "kind": "Label", "children": { "name": "end_request", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-cl-te-ambiguity", package_name: "moonbitlang/async/http", description: "These HTTP parser entrypoints accept messages where `Content-Length` and\n`Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity\nwhen a proxy and endpoint disagree on framing.\n", pattern_index: 1, loc, bindings: { "_client": _client } })
-        true
-      }
+    // rule: async/http-cl-te-ambiguity pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _conn,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "read_request", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-cl-te-ambiguity",
+        package_name: "moonbitlang/async/http",
+        description: "These HTTP parser entrypoints accept messages where `Content-Length` and\n`Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity\nwhen a proxy and endpoint disagree on framing.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-cl-te-ambiguity pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _client,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "end_request", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-cl-te-ambiguity",
+        package_name: "moonbitlang/async/http",
+        description: "These HTTP parser entrypoints accept messages where `Content-Length` and\n`Transfer-Encoding` may coexist, which can create CL/TE or TE/CL ambiguity\nwhen a proxy and endpoint disagree on framing.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/dom-set-inner-html
-fn rabbita_dom_set_inner_html(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_dom_set_inner_html(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/dom-set-inner-html pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _html, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _node, "method_name": { "kind": "Label", "children": { "name": "set_inner_html", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/dom-set-inner-html", package_name: "moonbit-community/rabbita/dom", description: "Writing untrusted HTML into `set_inner_html(...)` is a direct DOM XSS sink.\n", pattern_index: 0, loc, bindings: { "_html": _html, "_node": _node } })
-        true
-      }
+    // rule: rabbita/dom-set-inner-html pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _html,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _node,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "set_inner_html", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/dom-set-inner-html",
+        package_name: "moonbit-community/rabbita/dom",
+        description: "Writing untrusted HTML into `set_inner_html(...)` is a direct DOM XSS sink.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/js-global-this-get
-fn rabbita_js_global_this_get(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_js_global_this_get(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/js-global-this-get pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _name, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "globalThis", "pkg": "js", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "get_with_string", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/js-global-this-get", package_name: "moonbit-community/rabbita/js", description: "Looking up untrusted names from `@js.globalThis` can hand attackers direct\naccess to dangerous globals such as `eval`, `Function`, `open`, or `fetch`.\n", pattern_index: 0, loc, bindings: { "_name": _name } })
-        true
-      }
+    // rule: rabbita/js-global-this-get pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _name,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "globalThis", "pkg": "js", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "get_with_string", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/js-global-this-get",
+        package_name: "moonbit-community/rabbita/js",
+        description: "Looking up untrusted names from `@js.globalThis` can hand attackers direct\naccess to dangerous globals such as `eval`, `Function`, `open`, or `fetch`.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/dom-window-load-url
-fn rabbita_dom_window_load_url(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_dom_window_load_url(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/dom-window-load-url pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "window", "pkg": "dom", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "load_url", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/dom-window-load-url", package_name: "moonbit-community/rabbita/dom", description: "`load_url(...)` writes directly to `window.location.href`. Passing an\nunvalidated URL here triggers immediate navigation.\n", pattern_index: 0, loc, bindings: { "_url": _url } })
-        true
-      }
+    // rule: rabbita/dom-window-load-url pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": {
+          "kind": "Expr::Apply",
+          "children": {
+            "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. },
+            "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+            "func": {
+              "kind": "Expr::Ident",
+              "children": {
+                "id": {
+                  "kind": "Var",
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Dot",
+                      "children": { "id": "window", "pkg": "dom", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "load_url", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/dom-window-load-url",
+        package_name: "moonbit-community/rabbita/dom",
+        description: "`load_url(...)` writes directly to `window.location.href`. Passing an\nunvalidated URL here triggers immediate navigation.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/html-active-content
-fn rabbita_html_active_content(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_html_active_content(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/html-active-content pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "src", .. }, .. }, .. }, .. }, "value": _src, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "script", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 0, loc, bindings: { "_src": _src, "_children": _children } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::LabelledPun", "children": { "value": { "kind": "Label", "children": { "name": "src", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Ident", "children": { "value": "src", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "script", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 1, loc, bindings: { "_children": _children } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 2
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _html, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "html", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "srcdoc", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 2, loc, bindings: { "_html": _html } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 3
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "src", .. }, .. }, .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "iframe", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 3, loc, bindings: { "_url": _url } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 4
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "src", .. }, .. }, .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "fencedframe", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 4, loc, bindings: { "_url": _url } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 5
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "attrs", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _mime, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "html", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "data", .. }, .. }, "return_self": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "type_", .. }, .. }, "return_self": false, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _children, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "object", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 5, loc, bindings: { "_mime": _mime, "_url": _url, "_children": _children } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 6
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "attrs", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _mime, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::DotApply", "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Attrs", "pkg": "html", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "build", .. }, .. }, .. }, .. }, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "src", .. }, .. }, "return_self": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "type_", .. }, .. }, "return_self": false, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "embed", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 6, loc, bindings: { "_mime": _mime, "_url": _url } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 7
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "href", .. }, .. }, .. }, .. }, "value": _base, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "base", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 7, loc, bindings: { "_base": _base } })
-        true
-      }
-      // rule: rabbita/html-active-content pattern 8
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "http_equiv", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "refresh", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "content", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Infix", "children": { "op": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Ident", "children": { "value": "+", .. }, .. }, .. }, .. }, "lhs": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "0;url=", .. }, .. }, .. }, .. }, "rhs": _url, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "meta", "pkg": "html", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/html-active-content", package_name: "moonbit-community/rabbita/html", description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n", pattern_index: 8, loc, bindings: { "_url": _url } })
-        true
-      }
+    // rule: rabbita/html-active-content pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "src", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _src,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "script", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::LabelledPun",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "src", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Ident",
+                  "children": {
+                    "id": {
+                      "kind": "Var",
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "children": { "value": "src", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "script", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 2
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _html,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": {
+          "kind": "Expr::Apply",
+          "children": {
+            "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. },
+            "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+            "func": {
+              "kind": "Expr::Method",
+              "children": {
+                "type_name": {
+                  "kind": "TypeName",
+                  "children": {
+                    "name": {
+                      "kind": "LongIdent::Dot",
+                      "children": { "id": "Attrs", "pkg": "html", .. },
+                      ..
+                    },
+                    "is_object": false,
+                    ..
+                  },
+                  ..
+                },
+                "method_name": {
+                  "kind": "Label",
+                  "children": { "name": "build", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "srcdoc", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 3
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "src", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "iframe", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 4
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "src", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "fencedframe", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 4,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 5
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "attrs", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::DotApply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::DotApply::ArgList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _mime,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "self": {
+                      "kind": "Expr::DotApply",
+                      "children": {
+                        "args": {
+                          "kind": "Expr::DotApply::ArgList",
+                          "children": [
+                            {
+                              "kind": "Argument",
+                              "children": {
+                                "kind": {
+                                  "kind": "ArgumentKind::Positional",
+                                  "children": { .. },
+                                  ..
+                                },
+                                "value": _url,
+                                ..
+                              },
+                              ..
+                            },
+                          ],
+                          ..
+                        },
+                        "attr": {
+                          "kind": "ApplyAttr::NoAttr",
+                          "children": { .. },
+                          ..
+                        },
+                        "self": {
+                          "kind": "Expr::Apply",
+                          "children": {
+                            "args": {
+                              "kind": "Expr::Apply::ArgumentList",
+                              "children": [],
+                              ..
+                            },
+                            "attr": {
+                              "kind": "ApplyAttr::NoAttr",
+                              "children": { .. },
+                              ..
+                            },
+                            "func": {
+                              "kind": "Expr::Method",
+                              "children": {
+                                "type_name": {
+                                  "kind": "TypeName",
+                                  "children": {
+                                    "name": {
+                                      "kind": "LongIdent::Dot",
+                                      "children": {
+                                        "id": "Attrs",
+                                        "pkg": "html",
+                                        ..
+                                      },
+                                      ..
+                                    },
+                                    "is_object": false,
+                                    ..
+                                  },
+                                  ..
+                                },
+                                "method_name": {
+                                  "kind": "Label",
+                                  "children": { "name": "build", .. },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        "method_name": {
+                          "kind": "Label",
+                          "children": { "name": "data", .. },
+                          ..
+                        },
+                        "return_self": false,
+                        ..
+                      },
+                      ..
+                    },
+                    "method_name": {
+                      "kind": "Label",
+                      "children": { "name": "type_", .. },
+                      ..
+                    },
+                    "return_self": false,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _children,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "object", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 5,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 6
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "attrs", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::DotApply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::DotApply::ArgList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _mime,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "self": {
+                      "kind": "Expr::DotApply",
+                      "children": {
+                        "args": {
+                          "kind": "Expr::DotApply::ArgList",
+                          "children": [
+                            {
+                              "kind": "Argument",
+                              "children": {
+                                "kind": {
+                                  "kind": "ArgumentKind::Positional",
+                                  "children": { .. },
+                                  ..
+                                },
+                                "value": _url,
+                                ..
+                              },
+                              ..
+                            },
+                          ],
+                          ..
+                        },
+                        "attr": {
+                          "kind": "ApplyAttr::NoAttr",
+                          "children": { .. },
+                          ..
+                        },
+                        "self": {
+                          "kind": "Expr::Apply",
+                          "children": {
+                            "args": {
+                              "kind": "Expr::Apply::ArgumentList",
+                              "children": [],
+                              ..
+                            },
+                            "attr": {
+                              "kind": "ApplyAttr::NoAttr",
+                              "children": { .. },
+                              ..
+                            },
+                            "func": {
+                              "kind": "Expr::Method",
+                              "children": {
+                                "type_name": {
+                                  "kind": "TypeName",
+                                  "children": {
+                                    "name": {
+                                      "kind": "LongIdent::Dot",
+                                      "children": {
+                                        "id": "Attrs",
+                                        "pkg": "html",
+                                        ..
+                                      },
+                                      ..
+                                    },
+                                    "is_object": false,
+                                    ..
+                                  },
+                                  ..
+                                },
+                                "method_name": {
+                                  "kind": "Label",
+                                  "children": { "name": "build", .. },
+                                  ..
+                                },
+                                ..
+                              },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        "method_name": {
+                          "kind": "Label",
+                          "children": { "name": "src", .. },
+                          ..
+                        },
+                        "return_self": false,
+                        ..
+                      },
+                      ..
+                    },
+                    "method_name": {
+                      "kind": "Label",
+                      "children": { "name": "type_", .. },
+                      ..
+                    },
+                    "return_self": false,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "embed", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 6,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 7
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "href", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _base,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "base", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 7,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/html-active-content pattern 8
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "http_equiv", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "refresh", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "content", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Infix",
+                  "children": {
+                    "op": {
+                      "kind": "Var",
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "children": { "value": "+", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    "lhs": {
+                      "kind": "Expr::Constant",
+                      "children": {
+                        "constant": {
+                          "kind": "Constant::String",
+                          "children": { "value": "0;url=", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    "rhs": _url,
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "meta", "pkg": "html", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/html-active-content",
+        package_name: "moonbit-community/rabbita/html",
+        description: "These HTML builders create active content, inline documents, or page-wide URL\nrewriting behavior. Feeding them untrusted URLs or HTML can cause XSS,\ndangerous navigation, or third-party content loading.\n",
+        pattern_index: 8,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/fs-read-file-unbounded
-fn async_fs_read_file_unbounded(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_fs_read_file_unbounded(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/fs-read-file-unbounded pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "read_file", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-read-file-unbounded", package_name: "moonbitlang/async/fs", description: "`@fs.read_file(...)` reads the full target into memory. If the path can point\nto attacker-controlled large files or special files, this can exhaust memory.\n", pattern_index: 0, loc, bindings: { "_path": _path } })
-        true
-      }
+    // rule: async/fs-read-file-unbounded pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "read_file", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-read-file-unbounded",
+        package_name: "moonbitlang/async/fs",
+        description: "`@fs.read_file(...)` reads the full target into memory. If the path can point\nto attacker-controlled large files or special files, this can exhaust memory.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/fs-destructive-truncate
-fn async_fs_destructive_truncate(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_fs_destructive_truncate(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/fs-destructive-truncate pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "mode", .. }, .. }, .. }, .. }, "value": _mode, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "truncate", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "open", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-destructive-truncate", package_name: "moonbitlang/async/fs", description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n", pattern_index: 0, loc, bindings: { "_path": _path, "_mode": _mode } })
-        true
-      }
-      // rule: async/fs-destructive-truncate pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::LabelledPun", "children": { "value": { "kind": "Label", "children": { "name": "mode", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Ident", "children": { "value": "mode", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "truncate", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "open", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-destructive-truncate", package_name: "moonbitlang/async/fs", description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n", pattern_index: 1, loc, bindings: { "_path": _path } })
-        true
-      }
-      // rule: async/fs-destructive-truncate pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "write_file", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-destructive-truncate", package_name: "moonbitlang/async/fs", description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n", pattern_index: 2, loc, bindings: { "_path": _path, "_content": _content } })
-        true
-      }
-      // rule: async/fs-destructive-truncate pattern 3
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "truncate", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "write_file", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-destructive-truncate", package_name: "moonbitlang/async/fs", description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n", pattern_index: 3, loc, bindings: { "_path": _path, "_content": _content } })
-        true
-      }
+    // rule: async/fs-destructive-truncate pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "mode", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _mode,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "truncate", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "open", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-destructive-truncate",
+        package_name: "moonbitlang/async/fs",
+        description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/fs-destructive-truncate pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::LabelledPun",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "mode", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Ident",
+                  "children": {
+                    "id": {
+                      "kind": "Var",
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "children": { "value": "mode", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "truncate", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "open", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-destructive-truncate",
+        package_name: "moonbitlang/async/fs",
+        description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: async/fs-destructive-truncate pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "write_file", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-destructive-truncate",
+        package_name: "moonbitlang/async/fs",
+        description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: async/fs-destructive-truncate pattern 3
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "truncate", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "write_file", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-destructive-truncate",
+        package_name: "moonbitlang/async/fs",
+        description: "These file APIs overwrite existing content when `truncate=true` is used, and\n`@fs.write_file(...)` truncates by default. Passing untrusted paths here can\ndestroy arbitrary writable files.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/http-status-ok-footgun
-fn rabbita_http_status_ok_footgun(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_http_status_ok_footgun(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/http-status-ok-footgun pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "expect", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _handler, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Constr", "children": { "constr": { "kind": "Constructor", "children": { "name": { "kind": "ConstrName", "children": { "name": "Text", .. }, .. }, "extra_info": { "kind": "ConstructorExtraInfo::NoExtraInfo", "children": { .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "get", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/http-status-ok-footgun", package_name: "moonbit-community/rabbita/http", description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_handler": _handler } })
-        true
-      }
-      // rule: rabbita/http-status-ok-footgun pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _body, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "expect", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _handler, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Constr", "children": { "constr": { "kind": "Constructor", "children": { "name": { "kind": "ConstrName", "children": { "name": "Text", .. }, .. }, "extra_info": { "kind": "ConstructorExtraInfo::NoExtraInfo", "children": { .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "post", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/http-status-ok-footgun", package_name: "moonbit-community/rabbita/http", description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n", pattern_index: 1, loc, bindings: { "_url": _url, "_body": _body, "_handler": _handler } })
-        true
-      }
-      // rule: rabbita/http-status-ok-footgun pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _body, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "expect", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _handler, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Constr", "children": { "constr": { "kind": "Constructor", "children": { "name": { "kind": "ConstrName", "children": { "name": "Text", .. }, .. }, "extra_info": { "kind": "ConstructorExtraInfo::NoExtraInfo", "children": { .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "patch", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/http-status-ok-footgun", package_name: "moonbit-community/rabbita/http", description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n", pattern_index: 2, loc, bindings: { "_url": _url, "_body": _body, "_handler": _handler } })
-        true
-      }
-      // rule: rabbita/http-status-ok-footgun pattern 3
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "expect", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Apply", "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _handler, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Constr", "children": { "constr": { "kind": "Constructor", "children": { "name": { "kind": "ConstrName", "children": { "name": "Text", .. }, .. }, "extra_info": { "kind": "ConstructorExtraInfo::NoExtraInfo", "children": { .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "delete", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/http-status-ok-footgun", package_name: "moonbit-community/rabbita/http", description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n", pattern_index: 3, loc, bindings: { "_url": _url, "_handler": _handler } })
-        true
-      }
+    // rule: rabbita/http-status-ok-footgun pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "expect", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Apply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::Apply::ArgumentList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _handler,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "func": {
+                      "kind": "Expr::Constr",
+                      "children": {
+                        "constr": {
+                          "kind": "Constructor",
+                          "children": {
+                            "name": {
+                              "kind": "ConstrName",
+                              "children": { "name": "Text", .. },
+                              ..
+                            },
+                            "extra_info": {
+                              "kind": "ConstructorExtraInfo::NoExtraInfo",
+                              "children": { .. },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "get", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/http-status-ok-footgun",
+        package_name: "moonbit-community/rabbita/http",
+        description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/http-status-ok-footgun pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _body,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "expect", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Apply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::Apply::ArgumentList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _handler,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "func": {
+                      "kind": "Expr::Constr",
+                      "children": {
+                        "constr": {
+                          "kind": "Constructor",
+                          "children": {
+                            "name": {
+                              "kind": "ConstrName",
+                              "children": { "name": "Text", .. },
+                              ..
+                            },
+                            "extra_info": {
+                              "kind": "ConstructorExtraInfo::NoExtraInfo",
+                              "children": { .. },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "post", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/http-status-ok-footgun",
+        package_name: "moonbit-community/rabbita/http",
+        description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/http-status-ok-footgun pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _body,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "expect", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Apply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::Apply::ArgumentList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _handler,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "func": {
+                      "kind": "Expr::Constr",
+                      "children": {
+                        "constr": {
+                          "kind": "Constructor",
+                          "children": {
+                            "name": {
+                              "kind": "ConstrName",
+                              "children": { "name": "Text", .. },
+                              ..
+                            },
+                            "extra_info": {
+                              "kind": "ConstructorExtraInfo::NoExtraInfo",
+                              "children": { .. },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "patch", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/http-status-ok-footgun",
+        package_name: "moonbit-community/rabbita/http",
+        description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/http-status-ok-footgun pattern 3
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "expect", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Apply",
+                  "children": {
+                    "args": {
+                      "kind": "Expr::Apply::ArgumentList",
+                      "children": [
+                        {
+                          "kind": "Argument",
+                          "children": {
+                            "kind": {
+                              "kind": "ArgumentKind::Positional",
+                              "children": { .. },
+                              ..
+                            },
+                            "value": _handler,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    "attr": {
+                      "kind": "ApplyAttr::NoAttr",
+                      "children": { .. },
+                      ..
+                    },
+                    "func": {
+                      "kind": "Expr::Constr",
+                      "children": {
+                        "constr": {
+                          "kind": "Constructor",
+                          "children": {
+                            "name": {
+                              "kind": "ConstrName",
+                              "children": { "name": "Text", .. },
+                              ..
+                            },
+                            "extra_info": {
+                              "kind": "ConstructorExtraInfo::NoExtraInfo",
+                              "children": { .. },
+                              ..
+                            },
+                            ..
+                          },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "delete", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/http-status-ok-footgun",
+        package_name: "moonbit-community/rabbita/http",
+        description: "These Rabbita HTTP helpers only fail on network errors. Treating `Ok(...)` as\nsynonymous with a successful HTTP status can mis-handle 4xx and 5xx\nresponses.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/fs-tmpdir-weak-randomness
-fn async_fs_tmpdir_weak_randomness(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_fs_tmpdir_weak_randomness(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/fs-tmpdir-weak-randomness pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "tmpdir", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-tmpdir-weak-randomness", package_name: "moonbitlang/async/fs", description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n", pattern_index: 0, loc, bindings: Json::object(Map::of([])) })
-        true
-      }
-      // rule: async/fs-tmpdir-weak-randomness pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "prefix", .. }, .. }, .. }, .. }, "value": _prefix, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "tmpdir", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-tmpdir-weak-randomness", package_name: "moonbitlang/async/fs", description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n", pattern_index: 1, loc, bindings: { "_prefix": _prefix } })
-        true
-      }
-      // rule: async/fs-tmpdir-weak-randomness pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::LabelledPun", "children": { "value": { "kind": "Label", "children": { "name": "prefix", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Ident", "children": { "value": "prefix", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "tmpdir", "pkg": "fs", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/fs-tmpdir-weak-randomness", package_name: "moonbitlang/async/fs", description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n", pattern_index: 2, loc, bindings: Json::object(Map::of([])) })
-        true
-      }
+    // rule: async/fs-tmpdir-weak-randomness pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": { "kind": "Expr::Apply::ArgumentList", "children": [], .. },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "tmpdir", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-tmpdir-weak-randomness",
+        package_name: "moonbitlang/async/fs",
+        description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/fs-tmpdir-weak-randomness pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "prefix", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _prefix,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "tmpdir", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-tmpdir-weak-randomness",
+        package_name: "moonbitlang/async/fs",
+        description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: async/fs-tmpdir-weak-randomness pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::LabelledPun",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "prefix", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Ident",
+                  "children": {
+                    "id": {
+                      "kind": "Var",
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "children": { "value": "prefix", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "tmpdir", "pkg": "fs", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/fs-tmpdir-weak-randomness",
+        package_name: "moonbitlang/async/fs",
+        description: "`@fs.tmpdir(...)` does not generate cryptographically strong directory names.\nDo not treat the returned path as a secret token or capability URL fragment.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/process-redirect-truncate
-fn async_process_redirect_truncate(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_process_redirect_truncate(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/process-redirect-truncate pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "truncate", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "redirect_to_file", "pkg": "process", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/process-redirect-truncate", package_name: "moonbitlang/async/process", description: "Redirecting process output to a user-controlled path with `truncate=true`\nwill eagerly clobber the target file before writing command output.\n", pattern_index: 0, loc, bindings: { "_path": _path } })
-        true
-      }
+    // rule: async/process-redirect-truncate pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "truncate", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "redirect_to_file", "pkg": "process", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/process-redirect-truncate",
+        package_name: "moonbitlang/async/process",
+        description: "Redirecting process output to a user-controlled path with `truncate=true`\nwill eagerly clobber the target file before writing command output.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/process-unbounded-collect
-fn async_process_unbounded_collect(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_process_unbounded_collect(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/process-unbounded-collect pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _command, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "collect_stdout", "pkg": "process", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/process-unbounded-collect", package_name: "moonbitlang/async/process", description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n", pattern_index: 0, loc, bindings: { "_command": _command, "_args": _args } })
-        true
-      }
-      // rule: async/process-unbounded-collect pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _command, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "collect_stderr", "pkg": "process", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/process-unbounded-collect", package_name: "moonbitlang/async/process", description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n", pattern_index: 1, loc, bindings: { "_command": _command, "_args": _args } })
-        true
-      }
-      // rule: async/process-unbounded-collect pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _command, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "collect_output", "pkg": "process", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/process-unbounded-collect", package_name: "moonbitlang/async/process", description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n", pattern_index: 2, loc, bindings: { "_command": _command, "_args": _args } })
-        true
-      }
-      // rule: async/process-unbounded-collect pattern 3
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _command, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _args, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "collect_output_merged", "pkg": "process", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/process-unbounded-collect", package_name: "moonbitlang/async/process", description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n", pattern_index: 3, loc, bindings: { "_command": _command, "_args": _args } })
-        true
-      }
+    // rule: async/process-unbounded-collect pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _command,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "collect_stdout", "pkg": "process", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/process-unbounded-collect",
+        package_name: "moonbitlang/async/process",
+        description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/process-unbounded-collect pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _command,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "collect_stderr", "pkg": "process", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/process-unbounded-collect",
+        package_name: "moonbitlang/async/process",
+        description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: async/process-unbounded-collect pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _command,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "collect_output", "pkg": "process", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/process-unbounded-collect",
+        package_name: "moonbitlang/async/process",
+        description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: async/process-unbounded-collect pattern 3
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _command,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _args,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": {
+                    "id": "collect_output_merged",
+                    "pkg": "process",
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/process-unbounded-collect",
+        package_name: "moonbitlang/async/process",
+        description: "These helpers collect full child-process output into memory before\nreturning. A noisy or non-terminating process can exhaust memory.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: lang/cstyle-for-unused-loop-var
-fn lang_cstyle_for_unused_loop_var(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn lang_cstyle_for_unused_loop_var(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: lang/cstyle-for-unused-loop-var pattern 0
-      { "kind": "Expr::For", "loc": loc, "children": { "body": body, "label": Null, "binders": { "kind": "Expr::For::BindingList", "children": [{ "kind": "For::Binding", "children": { "expr": start, "binder": counter, .. }, .. }], .. }, "for_else": Null, "condition": { "kind": "Expr::Infix", "children": { "op": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Ident", "children": { "value": "<", .. }, .. }, .. }, .. }, "lhs": cond_counter, "rhs": upper_limit, .. }, .. }, "where_clause": Null, "continue_block": { "kind": "Expr::For::ContBindingList", "children": [{ "kind": "For::ContBinding", "children": { "expr": next, "binder": cont_counter, .. }, .. }], .. }, .. }, .. } => {
-        if @rules.is_cstyle_for_with_unused_loop_var(
-  counter,
-  cond_counter,
-  upper_limit,
-  cont_counter,
-  next,
-  body,
-) {
-          hits.push(MatchHit::{ file, rule_id: "lang/cstyle-for-unused-loop-var", package_name: "moonbitlang/core", description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n", pattern_index: 0, loc, bindings: { "body": body, "start": start, "counter": counter, "cond_counter": cond_counter, "upper_limit": upper_limit, "next": next, "cont_counter": cont_counter } })
-        }
-        true
+    // rule: lang/cstyle-for-unused-loop-var pattern 0
+    {
+      "kind": "Expr::For",
+      "loc": loc,
+      "children": {
+        "body": body,
+        "label": Null,
+        "binders": {
+          "kind": "Expr::For::BindingList",
+          "children": [
+            {
+              "kind": "For::Binding",
+              "children": { "expr": _start, "binder": counter, .. },
+              ..
+            },
+          ],
+          ..
+        },
+        "for_else": Null,
+        "condition": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "<", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": cond_counter,
+            "rhs": upper_limit,
+            ..
+          },
+          ..
+        },
+        "where_clause": Null,
+        "continue_block": {
+          "kind": "Expr::For::ContBindingList",
+          "children": [
+            {
+              "kind": "For::ContBinding",
+              "children": { "expr": next, "binder": cont_counter, .. },
+              ..
+            },
+          ],
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      if @rules.is_cstyle_for_with_unused_loop_var(
+          counter, cond_counter, upper_limit, cont_counter, next, body,
+        ) {
+        hits.push(MatchHit::{
+          file,
+          rule_id: "lang/cstyle-for-unused-loop-var",
+          package_name: "moonbitlang/core",
+          description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n",
+          pattern_index: 0,
+          loc,
+        })
       }
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/websocket-message-read-all
-fn async_websocket_message_read_all(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_websocket_message_read_all(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/websocket-message-read-all pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _message, "method_name": { "kind": "Label", "children": { "name": "read_all", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/websocket-message-read-all", package_name: "moonbitlang/async/websocket", description: "Calling `read_all()` on a received WebSocket message forfeits streaming and\nbuffers the entire payload in memory.\n", pattern_index: 0, loc, bindings: { "_message": _message } })
-        true
-      }
+    // rule: async/websocket-message-read-all pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _message,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "read_all", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/websocket-message-read-all",
+        package_name: "moonbitlang/async/websocket",
+        description: "Calling `read_all()` on a received WebSocket message forfeits streaming and\nbuffers the entire payload in memory.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/websocket-http-handshake-crlf
-fn async_websocket_http_handshake_crlf(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_websocket_http_handshake_crlf(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/websocket-http-handshake-crlf pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": _headers, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "connect", "pkg": "websocket", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/websocket-http-handshake-crlf", package_name: "moonbitlang/async/websocket", description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_headers": _headers } })
-        true
-      }
-      // rule: async/websocket-http-handshake-crlf pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _client, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "from_http_client", "pkg": "websocket", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/websocket-http-handshake-crlf", package_name: "moonbitlang/async/websocket", description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n", pattern_index: 1, loc, bindings: { "_client": _client, "_path": _path } })
-        true
-      }
+    // rule: async/websocket-http-handshake-crlf pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _headers,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "connect", "pkg": "websocket", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/websocket-http-handshake-crlf",
+        package_name: "moonbitlang/async/websocket",
+        description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/websocket-http-handshake-crlf pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _client,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": {
+                    "id": "from_http_client",
+                    "pkg": "websocket",
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/websocket-http-handshake-crlf",
+        package_name: "moonbitlang/async/websocket",
+        description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/http-request-transfer-encoding
-fn async_http_request_transfer_encoding(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_http_request_transfer_encoding(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/http-request-transfer-encoding pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Client", "pkg": "http", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "new", .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 0, loc, bindings: { "_url": _url, "_value": _value } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _method, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "extra_headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _client, "method_name": { "kind": "Label", "children": { "name": "request", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 1, loc, bindings: { "_method": _method, "_path": _path, "_value": _value, "_client": _client } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 2
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "extra_headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _client, "method_name": { "kind": "Label", "children": { "name": "get", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 2, loc, bindings: { "_path": _path, "_value": _value, "_client": _client } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 3
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "extra_headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _client, "method_name": { "kind": "Label", "children": { "name": "put", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 3, loc, bindings: { "_path": _path, "_content": _content, "_value": _value, "_client": _client } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 4
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _path, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "extra_headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _client, "method_name": { "kind": "Label", "children": { "name": "post", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 4, loc, bindings: { "_path": _path, "_content": _content, "_value": _value, "_client": _client } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 5
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "get", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 5, loc, bindings: { "_url": _url, "_value": _value } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 6
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "put", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 6, loc, bindings: { "_url": _url, "_content": _content, "_value": _value } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 7
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _content, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "post", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 7, loc, bindings: { "_url": _url, "_content": _content, "_value": _value } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 8
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "get_stream", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 8, loc, bindings: { "_url": _url, "_value": _value } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 9
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "put_stream", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 9, loc, bindings: { "_url": _url, "_value": _value } })
-        true
-      }
-      // rule: async/http-request-transfer-encoding pattern 10
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _url, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "headers", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Map", "children": { "elems": { "kind": "Expr::Map::ElemList", "children": [{ "kind": "MapExprElem", "children": { "key": { "kind": "Constant::String", "children": { "value": "Transfer-Encoding", .. }, .. }, "expr": _value, .. }, .. }], .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "post_stream", "pkg": "http", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/http-request-transfer-encoding", package_name: "moonbitlang/async/http", description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n", pattern_index: 10, loc, bindings: { "_url": _url, "_value": _value } })
-        true
-      }
+    // rule: async/http-request-transfer-encoding pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Method",
+          "children": {
+            "type_name": {
+              "kind": "TypeName",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "Client", "pkg": "http", .. },
+                  ..
+                },
+                "is_object": false,
+                ..
+              },
+              ..
+            },
+            "method_name": {
+              "kind": "Label",
+              "children": { "name": "new", .. },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _method,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "extra_headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _client,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "request", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 2
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "extra_headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _client,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "get", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 3
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "extra_headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _client,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "put", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 4
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _path,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "extra_headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _client,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "post", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 4,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 5
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "get", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 5,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 6
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "put", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 6,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 7
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _content,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "post", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 7,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 8
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "get_stream", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 8,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 9
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "put_stream", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 9,
+        loc,
+      })
+      true
+    }
+    // rule: async/http-request-transfer-encoding pattern 10
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _url,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "headers", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Map",
+                  "children": {
+                    "elems": {
+                      "kind": "Expr::Map::ElemList",
+                      "children": [
+                        {
+                          "kind": "MapExprElem",
+                          "children": {
+                            "key": {
+                              "kind": "Constant::String",
+                              "children": { "value": "Transfer-Encoding", .. },
+                              ..
+                            },
+                            "expr": _value,
+                            ..
+                          },
+                          ..
+                        },
+                      ],
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "post_stream", "pkg": "http", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/http-request-transfer-encoding",
+        package_name: "moonbitlang/async/http",
+        description: "Passing a user-controlled `Transfer-Encoding` header via `headers` or\n`extra_headers` to `[@http.Client::new, @http.Client::request,\n@http.Client::get, @http.Client::put, @http.Client::post, @http.get,\n@http.put, @http.post, @http.get_stream, @http.put_stream,\n@http.post_stream]` can create an ambiguous HTTP message and may enable\nrequest smuggling.\n",
+        pattern_index: 10,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/tls-client-verification-footgun
-fn async_tls_client_verification_footgun(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_tls_client_verification_footgun(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/tls-client-verification-footgun pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _stream, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "verify", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Tls", "pkg": "tls", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "client", .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/tls-client-verification-footgun", package_name: "moonbitlang/async/tls", description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n", pattern_index: 0, loc, bindings: { "_stream": _stream } })
-        true
-      }
-      // rule: async/tls-client-verification-footgun pattern 1
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _stream, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "verify", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": false, .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "host", .. }, .. }, .. }, .. }, "value": _host, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Tls", "pkg": "tls", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "client", .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/tls-client-verification-footgun", package_name: "moonbitlang/async/tls", description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n", pattern_index: 1, loc, bindings: { "_stream": _stream, "_host": _host } })
-        true
-      }
-      // rule: async/tls-client-verification-footgun pattern 2
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _reader, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _writer, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Labelled", "children": { "value": { "kind": "Label", "children": { "name": "verify", .. }, .. }, .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::Bool", "children": { "value": true, .. }, .. }, .. }, .. }, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Method", "children": { "type_name": { "kind": "TypeName", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "Tls", "pkg": "tls", .. }, .. }, "is_object": false, .. }, .. }, "method_name": { "kind": "Label", "children": { "name": "client_from_pair", .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/tls-client-verification-footgun", package_name: "moonbitlang/async/tls", description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n", pattern_index: 2, loc, bindings: { "_reader": _reader, "_writer": _writer } })
-        true
-      }
+    // rule: async/tls-client-verification-footgun pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _stream,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "verify", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Method",
+          "children": {
+            "type_name": {
+              "kind": "TypeName",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "Tls", "pkg": "tls", .. },
+                  ..
+                },
+                "is_object": false,
+                ..
+              },
+              ..
+            },
+            "method_name": {
+              "kind": "Label",
+              "children": { "name": "client", .. },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/tls-client-verification-footgun",
+        package_name: "moonbitlang/async/tls",
+        description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: async/tls-client-verification-footgun pattern 1
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _stream,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "verify", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": false, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "host", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": _host,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Method",
+          "children": {
+            "type_name": {
+              "kind": "TypeName",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "Tls", "pkg": "tls", .. },
+                  ..
+                },
+                "is_object": false,
+                ..
+              },
+              ..
+            },
+            "method_name": {
+              "kind": "Label",
+              "children": { "name": "client", .. },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/tls-client-verification-footgun",
+        package_name: "moonbitlang/async/tls",
+        description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: async/tls-client-verification-footgun pattern 2
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _reader,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _writer,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Labelled",
+                  "children": {
+                    "value": {
+                      "kind": "Label",
+                      "children": { "name": "verify", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::Bool",
+                      "children": { "value": true, .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Method",
+          "children": {
+            "type_name": {
+              "kind": "TypeName",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": { "id": "Tls", "pkg": "tls", .. },
+                  ..
+                },
+                "is_object": false,
+                ..
+              },
+              ..
+            },
+            "method_name": {
+              "kind": "Label",
+              "children": { "name": "client_from_pair", .. },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/tls-client-verification-footgun",
+        package_name: "moonbitlang/async/tls",
+        description: "These TLS client calls are easy to misuse: `verify=true` without `host`\nskips hostname validation, and `verify=false` disables certificate checks\nentirely.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: rabbita/dom-dangerous-attribute-write
-fn rabbita_dom_dangerous_attribute_write(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn rabbita_dom_dangerous_attribute_write(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: rabbita/dom-dangerous-attribute-write pattern 0
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "srcdoc", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _html, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _node, "method_name": { "kind": "Label", "children": { "name": "set_attribute", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/dom-dangerous-attribute-write", package_name: "moonbit-community/rabbita/dom", description: "Writing untrusted content into dangerous DOM sinks such as `srcdoc` via\n`set_attribute(...)` or `set_property(...)` can execute attacker-controlled\nHTML or script.\n", pattern_index: 0, loc, bindings: { "_html": _html, "_node": _node } })
-        true
-      }
-      // rule: rabbita/dom-dangerous-attribute-write pattern 1
-      { "kind": "Expr::DotApply", "loc": loc, "children": { "args": { "kind": "Expr::DotApply::ArgList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": { "kind": "Expr::Constant", "children": { "constant": { "kind": "Constant::String", "children": { "value": "srcdoc", .. }, .. }, .. }, .. }, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _value, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "self": _node, "method_name": { "kind": "Label", "children": { "name": "set_property", .. }, .. }, "return_self": false, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "rabbita/dom-dangerous-attribute-write", package_name: "moonbit-community/rabbita/dom", description: "Writing untrusted content into dangerous DOM sinks such as `srcdoc` via\n`set_attribute(...)` or `set_property(...)` can execute attacker-controlled\nHTML or script.\n", pattern_index: 1, loc, bindings: { "_value": _value, "_node": _node } })
-        true
-      }
+    // rule: rabbita/dom-dangerous-attribute-write pattern 0
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "srcdoc", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _html,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _node,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "set_attribute", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/dom-dangerous-attribute-write",
+        package_name: "moonbit-community/rabbita/dom",
+        description: "Writing untrusted content into dangerous DOM sinks such as `srcdoc` via\n`set_attribute(...)` or `set_property(...)` can execute attacker-controlled\nHTML or script.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: rabbita/dom-dangerous-attribute-write pattern 1
+    {
+      "kind": "Expr::DotApply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::DotApply::ArgList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": {
+                  "kind": "Expr::Constant",
+                  "children": {
+                    "constant": {
+                      "kind": "Constant::String",
+                      "children": { "value": "srcdoc", .. },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _value,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "self": _node,
+        "method_name": {
+          "kind": "Label",
+          "children": { "name": "set_property", .. },
+          ..
+        },
+        "return_self": false,
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "rabbita/dom-dangerous-attribute-write",
+        package_name: "moonbit-community/rabbita/dom",
+        description: "Writing untrusted content into dangerous DOM sinks such as `srcdoc` via\n`set_attribute(...)` or `set_property(...)` can execute attacker-controlled\nHTML or script.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
 
 ///|
 // bundled rule: async/websocket-server-upgrade-unchecked
-fn async_websocket_server_upgrade_unchecked(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+fn async_websocket_server_upgrade_unchecked(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool {
   match ast {
-      // rule: async/websocket-server-upgrade-unchecked pattern 0
-      { "kind": "Expr::Apply", "loc": loc, "children": { "args": { "kind": "Expr::Apply::ArgumentList", "children": [{ "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _request, .. }, .. }, { "kind": "Argument", "children": { "kind": { "kind": "ArgumentKind::Positional", "children": { .. }, .. }, "value": _conn, .. }, .. }], .. }, "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. }, "func": { "kind": "Expr::Ident", "children": { "id": { "kind": "Var", "children": { "name": { "kind": "LongIdent::Dot", "children": { "id": "from_http_server", "pkg": "websocket", .. }, .. }, .. }, .. }, .. }, .. }, .. }, .. } => {
-        hits.push(MatchHit::{ file, rule_id: "async/websocket-server-upgrade-unchecked", package_name: "moonbitlang/async/websocket", description: "`@websocket.from_http_server(...)` only performs the protocol upgrade. Code\nthat calls it without checking path, `Origin`, cookies, or auth is exposed to\ncross-site WebSocket hijacking.\n", pattern_index: 0, loc, bindings: { "_request": _request, "_conn": _conn } })
-        true
-      }
+    // rule: async/websocket-server-upgrade-unchecked pattern 0
+    {
+      "kind": "Expr::Apply",
+      "loc": loc,
+      "children": {
+        "args": {
+          "kind": "Expr::Apply::ArgumentList",
+          "children": [
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _request,
+                ..
+              },
+              ..
+            },
+            {
+              "kind": "Argument",
+              "children": {
+                "kind": {
+                  "kind": "ArgumentKind::Positional",
+                  "children": { .. },
+                  ..
+                },
+                "value": _conn,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
+        "func": {
+          "kind": "Expr::Ident",
+          "children": {
+            "id": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Dot",
+                  "children": {
+                    "id": "from_http_server",
+                    "pkg": "websocket",
+                    ..
+                  },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        ..
+      },
+      ..
+    } => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "async/websocket-server-upgrade-unchecked",
+        package_name: "moonbitlang/async/websocket",
+        description: "`@websocket.from_http_server(...)` only performs the protocol upgrade. Code\nthat calls it without checking path, `Origin`, cookies, or auth is exposed to\ncross-site WebSocket hijacking.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }
@@ -785,5 +8431,5 @@ let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] 
   "async/http-request-transfer-encoding": async_http_request_transfer_encoding,
   "async/tls-client-verification-footgun": async_tls_client_verification_footgun,
   "rabbita/dom-dangerous-attribute-write": rabbita_dom_dangerous_attribute_write,
-  "async/websocket-server-upgrade-unchecked": async_websocket_server_upgrade_unchecked
+  "async/websocket-server-upgrade-unchecked": async_websocket_server_upgrade_unchecked,
 }
