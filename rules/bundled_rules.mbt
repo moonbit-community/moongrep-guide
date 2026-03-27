@@ -6447,15 +6447,15 @@ fn lang_cstyle_for_unused_loop_var(
         ignore(next)
         ignore(body)
         ignore(counter)
-        @rules.is_cstyle_for_with_unused_loop_var(counter, next, body)
+        @greptools.is_cstyle_for_with_unused_loop_var(counter, next, body)
       }
-      let __moongrep_name_opt_meta_counter_1 = @rules.normalize_metavar_name(
+      let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(
         counter,
       )
-      let __moongrep_name_opt_meta_counter_2 = @rules.normalize_metavar_name(
+      let __moongrep_name_opt_meta_counter_2 = @greptools.normalize_metavar_name(
         meta_counter_2,
       )
-      let __moongrep_name_opt_meta_counter_3 = @rules.normalize_metavar_name(
+      let __moongrep_name_opt_meta_counter_3 = @greptools.normalize_metavar_name(
         meta_counter_3,
       )
       match
@@ -8434,7 +8434,10 @@ fn async_websocket_server_upgrade_unchecked(
 }
 
 ///|
-let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] = {
+pub let moongrep_rules_table : Map[
+  String,
+  (String, Json, Array[MatchHit]) -> Bool,
+] = {
   "rabbita/nav-load": rabbita_nav_load,
   "rabbita/js-require": rabbita_js_require,
   "rabbita/svg-script": rabbita_svg_script,

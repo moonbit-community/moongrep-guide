@@ -224,7 +224,7 @@ fn emit_rules_table_source(
   }
   builder.write_string("///|\n")
   builder.write_string(
-    "let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] = {\n",
+    "pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] = {\n",
   )
   if !entries.is_empty() {
     builder.write_string(entries.join(",\n"))
@@ -240,7 +240,7 @@ fn emit_rule_arm(
   pattern_index : Int,
   pattern : RulePatternSpec,
 ) -> String raise {
-  let ast = @dump_expr.dump_expr_json_repr(pattern.shape)
+  let ast = @greptools.dump_expr_json_repr(pattern.shape)
   let ctx = { declared_metavars: emit_pattern_metavars(pattern), bindings: [] }
   let pattern_source = emit_pattern_source(ast, ctx, root=true)
   ensure_all_metavars_bound(
@@ -413,7 +413,7 @@ fn emit_rule_arm_body(
   }
   for binding in name_only_bindings {
     builder.write_string(
-      "        let \{emit_name_only_option_name(binding.meta_name, binding.occurrence)} = @rules.normalize_metavar_name(\{binding.bind_name})\n",
+      "        let \{emit_name_only_option_name(binding.meta_name, binding.occurrence)} = @greptools.normalize_metavar_name(\{binding.bind_name})\n",
     )
   }
   builder.write_string(

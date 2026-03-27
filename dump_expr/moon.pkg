@@ -1,8 +1,5 @@
 import {
-  "moonbitlang/parser/basic",
-  "moonbitlang/parser/syntax",
-  "moonbitlang/parser/lexer",
-  "moonbitlang/parser/handrolled_parser",
+  "moonbit-community/moongrep-guide/greptools",
   "moonbitlang/x/sys",
   "moonbitlang/x/fs",
 }

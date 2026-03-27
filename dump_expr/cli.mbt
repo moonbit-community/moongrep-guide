@@ -9,7 +9,7 @@ fn main {
   }
   try {
     let source = @fs.read_file_to_string(filename)
-    let expr_json_repr = dump_expr_json_repr(source).stringify(
+    let expr_json_repr = @greptools.dump_expr_json_repr(source).stringify(
       escape_slash=true,
       indent=2,
     )

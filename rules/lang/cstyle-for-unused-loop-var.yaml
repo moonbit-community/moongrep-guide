@@ -12,7 +12,7 @@ patterns:
       structural: [_start, upper_limit, next, body]
       nameonly: [counter]
     guard: |
-      @rules.is_cstyle_for_with_unused_loop_var(
+      @greptools.is_cstyle_for_with_unused_loop_var(
         counter,
         next,
         body,

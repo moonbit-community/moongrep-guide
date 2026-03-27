@@ -6,7 +6,7 @@ struct SkippedFile {
 
 ///|
 struct DirectoryScanResult {
-  hits : Array[MatchHit]
+  hits : Array[@greptools.MatchHit]
   skipped_files : Array[SkippedFile]
 } derive(Eq)
 
@@ -45,7 +45,7 @@ fn collect_source_files(dir : String, files : Array[String]) -> Unit raise {
 fn find_rule_hits(
   name~ : String,
   source : String,
-  hits : Array[MatchHit],
+  hits : Array[@greptools.MatchHit],
 ) -> Unit raise {
   @references.traverse_top_impls(name~, source, context=hits, (hits, ast) => {
     apply_bundled_rules(name, ast, hits)
@@ -57,7 +57,7 @@ fn collect_directory_hits(scan_root : String) -> DirectoryScanResult raise {
   let files : Array[String] = []
   collect_source_files(scan_root, files)
   files.sort()
-  let hits : Array[MatchHit] = []
+  let hits : Array[@greptools.MatchHit] = []
   let skipped_files : Array[SkippedFile] = []
   for file in files {
     let source = @fs.read_file_to_string(file)

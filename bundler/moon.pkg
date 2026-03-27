@@ -1,5 +1,5 @@
 import {
-  "moonbit-community/moongrep-guide/dump_expr",
+  "moonbit-community/moongrep-guide/greptools",
   "moonbitlang/parser/basic",
   "moonbitlang/parser/lexer",
   "moonbitlang/parser/handrolled_parser",

@@ -1,6 +1,7 @@
 import {
   "moonbit-community/moongrep-guide/references",
   "moonbit-community/moongrep-guide/rules",
+  "moonbit-community/moongrep-guide/greptools",
   "moonbitlang/x/fs",
   "moonbitlang/x/sys",
 }

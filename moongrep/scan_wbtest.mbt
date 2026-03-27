@@ -16,7 +16,7 @@ fn reset_scan_test_dir(dir : String) -> Unit raise {
 
 ///|
 test "collect directory hits skips files that fail to parse" {
-  let dir = "_build/moongrep-scan-test"
+  let dir = "temp"
   let broken_file = "\{dir}/broken.mbt"
   let valid_file = "\{dir}/valid.mbt"
   let valid_source =
@@ -41,7 +41,7 @@ test "collect directory hits skips files that fail to parse" {
   assert_true(result.skipped_files[0].reason != "")
   inspect(
     render_skipped_file_message(result.skipped_files[0]),
-    content="warning: skipping _build/moongrep-scan-test/broken.mbt: parse failed",
+    content="warning: skipping temp/broken.mbt: parse failed",
   )
   @fs.remove_file(broken_file)
   @fs.remove_file(valid_file)
