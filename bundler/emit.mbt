@@ -224,7 +224,7 @@ fn emit_rules_table_source(
   }
   builder.write_string("///|\n")
   builder.write_string(
-    "pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool] = {\n",
+    "pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool raise] = {\n",
   )
   if !entries.is_empty() {
     builder.write_string(entries.join(",\n"))
@@ -270,8 +270,9 @@ fn emit_rule_matcher_source(
   let builder = StringBuilder::new()
   builder.write_string("///|\n")
   builder.write_string("// bundled rule: \{rule.rule_id}\n")
+  builder.write_string("#warnings(\"-unused_error_type\")\n")
   builder.write_string(
-    "fn \{rule_function_name}(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {\n",
+    "fn \{rule_function_name}(file : String, ast : Json, hits : Array[MatchHit]) -> Bool raise {\n",
   )
   builder.write_string("  match ast {\n")
   for pattern_index in 0..<rule.patterns.length() {
@@ -530,7 +531,7 @@ fn emit_name_only_guard_function_source(
   }
   let joined_params = params.join(", ")
   builder.write_string(
-    "        fn \{emit_guard_function_name()}(\{joined_params}) -> Bool {\n",
+    "        fn \{emit_guard_function_name()}(\{joined_params}) -> Bool raise {\n",
   )
   for meta_name in emit_pattern_metavars(pattern) {
     builder.write_string("          ignore(\{meta_name})\n")

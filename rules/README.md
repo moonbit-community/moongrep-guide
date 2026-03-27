@@ -84,15 +84,6 @@ You can override both positional arguments:
 moon run bundler <rules-root> <output-path>
 ```
 
-Bundling does the following:
-
-1. Recursively walks the rules root and collects every `.yaml` and `.yml` file.
-2. Sorts paths to keep bundle output stable.
-3. Parses and validates each rule file.
-4. Generates one matcher function per rule plus
-   `pub let moongrep_rules_table`.
-5. Writes the generated source to `rules/bundled_rules.mbt`.
-
 The bundler will fail when the rules root contains no YAML rule files, or on
 invalid YAML shape, unsupported keys, empty `patterns`, duplicate or
 overlapping metavar declarations, invalid guard syntax, unused declared
@@ -103,10 +94,7 @@ metavars, or generated matcher name collisions.
 The generated bundle exports:
 
 ```moonbit
-pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool]
+pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool raise]
 ```
 
-`moongrep/apply_bundled_rules.mbt` iterates this table and applies every rule
-matcher while traversing AST nodes. To update packaged rules, edit the YAML
-files first and rerun `moon run bundler`. Do not edit `bundled_rules.mbt`
-manually.
+To update rules, edit/create the YAML file first and rerun `moon run bundler`. Do not edit `bundled_rules.mbt` manually.
