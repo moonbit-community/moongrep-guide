@@ -5,10 +5,9 @@ description: |
 patterns:
   - shape: |
       @fs.tmpdir()
-    metavars: []
   - shape: |
       @fs.tmpdir(prefix=_prefix)
-    metavars: [_prefix]
+    metavars:
+      structural: [_prefix]
   - shape: |
       @fs.tmpdir(prefix~)
-    metavars: []

@@ -6,4 +6,5 @@ description: |
 patterns:
   - shape: |
       @websocket.from_http_server(_request, _conn)
-    metavars: [_request, _conn]
+    metavars:
+      structural: [_request, _conn]

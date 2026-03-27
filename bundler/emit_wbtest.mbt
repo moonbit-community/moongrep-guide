@@ -8,7 +8,8 @@ test "emit bundle source builds package-local matcher file" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          metavars: ["node", "html"],
+          structural_metavars: ["node", "html"],
+          nameonly_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -34,12 +35,14 @@ test "emit bundle source generates one matcher function per rule" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          metavars: ["node", "html"],
+          structural_metavars: ["node", "html"],
+          nameonly_metavars: [],
           pattern_guard: None,
         },
         {
           shape: "node.set_outer_html(html)",
-          metavars: ["node", "html"],
+          structural_metavars: ["node", "html"],
+          nameonly_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -51,7 +54,8 @@ test "emit bundle source generates one matcher function per rule" {
       patterns: [
         {
           shape: "value.apply(args)",
-          metavars: ["value", "args"],
+          structural_metavars: ["value", "args"],
+          nameonly_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -76,7 +80,8 @@ test "emit matcher source does not capture metavars in match hits" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          metavars: ["node", "html"],
+          structural_metavars: ["node", "html"],
+          nameonly_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -129,7 +134,8 @@ test "emit matcher source checks duplicate equality before guard" {
       patterns: [
         {
           shape: "pair(left, left)",
-          metavars: ["pair", "left"],
+          structural_metavars: ["pair", "left"],
+          nameonly_metavars: [],
           pattern_guard: Some("left != pair"),
         },
       ],
@@ -144,4 +150,85 @@ test "emit matcher source checks duplicate equality before guard" {
   assert_false(source.contains("\"pair\": pair"))
   assert_false(source.contains("\"left\": left"))
   assert_false(source.contains("bindings:"))
+}
+
+///|
+test "emit matcher source normalizes nameonly metavars before guard" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/name-only-guarded",
+      package_name: "moonbit-community/example",
+      description: "name-only guarded rule",
+      patterns: [
+        {
+          shape: "for counter = start; counter < limit; counter = next { body }",
+          structural_metavars: ["start", "limit", "next", "body"],
+          nameonly_metavars: ["counter"],
+          pattern_guard: Some("@rules.example(counter, next, body)"),
+        },
+      ],
+    },
+  ])
+  assert_true(
+    source.contains(
+      "let __moongrep_name_opt_meta_counter_1 = @rules.normalize_metavar_name(counter)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "let __moongrep_name_opt_meta_counter_2 = @rules.normalize_metavar_name(meta_counter_2)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "match (__moongrep_name_opt_meta_counter_1, __moongrep_name_opt_meta_counter_2, __moongrep_name_opt_meta_counter_3)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "(Some(__moongrep_name_meta_counter_1), Some(__moongrep_name_meta_counter_2), Some(__moongrep_name_meta_counter_3)) => {",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "fn __moongrep_guard(start : Json, limit : Json, next : Json, body : Json, counter : String) -> Bool {",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "if __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_2 && __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_3 {",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "if __moongrep_guard(start, limit, next, body, __moongrep_name_meta_counter_1) {",
+    ),
+  )
+}
+
+///|
+test "emit matcher source checks nameonly normalization without guard" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/name-only",
+      package_name: "moonbit-community/example",
+      description: "name-only rule",
+      patterns: [
+        {
+          shape: "pair(left, right)",
+          structural_metavars: ["pair", "right"],
+          nameonly_metavars: ["left"],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(
+    source.contains(
+      "let __moongrep_name_opt_meta_left_1 = @rules.normalize_metavar_name(left)",
+    ),
+  )
+  assert_true(source.contains("match __moongrep_name_opt_meta_left_1 {"))
+  assert_true(source.contains("Some(__moongrep_name_meta_left_1) => {"))
+  assert_false(source.contains("fn __moongrep_guard("))
 }

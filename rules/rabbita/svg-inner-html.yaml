@@ -5,4 +5,5 @@ description: |
 patterns:
   - shape: |
       @svg.Attrs::build().inner_html(_svg)
-    metavars: [_svg]
+    metavars:
+      structural: [_svg]

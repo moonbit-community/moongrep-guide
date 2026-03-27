@@ -1,4 +1,11 @@
 ///|
+priv struct NameOnlyBinding {
+  meta_name : String
+  occurrence : Int
+  bind_name : String
+}
+
+///|
 fn emit_pattern_source(
   node : Json,
   ctx : PatternEmitContext,
@@ -137,6 +144,42 @@ fn sanitize_identifier(name : String) -> String {
 }
 
 ///|
+fn emit_generated_local_name(
+  stem : String,
+  meta_name : String,
+  occurrence : Int,
+) -> String {
+  "__moongrep_\{stem}_\{sanitize_identifier(meta_name)}_\{occurrence}"
+}
+
+///|
+fn emit_name_only_option_name(meta_name : String, occurrence : Int) -> String {
+  emit_generated_local_name("name_opt", meta_name, occurrence)
+}
+
+///|
+fn emit_name_only_value_name(meta_name : String, occurrence : Int) -> String {
+  emit_generated_local_name("name", meta_name, occurrence)
+}
+
+///|
+fn emit_guard_function_name() -> String {
+  "__moongrep_guard"
+}
+
+///|
+fn emit_pattern_metavars(pattern : RulePatternSpec) -> Array[String] {
+  let metavars : Array[String] = []
+  for meta_name in pattern.structural_metavars {
+    metavars.push(meta_name)
+  }
+  for meta_name in pattern.nameonly_metavars {
+    metavars.push(meta_name)
+  }
+  metavars
+}
+
+///|
 fn emit_string_literal(value : String) -> String {
   Json::string(value).stringify()
 }
@@ -198,22 +241,22 @@ fn emit_rule_arm(
   pattern : RulePatternSpec,
 ) -> String raise {
   let ast = @dump_expr.dump_expr_json_repr(pattern.shape)
-  let ctx = { declared_metavars: pattern.metavars, bindings: [] }
+  let ctx = { declared_metavars: emit_pattern_metavars(pattern), bindings: [] }
   let pattern_source = emit_pattern_source(ast, ctx, root=true)
-  ensure_all_metavars_bound(rule.rule_id, pattern_index, pattern.metavars, ctx)
+  ensure_all_metavars_bound(
+    rule.rule_id,
+    pattern_index,
+    emit_pattern_metavars(pattern),
+    ctx,
+  )
   let builder = StringBuilder::new()
   builder.write_string(
     "      // rule: \{rule.rule_id} pattern \{pattern_index}\n",
   )
   builder.write_string("      \{pattern_source} => {\n")
-  let duplicate_condition = emit_duplicate_condition(ctx)
   let push_source = emit_push_source(rule, pattern_index, ctx)
-  emit_guarded_push_source(
-    builder,
-    duplicate_condition,
-    pattern.pattern_guard,
-    push_source,
-  )
+  emit_name_only_guard_function_source(builder, pattern, ctx)
+  emit_rule_arm_body(builder, pattern, ctx, push_source)
   builder.write_string("        true\n")
   builder.write_string("      }\n")
   builder.to_string()
@@ -297,13 +340,25 @@ fn emit_push_source(
 }
 
 ///|
-fn emit_duplicate_condition(ctx : PatternEmitContext) -> String {
+fn emit_duplicate_condition(
+  pattern : RulePatternSpec,
+  ctx : PatternEmitContext,
+) -> String {
   let conditions : Array[String] = []
   for binding in ctx.bindings {
     if binding.bind_names.length() >= 2 {
-      let first = binding.bind_names[0]
+      let first = if pattern.nameonly_metavars.contains(binding.meta_name) {
+        emit_name_only_value_name(binding.meta_name, 1)
+      } else {
+        binding.bind_names[0]
+      }
       for index in 1..<binding.bind_names.length() {
-        conditions.push("\{first} == \{binding.bind_names[index]}")
+        let other = if pattern.nameonly_metavars.contains(binding.meta_name) {
+          emit_name_only_value_name(binding.meta_name, index + 1)
+        } else {
+          binding.bind_names[index]
+        }
+        conditions.push("\{first} == \{other}")
       }
     }
   }
@@ -316,25 +371,170 @@ fn emit_guarded_push_source(
   duplicate_condition : String,
   guard_source : String?,
   push_source : String,
+  indent : String,
 ) -> Unit {
   match (duplicate_condition, guard_source) {
-    ("", None) => builder.write_string("        \{push_source}\n")
+    ("", None) => builder.write_string("\{indent}\{push_source}\n")
     ("", Some(guard_source)) => {
-      builder.write_string("        if \{guard_source} {\n")
-      builder.write_string("          \{push_source}\n")
-      builder.write_string("        }\n")
+      builder.write_string("\{indent}if \{guard_source} {\n")
+      builder.write_string("\{indent}  \{push_source}\n")
+      builder.write_string("\{indent}}\n")
     }
     (_, None) => {
-      builder.write_string("        if \{duplicate_condition} {\n")
-      builder.write_string("          \{push_source}\n")
-      builder.write_string("        }\n")
+      builder.write_string("\{indent}if \{duplicate_condition} {\n")
+      builder.write_string("\{indent}  \{push_source}\n")
+      builder.write_string("\{indent}}\n")
     }
     (_, Some(guard_source)) => {
-      builder.write_string("        if \{duplicate_condition} {\n")
-      builder.write_string("          if \{guard_source} {\n")
-      builder.write_string("            \{push_source}\n")
-      builder.write_string("          }\n")
-      builder.write_string("        }\n")
+      builder.write_string("\{indent}if \{duplicate_condition} {\n")
+      builder.write_string("\{indent}  if \{guard_source} {\n")
+      builder.write_string("\{indent}    \{push_source}\n")
+      builder.write_string("\{indent}  }\n")
+      builder.write_string("\{indent}}\n")
     }
   }
+}
+
+///|
+fn emit_rule_arm_body(
+  builder : StringBuilder,
+  pattern : RulePatternSpec,
+  ctx : PatternEmitContext,
+  push_source : String,
+) -> Unit {
+  let duplicate_condition = emit_duplicate_condition(pattern, ctx)
+  let guard_source = emit_guard_source(pattern, ctx)
+  let name_only_bindings = collect_name_only_bindings(pattern, ctx)
+  if name_only_bindings.is_empty() {
+    emit_guarded_push_source(
+      builder, duplicate_condition, guard_source, push_source, "        ",
+    )
+    return
+  }
+  for binding in name_only_bindings {
+    builder.write_string(
+      "        let \{emit_name_only_option_name(binding.meta_name, binding.occurrence)} = @rules.normalize_metavar_name(\{binding.bind_name})\n",
+    )
+  }
+  builder.write_string(
+    "        match \{emit_name_only_match_expr(name_only_bindings)} {\n",
+  )
+  builder.write_string(
+    "          \{emit_name_only_match_pattern(name_only_bindings)} => {\n",
+  )
+  emit_guarded_push_source(
+    builder, duplicate_condition, guard_source, push_source, "            ",
+  )
+  builder.write_string("          }\n")
+  builder.write_string("          _ => ()\n")
+  builder.write_string("        }\n")
+}
+
+///|
+fn collect_name_only_bindings(
+  pattern : RulePatternSpec,
+  ctx : PatternEmitContext,
+) -> Array[NameOnlyBinding] {
+  let name_only_bindings : Array[NameOnlyBinding] = []
+  for binding in ctx.bindings {
+    if pattern.nameonly_metavars.contains(binding.meta_name) {
+      for index in 0..<binding.bind_names.length() {
+        name_only_bindings.push({
+          meta_name: binding.meta_name,
+          occurrence: index + 1,
+          bind_name: binding.bind_names[index],
+        })
+      }
+    }
+  }
+  name_only_bindings
+}
+
+///|
+fn emit_name_only_match_expr(bindings : Array[NameOnlyBinding]) -> String {
+  if bindings.length() == 1 {
+    emit_name_only_option_name(bindings[0].meta_name, bindings[0].occurrence)
+  } else {
+    let entries : Array[String] = []
+    for binding in bindings {
+      entries.push(
+        emit_name_only_option_name(binding.meta_name, binding.occurrence),
+      )
+    }
+    let joined = entries.join(", ")
+    "(\{joined})"
+  }
+}
+
+///|
+fn emit_name_only_match_pattern(bindings : Array[NameOnlyBinding]) -> String {
+  if bindings.length() == 1 {
+    "Some(\{emit_name_only_value_name(bindings[0].meta_name, bindings[0].occurrence)})"
+  } else {
+    let entries : Array[String] = []
+    for binding in bindings {
+      entries.push(
+        "Some(\{emit_name_only_value_name(binding.meta_name, binding.occurrence)})",
+      )
+    }
+    let joined = entries.join(", ")
+    "(\{joined})"
+  }
+}
+
+///|
+fn emit_guard_source(
+  pattern : RulePatternSpec,
+  ctx : PatternEmitContext,
+) -> String? {
+  match pattern.pattern_guard {
+    None => None
+    Some(guard_source) =>
+      if pattern.nameonly_metavars.is_empty() {
+        Some(guard_source)
+      } else {
+        let args : Array[String] = []
+        for meta_name in emit_pattern_metavars(pattern) {
+          if pattern.nameonly_metavars.contains(meta_name) {
+            args.push(emit_name_only_value_name(meta_name, 1))
+          } else {
+            let binding = find_binding_record(ctx, meta_name).unwrap()
+            args.push(binding.bind_names[0])
+          }
+        }
+        let joined_args = args.join(", ")
+        Some("\{emit_guard_function_name()}(\{joined_args})")
+      }
+  }
+}
+
+///|
+fn emit_name_only_guard_function_source(
+  builder : StringBuilder,
+  pattern : RulePatternSpec,
+  ctx : PatternEmitContext,
+) -> Unit {
+  ignore(ctx)
+  guard pattern.pattern_guard is Some(guard_source) else { return }
+  if pattern.nameonly_metavars.is_empty() {
+    return
+  }
+  let params : Array[String] = []
+  for meta_name in emit_pattern_metavars(pattern) {
+    let param_type = if pattern.nameonly_metavars.contains(meta_name) {
+      "String"
+    } else {
+      "Json"
+    }
+    params.push("\{meta_name} : \{param_type}")
+  }
+  let joined_params = params.join(", ")
+  builder.write_string(
+    "        fn \{emit_guard_function_name()}(\{joined_params}) -> Bool {\n",
+  )
+  for meta_name in emit_pattern_metavars(pattern) {
+    builder.write_string("          ignore(\{meta_name})\n")
+  }
+  builder.write_string("          \{guard_source}\n")
+  builder.write_string("        }\n")
 }

@@ -6,13 +6,17 @@ description: |
 patterns:
   - shape: |
       _ctor.new(_args)
-    metavars: [_ctor, _args]
+    metavars:
+      structural: [_ctor, _args]
   - shape: |
       _value.new_with_string(_name, _args)
-    metavars: [_value, _name, _args]
+    metavars:
+      structural: [_value, _name, _args]
   - shape: |
       _value.new_with_index(_index, _args)
-    metavars: [_value, _index, _args]
+    metavars:
+      structural: [_value, _index, _args]
   - shape: |
       _value.new_with_symbol(_symbol, _args)
-    metavars: [_value, _symbol, _args]
+    metavars:
+      structural: [_value, _symbol, _args]

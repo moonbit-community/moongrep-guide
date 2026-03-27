@@ -5,4 +5,5 @@ description: |
 patterns:
   - shape: |
       @cmd.raw_effect(_effect)
-    metavars: [_effect]
+    metavars:
+      structural: [_effect]

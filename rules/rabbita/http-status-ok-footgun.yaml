@@ -6,13 +6,17 @@ description: |
 patterns:
   - shape: |
       @http.get(_url, expect=Text(_handler))
-    metavars: [_url, _handler]
+    metavars:
+      structural: [_url, _handler]
   - shape: |
       @http.post(_url, _body, expect=Text(_handler))
-    metavars: [_url, _body, _handler]
+    metavars:
+      structural: [_url, _body, _handler]
   - shape: |
       @http.patch(_url, _body, expect=Text(_handler))
-    metavars: [_url, _body, _handler]
+    metavars:
+      structural: [_url, _body, _handler]
   - shape: |
       @http.delete(_url, expect=Text(_handler))
-    metavars: [_url, _handler]
+    metavars:
+      structural: [_url, _handler]

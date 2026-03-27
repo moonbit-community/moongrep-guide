@@ -6,7 +6,9 @@ description: |
 patterns:
   - shape: |
       _conn.read_request()
-    metavars: [_conn]
+    metavars:
+      structural: [_conn]
   - shape: |
       _client.end_request()
-    metavars: [_client]
+    metavars:
+      structural: [_client]

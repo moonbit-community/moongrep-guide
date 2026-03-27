@@ -5,16 +5,15 @@ description: |
   loop with `_`, or refactor the loop body to use the counter intentionally.
 patterns:
   - shape: |
-      for counter = _start; cond_counter < upper_limit; cont_counter = next {
+      for counter = _start; counter < upper_limit; counter = next {
         body
       }
-    metavars: [counter, _start, cond_counter, upper_limit, cont_counter, next, body]
+    metavars:
+      structural: [_start, upper_limit, next, body]
+      nameonly: [counter]
     guard: |
       @rules.is_cstyle_for_with_unused_loop_var(
         counter,
-        cond_counter,
-        upper_limit,
-        cont_counter,
         next,
         body,
       )

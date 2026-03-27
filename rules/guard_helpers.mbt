@@ -1,36 +1,8 @@
 ///|
-// Guard helper for rules that need to inspect loop-control AST fragments.
-pub fn is_cstyle_for_with_unused_loop_var(
-  counter : Json,
-  cond_counter : Json,
-  _upper_limit : Json,
-  cont_counter : Json,
-  next : Json,
-  body : Json,
-) -> Bool {
-  match
-    (binder_name(counter), ident_name(cond_counter), binder_name(cont_counter)) {
-    (Some(loop_var), Some(cond_name), Some(cont_name)) =>
-      loop_var == cond_name &&
-      loop_var == cont_name &&
-      contains_ident(next, loop_var) &&
-      !contains_ident(body, loop_var)
-    _ => false
-  }
-}
-
-///|
-fn binder_name(ast : Json) -> String? {
+pub fn normalize_metavar_name(ast : Json) -> String? {
   match ast {
     { "kind": "Binder", "children": { "name": String(name), .. }, .. } =>
       Some(name)
-    _ => None
-  }
-}
-
-///|
-fn ident_name(ast : Json) -> String? {
-  match ast {
     {
       "kind": "Expr::Ident",
       "children": {
@@ -50,8 +22,30 @@ fn ident_name(ast : Json) -> String? {
       },
       ..
     } => Some(name)
+    {
+      "kind": "Pattern::Var",
+      "children": {
+        "value": {
+          "kind": "Binder",
+          "children": { "name": String(name), .. },
+          ..
+        },
+        ..
+      },
+      ..
+    } => Some(name)
     _ => None
   }
+}
+
+///|
+// Guard helper for rules that need to inspect loop-control AST fragments.
+pub fn is_cstyle_for_with_unused_loop_var(
+  counter : String,
+  next : Json,
+  body : Json,
+) -> Bool {
+  contains_ident(next, counter) && !contains_ident(body, counter)
 }
 
 ///|

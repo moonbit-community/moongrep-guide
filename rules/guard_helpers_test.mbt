@@ -58,13 +58,51 @@ fn collect_loop_checks(source : String) -> Array[Bool] raise {
           },
           ..
         } => {
-          results.push(
-            is_cstyle_for_with_unused_loop_var(
-              init_var, cond_counter, upper_limit, cont_counter, next, body,
-            ),
-          )
+          ignore(upper_limit)
+          match
+            (
+              normalize_metavar_name(init_var),
+              normalize_metavar_name(cond_counter),
+              normalize_metavar_name(cont_counter),
+            ) {
+            (Some(counter), Some(cond_name), Some(cont_name)) =>
+              results.push(
+                counter == cond_name &&
+                counter == cont_name &&
+                is_cstyle_for_with_unused_loop_var(counter, next, body),
+              )
+            _ => results.push(false)
+          }
           true
         }
+        _ => true
+      }
+    },
+  )
+  results
+}
+
+///|
+fn collect_normalized_name(ast : Json, results : Array[String]) -> Bool {
+  match normalize_metavar_name(ast) {
+    Some(name) => results.push(name)
+    None => ()
+  }
+  false
+}
+
+///|
+fn collect_name_only_matches(source : String) -> Array[String] raise {
+  let results : Array[String] = []
+  @references.traverse_top_impls(
+    name="rules/guard_helpers_test",
+    source,
+    context=results,
+    (results, ast) => {
+      match ast {
+        { "kind": "Binder", .. } => collect_normalized_name(ast, results)
+        { "kind": "Expr::Ident", .. } => collect_normalized_name(ast, results)
+        { "kind": "Pattern::Var", .. } => collect_normalized_name(ast, results)
         _ => true
       }
     },
@@ -96,6 +134,50 @@ test "guard helper rejects used c-style for loop variable" {
   let results = collect_loop_checks(source)
   assert_true(results.length() == 1)
   assert_false(results[0])
+}
+
+///|
+test "normalize_metavar_name extracts binder ident and pattern-var names" {
+  let source =
+    #|fn sample(limit : Int) -> Unit {
+    #|  for i = 0; i < limit; i = i + 1 {
+    #|    match value {
+    #|      Some(item) => println(item)
+    #|      None => ()
+    #|    }
+    #|  }
+    #|}
+  let results = collect_name_only_matches(source)
+  assert_true(results.contains("i"))
+  assert_true(results.contains("limit"))
+  assert_true(results.contains("item"))
+}
+
+///|
+test "normalize_metavar_name rejects non-name-like AST" {
+  let source =
+    #|fn sample(limit : Int) -> Unit {
+    #|  for i = 0; i < limit; i = i + 1 {
+    #|    println(i + 1)
+    #|  }
+    #|}
+  let results : Array[Bool] = []
+  @references.traverse_top_impls(
+    name="rules/guard_helpers_test",
+    source,
+    context=results,
+    (results, ast) => {
+      match ast {
+        { "kind": "Expr::Infix", .. } => {
+          results.push(normalize_metavar_name(ast) is None)
+          false
+        }
+        _ => true
+      }
+    },
+  )
+  assert_true(results.length() >= 1)
+  assert_true(results[0])
 }
 
 ///|

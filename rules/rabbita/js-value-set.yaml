@@ -6,10 +6,13 @@ description: |
 patterns:
   - shape: |
       _value.set_with_string(_key, _payload)
-    metavars: [_value, _key, _payload]
+    metavars:
+      structural: [_value, _key, _payload]
   - shape: |
       _value.set_with_index(_index, _payload)
-    metavars: [_value, _index, _payload]
+    metavars:
+      structural: [_value, _index, _payload]
   - shape: |
       _value.set_with_symbol(_symbol, _payload)
-    metavars: [_value, _symbol, _payload]
+    metavars:
+      structural: [_value, _symbol, _payload]

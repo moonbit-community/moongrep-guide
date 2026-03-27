@@ -6413,7 +6413,7 @@ fn lang_cstyle_for_unused_loop_var(
               },
               ..
             },
-            "lhs": cond_counter,
+            "lhs": meta_counter_2,
             "rhs": upper_limit,
             ..
           },
@@ -6425,7 +6425,7 @@ fn lang_cstyle_for_unused_loop_var(
           "children": [
             {
               "kind": "For::ContBinding",
-              "children": { "expr": next, "binder": cont_counter, .. },
+              "children": { "expr": next, "binder": meta_counter_3, .. },
               ..
             },
           ],
@@ -6435,17 +6435,55 @@ fn lang_cstyle_for_unused_loop_var(
       },
       ..
     } => {
-      if @rules.is_cstyle_for_with_unused_loop_var(
-          counter, cond_counter, upper_limit, cont_counter, next, body,
+      fn __moongrep_guard(
+        _start : Json,
+        upper_limit : Json,
+        next : Json,
+        body : Json,
+        counter : String,
+      ) -> Bool {
+        ignore(_start)
+        ignore(upper_limit)
+        ignore(next)
+        ignore(body)
+        ignore(counter)
+        @rules.is_cstyle_for_with_unused_loop_var(counter, next, body)
+      }
+      let __moongrep_name_opt_meta_counter_1 = @rules.normalize_metavar_name(
+        counter,
+      )
+      let __moongrep_name_opt_meta_counter_2 = @rules.normalize_metavar_name(
+        meta_counter_2,
+      )
+      let __moongrep_name_opt_meta_counter_3 = @rules.normalize_metavar_name(
+        meta_counter_3,
+      )
+      match
+        (
+          __moongrep_name_opt_meta_counter_1, __moongrep_name_opt_meta_counter_2,
+          __moongrep_name_opt_meta_counter_3,
         ) {
-        hits.push(MatchHit::{
-          file,
-          rule_id: "lang/cstyle-for-unused-loop-var",
-          package_name: "moonbitlang/core",
-          description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n",
-          pattern_index: 0,
-          loc,
-        })
+        (
+          Some(__moongrep_name_meta_counter_1),
+          Some(__moongrep_name_meta_counter_2),
+          Some(__moongrep_name_meta_counter_3),
+        ) =>
+          if __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_2 &&
+            __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_3 {
+            if __moongrep_guard(
+                _start, upper_limit, next, body, __moongrep_name_meta_counter_1,
+              ) {
+              hits.push(MatchHit::{
+                file,
+                rule_id: "lang/cstyle-for-unused-loop-var",
+                package_name: "moonbitlang/core",
+                description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n",
+                pattern_index: 0,
+                loc,
+              })
+            }
+          }
+        _ => ()
       }
       true
     }

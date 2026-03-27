@@ -5,4 +5,5 @@ description: |
 patterns:
   - shape: |
       @html.Attrs::build().inner_html(_html)
-    metavars: [_html]
+    metavars:
+      structural: [_html]

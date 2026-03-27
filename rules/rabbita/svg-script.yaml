@@ -5,4 +5,5 @@ description: |
 patterns:
   - shape: |
       @svg.script([@svg.text(_script)])
-    metavars: [_script]
+    metavars:
+      structural: [_script]

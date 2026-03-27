@@ -6,7 +6,9 @@ description: |
 patterns:
   - shape: |
       @websocket.connect(_url, headers=_headers)
-    metavars: [_url, _headers]
+    metavars:
+      structural: [_url, _headers]
   - shape: |
       @websocket.from_http_client(_client, _path)
-    metavars: [_client, _path]
+    metavars:
+      structural: [_client, _path]

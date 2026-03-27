@@ -74,26 +74,20 @@ fn parse_rule_source(
       "shape", "metavars", "guard",
     ])
     let shape = expect_yaml_string(pattern_map, path, "shape")
-    let metavars_yaml = expect_yaml_array(pattern_map, path, "metavars")
-    let metavars : Array[String] = []
-    for meta_index in 0..<metavars_yaml.length() {
-      guard metavars_yaml[meta_index] is @yaml.Yaml::String(meta_name) else {
-        raise InvalidRule(
-          path~,
-          info="patterns[\{index}].metavars[\{meta_index}] must be a string",
-        )
-      }
-      if metavars.contains(meta_name) {
-        raise InvalidRule(
-          path~,
-          info="patterns[\{index}] contains duplicate metavar \{meta_name}",
-        )
-      }
-      metavars.push(meta_name)
-    }
+    let (structural_metavars, nameonly_metavars) = expect_metavars(
+      pattern_map, path, index,
+    )
+    let metavars = pattern_declared_metavars(
+      structural_metavars, nameonly_metavars,
+    )
     ensure_metavars_safe(path, index, metavars)
     let pattern_guard = expect_pattern_guard(pattern_map, path, index)
-    patterns.push({ shape, metavars, pattern_guard })
+    patterns.push({
+      shape,
+      structural_metavars,
+      nameonly_metavars,
+      pattern_guard,
+    })
   }
   {
     rule_id: rule_id_from_path(path, rules_root),
@@ -192,6 +186,106 @@ fn expect_pattern_guard(
 }
 
 ///|
+fn expect_metavars(
+  map : Map[String, @yaml.Yaml],
+  path : String,
+  pattern_index : Int,
+) -> (Array[String], Array[String]) raise {
+  match map.get("metavars") {
+    Some(@yaml.Yaml::Map(meta_map)) => {
+      ensure_allowed_keys(
+        path,
+        "patterns[\{pattern_index}].metavars",
+        meta_map,
+        ["structural", "nameonly"],
+      )
+      let structural = expect_metavar_bucket(
+        meta_map, path, pattern_index, "structural",
+      )
+      let nameonly = expect_metavar_bucket(
+        meta_map, path, pattern_index, "nameonly",
+      )
+      ensure_metavar_buckets_disjoint(path, pattern_index, structural, nameonly)
+      (structural, nameonly)
+    }
+    Some(_) =>
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}].metavars must be a mapping",
+      )
+    None => ([], [])
+  }
+}
+
+///|
+fn expect_metavar_bucket(
+  map : Map[String, @yaml.Yaml],
+  path : String,
+  pattern_index : Int,
+  bucket : String,
+) -> Array[String] raise {
+  match map.get(bucket) {
+    None => []
+    Some(@yaml.Yaml::Array(values)) => {
+      let metavars : Array[String] = []
+      for index in 0..<values.length() {
+        guard values[index] is @yaml.Yaml::String(meta_name) else {
+          raise InvalidRule(
+            path~,
+            info="patterns[\{pattern_index}].metavars.\{bucket}[\{index}] must be a string",
+          )
+        }
+        if metavars.contains(meta_name) {
+          raise InvalidRule(
+            path~,
+            info="patterns[\{pattern_index}].metavars.\{bucket} contains duplicate metavar \{meta_name}",
+          )
+        }
+        metavars.push(meta_name)
+      }
+      metavars
+    }
+    Some(_) =>
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}].metavars.\{bucket} must be an array",
+      )
+  }
+}
+
+///|
+fn ensure_metavar_buckets_disjoint(
+  path : String,
+  pattern_index : Int,
+  structural : Array[String],
+  nameonly : Array[String],
+) -> Unit raise {
+  for meta_name in nameonly {
+    if structural.contains(meta_name) {
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}].metavars contains duplicate metavar \{meta_name}",
+      )
+    }
+  }
+}
+
+///|
+fn pattern_declared_metavars(
+  structural_metavars : Array[String],
+  nameonly_metavars : Array[String],
+) -> Array[String] {
+  let metavars : Array[String] = []
+  for meta_name in structural_metavars {
+    metavars.push(meta_name)
+  }
+  for meta_name in nameonly_metavars {
+    metavars.push(meta_name)
+  }
+  metavars
+}
+
+///|
 fn ensure_metavars_safe(
   path : String,
   pattern_index : Int,
@@ -202,6 +296,11 @@ fn ensure_metavars_safe(
       raise InvalidRule(
         path~,
         info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because it conflicts with generated matcher locals",
+      )
+    } else if meta_name.has_prefix("__moongrep_") {
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because names starting with __moongrep_ are reserved for generated matcher locals",
       )
     }
   }

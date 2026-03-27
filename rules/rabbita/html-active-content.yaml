@@ -6,28 +6,37 @@ description: |
 patterns:
   - shape: |
       @html.script(src=_src, _children)
-    metavars: [_src, _children]
+    metavars:
+      structural: [_src, _children]
   - shape: |
       @html.script(src~, _children)
-    metavars: [_children]
+    metavars:
+      structural: [_children]
   - shape: |
       @html.Attrs::build().srcdoc(_html)
-    metavars: [_html]
+    metavars:
+      structural: [_html]
   - shape: |
       @html.iframe(src=_url)
-    metavars: [_url]
+    metavars:
+      structural: [_url]
   - shape: |
       @html.fencedframe(src=_url)
-    metavars: [_url]
+    metavars:
+      structural: [_url]
   - shape: |
       @html.object(attrs=@html.Attrs::build().data(_url).type_(_mime), _children)
-    metavars: [_url, _mime, _children]
+    metavars:
+      structural: [_url, _mime, _children]
   - shape: |
       @html.embed(attrs=@html.Attrs::build().src(_url).type_(_mime))
-    metavars: [_url, _mime]
+    metavars:
+      structural: [_url, _mime]
   - shape: |
       @html.base(href=_base)
-    metavars: [_base]
+    metavars:
+      structural: [_base]
   - shape: |
       @html.meta(http_equiv="refresh", content="0;url=" + _url)
-    metavars: [_url]
+    metavars:
+      structural: [_url]

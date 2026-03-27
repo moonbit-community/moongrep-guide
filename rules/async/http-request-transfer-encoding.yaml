@@ -9,34 +9,45 @@ description: |
 patterns:
   - shape: |
       @http.Client::new(_url, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _value]
+    metavars:
+      structural: [_url, _value]
   - shape: |
       _client.request(_method, _path, extra_headers={ "Transfer-Encoding": _value })
-    metavars: [_client, _method, _path, _value]
+    metavars:
+      structural: [_client, _method, _path, _value]
   - shape: |
       _client.get(_path, extra_headers={ "Transfer-Encoding": _value })
-    metavars: [_client, _path, _value]
+    metavars:
+      structural: [_client, _path, _value]
   - shape: |
       _client.put(_path, _content, extra_headers={ "Transfer-Encoding": _value })
-    metavars: [_client, _path, _content, _value]
+    metavars:
+      structural: [_client, _path, _content, _value]
   - shape: |
       _client.post(_path, _content, extra_headers={ "Transfer-Encoding": _value })
-    metavars: [_client, _path, _content, _value]
+    metavars:
+      structural: [_client, _path, _content, _value]
   - shape: |
       @http.get(_url, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _value]
+    metavars:
+      structural: [_url, _value]
   - shape: |
       @http.put(_url, _content, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _content, _value]
+    metavars:
+      structural: [_url, _content, _value]
   - shape: |
       @http.post(_url, _content, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _content, _value]
+    metavars:
+      structural: [_url, _content, _value]
   - shape: |
       @http.get_stream(_url, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _value]
+    metavars:
+      structural: [_url, _value]
   - shape: |
       @http.put_stream(_url, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _value]
+    metavars:
+      structural: [_url, _value]
   - shape: |
       @http.post_stream(_url, headers={ "Transfer-Encoding": _value })
-    metavars: [_url, _value]
+    metavars:
+      structural: [_url, _value]

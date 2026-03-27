@@ -6,13 +6,17 @@ description: |
 patterns:
   - shape: |
       @fs.open(_path, mode=_mode, truncate=true)
-    metavars: [_path, _mode]
+    metavars:
+      structural: [_path, _mode]
   - shape: |
       @fs.open(_path, mode~, truncate=true)
-    metavars: [_path]
+    metavars:
+      structural: [_path]
   - shape: |
       @fs.write_file(_path, _content)
-    metavars: [_path, _content]
+    metavars:
+      structural: [_path, _content]
   - shape: |
       @fs.write_file(_path, _content, truncate=true)
-    metavars: [_path, _content]
+    metavars:
+      structural: [_path, _content]

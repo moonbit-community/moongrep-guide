@@ -5,4 +5,5 @@ description: |
 patterns:
   - shape: |
       @nav.load(_url)
-    metavars: [_url]
+    metavars:
+      structural: [_url]
