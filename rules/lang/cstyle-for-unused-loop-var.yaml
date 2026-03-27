@@ -5,11 +5,11 @@ description: |
   loop with `_`, or refactor the loop body to use the counter intentionally.
 patterns:
   - shape: |
-      for counter = _start; counter < upper_limit; counter = next {
+      for counter = _start; counter < upper_limit; counter = counter + 1 {
         body
       }
     metavars:
-      structural: [_start, upper_limit, next, body]
+      structural: [_start, upper_limit, body]
       nameonly: [counter]
     guard: |
-      @greptools.contains_ident(next, counter) && !@greptools.contains_ident(body, counter)
+      !@greptools.is_unused_var(body, counter)

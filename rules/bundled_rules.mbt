@@ -6425,7 +6425,42 @@ fn lang_cstyle_for_unused_loop_var(
           "children": [
             {
               "kind": "For::ContBinding",
-              "children": { "expr": next, "binder": meta_counter_3, .. },
+              "children": {
+                "expr": {
+                  "kind": "Expr::Infix",
+                  "children": {
+                    "op": {
+                      "kind": "Var",
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "children": { "value": "+", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    "lhs": meta_counter_3,
+                    "rhs": {
+                      "kind": "Expr::Constant",
+                      "children": {
+                        "constant": {
+                          "kind": "Constant::Int",
+                          "children": { "value": "1", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "binder": meta_counter_4,
+                ..
+              },
               ..
             },
           ],
@@ -6438,17 +6473,14 @@ fn lang_cstyle_for_unused_loop_var(
       fn __moongrep_guard(
         _start : Json,
         upper_limit : Json,
-        next : Json,
         body : Json,
         counter : String,
       ) -> Bool {
         ignore(_start)
         ignore(upper_limit)
-        ignore(next)
         ignore(body)
         ignore(counter)
-        @greptools.contains_ident(next, counter) &&
-        !@greptools.contains_ident(body, counter)
+        !@greptools.is_unused_var(body, counter)
       }
       let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(
         counter,
@@ -6459,20 +6491,25 @@ fn lang_cstyle_for_unused_loop_var(
       let __moongrep_name_opt_meta_counter_3 = @greptools.normalize_metavar_name(
         meta_counter_3,
       )
+      let __moongrep_name_opt_meta_counter_4 = @greptools.normalize_metavar_name(
+        meta_counter_4,
+      )
       match
         (
           __moongrep_name_opt_meta_counter_1, __moongrep_name_opt_meta_counter_2,
-          __moongrep_name_opt_meta_counter_3,
+          __moongrep_name_opt_meta_counter_3, __moongrep_name_opt_meta_counter_4,
         ) {
         (
           Some(__moongrep_name_meta_counter_1),
           Some(__moongrep_name_meta_counter_2),
           Some(__moongrep_name_meta_counter_3),
+          Some(__moongrep_name_meta_counter_4),
         ) =>
           if __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_2 &&
-            __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_3 {
+            __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_3 &&
+            __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_4 {
             if __moongrep_guard(
-                _start, upper_limit, next, body, __moongrep_name_meta_counter_1,
+                _start, upper_limit, body, __moongrep_name_meta_counter_1,
               ) {
               hits.push(MatchHit::{
                 file,

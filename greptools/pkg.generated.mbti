@@ -1,12 +1,20 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbit-community/moongrep-guide/greptools"
 
-// Values
-pub fn contains_ident(Json, String) -> Bool
+import {
+  "moonbit-community/moongrep-guide/references",
+}
 
+// Values
 pub fn dump_expr_json_repr(String) -> Json raise
 
+pub fn is_unused_var(Json, String) -> Bool
+
 pub fn normalize_metavar_name(Json) -> String?
+
+pub fn[C] traverse_ast_json_repr(Json, (C, Json) -> Bool raise, context~ : C) -> Unit raise
+
+pub fn[C] traverse_top_impls(name~ : String, String, (C, Json) -> Bool raise, context~ : C) -> Unit raise
 
 // Errors
 
@@ -24,6 +32,7 @@ pub impl Show for MatchHit
 pub impl ToJson for MatchHit
 
 // Type aliases
+pub using @references {type AstTraverseError}
 
 // Traits
 

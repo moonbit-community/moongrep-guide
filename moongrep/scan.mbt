@@ -47,7 +47,7 @@ fn find_rule_hits(
   source : String,
   hits : Array[@greptools.MatchHit],
 ) -> Unit raise {
-  @references.traverse_top_impls(name~, source, context=hits, (hits, ast) => {
+  @greptools.traverse_top_impls(name~, source, context=hits, (hits, ast) => {
     apply_bundled_rules(name, ast, hits)
   })
 }
