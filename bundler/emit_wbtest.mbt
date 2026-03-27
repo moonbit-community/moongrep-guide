@@ -26,6 +26,35 @@ test "emit bundle source builds package-local matcher file" {
 }
 
 ///|
+test "emit matcher source marks bundled rule functions as raising" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/test",
+      package_name: "moonbit-community/example",
+      description: "example rule",
+      patterns: [
+        {
+          shape: "node.set_inner_html(html)",
+          structural_metavars: ["node", "html"],
+          nameonly_metavars: [],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(
+    source.contains(
+      "#warnings(\"-unused_error_type\")\nfn example_test(file : String, ast : Json, hits : Array[MatchHit]) -> Bool raise {",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool raise] = {",
+    ),
+  )
+}
+
+///|
 test "emit bundle source generates one matcher function per rule" {
   let source = emit_matcher_source([
     {
@@ -191,7 +220,7 @@ test "emit matcher source normalizes nameonly metavars before guard" {
   )
   assert_true(
     source.contains(
-      "fn __moongrep_guard(start : Json, limit : Json, next : Json, body : Json, counter : String) -> Bool {",
+      "fn __moongrep_guard(start : Json, limit : Json, next : Json, body : Json, counter : String) -> Bool raise {",
     ),
   )
   assert_true(

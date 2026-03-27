@@ -6,7 +6,7 @@ import {
 }
 
 // Values
-pub let moongrep_rules_table : Map[String, (String, Json, Array[@greptools.MatchHit]) -> Bool]
+pub let moongrep_rules_table : Map[String, (String, Json, Array[@greptools.MatchHit]) -> Bool raise]
 
 // Errors
 

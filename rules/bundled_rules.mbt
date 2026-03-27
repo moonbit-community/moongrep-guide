@@ -2,7 +2,12 @@
 
 ///|
 // bundled rule: rabbita/nav-load
-fn rabbita_nav_load(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
+#warnings("-unused_error_type")
+fn rabbita_nav_load(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool raise {
   match ast {
     // rule: rabbita/nav-load pattern 0
     {
@@ -68,11 +73,12 @@ fn rabbita_nav_load(file : String, ast : Json, hits : Array[MatchHit]) -> Bool {
 
 ///|
 // bundled rule: rabbita/js-require
+#warnings("-unused_error_type")
 fn rabbita_js_require(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/js-require pattern 0
     {
@@ -169,11 +175,12 @@ fn rabbita_js_require(
 
 ///|
 // bundled rule: rabbita/svg-script
+#warnings("-unused_error_type")
 fn rabbita_svg_script(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/svg-script pattern 0
     {
@@ -305,11 +312,12 @@ fn rabbita_svg_script(
 
 ///|
 // bundled rule: rabbita/js-value-get
+#warnings("-unused_error_type")
 fn rabbita_js_value_get(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/js-value-get pattern 0
     {
@@ -455,11 +463,12 @@ fn rabbita_js_value_get(
 
 ///|
 // bundled rule: rabbita/js-value-new
+#warnings("-unused_error_type")
 fn rabbita_js_value_new(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/js-value-new pattern 0
     {
@@ -690,11 +699,12 @@ fn rabbita_js_value_new(
 
 ///|
 // bundled rule: rabbita/js-value-set
+#warnings("-unused_error_type")
 fn rabbita_js_value_set(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/js-value-set pattern 0
     {
@@ -879,11 +889,12 @@ fn rabbita_js_value_set(
 
 ///|
 // bundled rule: rabbita/svg-href-url
+#warnings("-unused_error_type")
 fn rabbita_svg_href_url(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/svg-href-url pattern 0
     {
@@ -1278,11 +1289,12 @@ fn rabbita_svg_href_url(
 
 ///|
 // bundled rule: rabbita/html-href-url
+#warnings("-unused_error_type")
 fn rabbita_html_href_url(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/html-href-url pattern 0
     {
@@ -1545,11 +1557,12 @@ fn rabbita_html_href_url(
 
 ///|
 // bundled rule: rabbita/cmd-raw-effect
+#warnings("-unused_error_type")
 fn rabbita_cmd_raw_effect(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/cmd-raw-effect pattern 0
     {
@@ -1615,11 +1628,12 @@ fn rabbita_cmd_raw_effect(
 
 ///|
 // bundled rule: rabbita/js-value-apply
+#warnings("-unused_error_type")
 fn rabbita_js_value_apply(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/js-value-apply pattern 0
     {
@@ -1850,11 +1864,12 @@ fn rabbita_js_value_apply(
 
 ///|
 // bundled rule: rabbita/svg-inner-html
+#warnings("-unused_error_type")
 fn rabbita_svg_inner_html(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/svg-inner-html pattern 0
     {
@@ -1941,11 +1956,12 @@ fn rabbita_svg_inner_html(
 
 ///|
 // bundled rule: async/io-unbounded-read
+#warnings("-unused_error_type")
 fn async_io_unbounded_read(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/io-unbounded-read pattern 0
     {
@@ -2027,11 +2043,12 @@ fn async_io_unbounded_read(
 
 ///|
 // bundled rule: async/socket-reuse-addr
+#warnings("-unused_error_type")
 fn async_socket_reuse_addr(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/socket-reuse-addr pattern 0
     {
@@ -2134,11 +2151,12 @@ fn async_socket_reuse_addr(
 
 ///|
 // bundled rule: rabbita/html-inner-html
+#warnings("-unused_error_type")
 fn rabbita_html_inner_html(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/html-inner-html pattern 0
     {
@@ -2225,11 +2243,12 @@ fn rabbita_html_inner_html(
 
 ///|
 // bundled rule: rabbita/svg-target-blank
+#warnings("-unused_error_type")
 fn rabbita_svg_target_blank(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/svg-target-blank pattern 0
     {
@@ -2462,11 +2481,12 @@ fn rabbita_svg_target_blank(
 
 ///|
 // bundled rule: async/http-crlf-injection
+#warnings("-unused_error_type")
 fn async_http_crlf_injection(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/http-crlf-injection pattern 0
     {
@@ -3090,11 +3110,12 @@ fn async_http_crlf_injection(
 
 ///|
 // bundled rule: rabbita/html-target-blank
+#warnings("-unused_error_type")
 fn rabbita_html_target_blank(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/html-target-blank pattern 0
     {
@@ -3460,11 +3481,12 @@ fn rabbita_html_target_blank(
 
 ///|
 // bundled rule: async/http-cl-te-ambiguity
+#warnings("-unused_error_type")
 fn async_http_cl_te_ambiguity(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/http-cl-te-ambiguity pattern 0
     {
@@ -3528,11 +3550,12 @@ fn async_http_cl_te_ambiguity(
 
 ///|
 // bundled rule: rabbita/dom-set-inner-html
+#warnings("-unused_error_type")
 fn rabbita_dom_set_inner_html(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/dom-set-inner-html pattern 0
     {
@@ -3586,11 +3609,12 @@ fn rabbita_dom_set_inner_html(
 
 ///|
 // bundled rule: rabbita/js-global-this-get
+#warnings("-unused_error_type")
 fn rabbita_js_global_this_get(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/js-global-this-get pattern 0
     {
@@ -3662,11 +3686,12 @@ fn rabbita_js_global_this_get(
 
 ///|
 // bundled rule: rabbita/dom-window-load-url
+#warnings("-unused_error_type")
 fn rabbita_dom_window_load_url(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/dom-window-load-url pattern 0
     {
@@ -3747,11 +3772,12 @@ fn rabbita_dom_window_load_url(
 
 ///|
 // bundled rule: rabbita/html-active-content
+#warnings("-unused_error_type")
 fn rabbita_html_active_content(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/html-active-content pattern 0
     {
@@ -4715,11 +4741,12 @@ fn rabbita_html_active_content(
 
 ///|
 // bundled rule: async/fs-read-file-unbounded
+#warnings("-unused_error_type")
 fn async_fs_read_file_unbounded(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/fs-read-file-unbounded pattern 0
     {
@@ -4785,11 +4812,12 @@ fn async_fs_read_file_unbounded(
 
 ///|
 // bundled rule: async/fs-destructive-truncate
+#warnings("-unused_error_type")
 fn async_fs_destructive_truncate(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/fs-destructive-truncate pattern 0
     {
@@ -5206,11 +5234,12 @@ fn async_fs_destructive_truncate(
 
 ///|
 // bundled rule: rabbita/http-status-ok-footgun
+#warnings("-unused_error_type")
 fn rabbita_http_status_ok_footgun(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/http-status-ok-footgun pattern 0
     {
@@ -5772,11 +5801,12 @@ fn rabbita_http_status_ok_footgun(
 
 ///|
 // bundled rule: async/fs-tmpdir-weak-randomness
+#warnings("-unused_error_type")
 fn async_fs_tmpdir_weak_randomness(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/fs-tmpdir-weak-randomness pattern 0
     {
@@ -5972,11 +6002,12 @@ fn async_fs_tmpdir_weak_randomness(
 
 ///|
 // bundled rule: async/process-redirect-truncate
+#warnings("-unused_error_type")
 fn async_process_redirect_truncate(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/process-redirect-truncate pattern 0
     {
@@ -6073,11 +6104,12 @@ fn async_process_redirect_truncate(
 
 ///|
 // bundled rule: async/process-unbounded-collect
+#warnings("-unused_error_type")
 fn async_process_unbounded_collect(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/process-unbounded-collect pattern 0
     {
@@ -6373,11 +6405,12 @@ fn async_process_unbounded_collect(
 
 ///|
 // bundled rule: lang/cstyle-for-unused-loop-var
+#warnings("-unused_error_type")
 fn lang_cstyle_for_unused_loop_var(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: lang/cstyle-for-unused-loop-var pattern 0
     {
@@ -6475,7 +6508,7 @@ fn lang_cstyle_for_unused_loop_var(
         upper_limit : Json,
         body : Json,
         counter : String,
-      ) -> Bool {
+      ) -> Bool raise {
         ignore(_start)
         ignore(upper_limit)
         ignore(body)
@@ -6532,11 +6565,12 @@ fn lang_cstyle_for_unused_loop_var(
 
 ///|
 // bundled rule: async/websocket-message-read-all
+#warnings("-unused_error_type")
 fn async_websocket_message_read_all(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/websocket-message-read-all pattern 0
     {
@@ -6572,11 +6606,12 @@ fn async_websocket_message_read_all(
 
 ///|
 // bundled rule: async/websocket-http-handshake-crlf
+#warnings("-unused_error_type")
 fn async_websocket_http_handshake_crlf(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/websocket-http-handshake-crlf pattern 0
     {
@@ -6737,11 +6772,12 @@ fn async_websocket_http_handshake_crlf(
 
 ///|
 // bundled rule: async/http-request-transfer-encoding
+#warnings("-unused_error_type")
 fn async_http_request_transfer_encoding(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/http-request-transfer-encoding pattern 0
     {
@@ -7905,11 +7941,12 @@ fn async_http_request_transfer_encoding(
 
 ///|
 // bundled rule: async/tls-client-verification-footgun
+#warnings("-unused_error_type")
 fn async_tls_client_verification_footgun(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/tls-client-verification-footgun pattern 0
     {
@@ -8235,11 +8272,12 @@ fn async_tls_client_verification_footgun(
 
 ///|
 // bundled rule: rabbita/dom-dangerous-attribute-write
+#warnings("-unused_error_type")
 fn rabbita_dom_dangerous_attribute_write(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: rabbita/dom-dangerous-attribute-write pattern 0
     {
@@ -8387,11 +8425,12 @@ fn rabbita_dom_dangerous_attribute_write(
 
 ///|
 // bundled rule: async/websocket-server-upgrade-unchecked
+#warnings("-unused_error_type")
 fn async_websocket_server_upgrade_unchecked(
   file : String,
   ast : Json,
   hits : Array[MatchHit],
-) -> Bool {
+) -> Bool raise {
   match ast {
     // rule: async/websocket-server-upgrade-unchecked pattern 0
     {
@@ -8475,7 +8514,7 @@ fn async_websocket_server_upgrade_unchecked(
 ///|
 pub let moongrep_rules_table : Map[
   String,
-  (String, Json, Array[MatchHit]) -> Bool,
+  (String, Json, Array[MatchHit]) -> Bool raise,
 ] = {
   "rabbita/nav-load": rabbita_nav_load,
   "rabbita/js-require": rabbita_js_require,
