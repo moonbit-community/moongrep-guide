@@ -40,7 +40,7 @@ pub fn normalize_metavar_name(ast : Json) -> String? {
 
 ///|
 pub fn is_unused_var(ast : Json, name : String) -> Bool {
-  contains_ident_with_shadow(ast, name, false)
+  !contains_ident_with_shadow(ast, name, false)
 }
 
 ///|
