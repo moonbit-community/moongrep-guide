@@ -56,7 +56,7 @@ fn parse_rule_source(
     raise InvalidRule(path~, info="top-level YAML document must be a mapping")
   }
   ensure_allowed_keys(path, "top-level rule", doc, [
-    "package", "description", "describle", "patterns",
+    "package", "description", "patterns",
   ])
   let package_name = expect_yaml_string(doc, path, "package")
   let description = expect_description(doc, path)
@@ -148,13 +148,7 @@ fn expect_description(
   match map.get("description") {
     Some(@yaml.Yaml::String(value)) => value
     Some(_) => raise InvalidRule(path~, info="description must be a string")
-    None =>
-      match map.get("describle") {
-        Some(@yaml.Yaml::String(value)) => value
-        Some(_) => raise InvalidRule(path~, info="describle must be a string")
-        None =>
-          raise InvalidRule(path~, info="missing required key description")
-      }
+    None => raise InvalidRule(path~, info="missing required key description")
   }
 }
 
