@@ -164,19 +164,19 @@ test "emit matcher source normalizes nameonly metavars before guard" {
           shape: "for counter = start; counter < limit; counter = next { body }",
           structural_metavars: ["start", "limit", "next", "body"],
           nameonly_metavars: ["counter"],
-          pattern_guard: Some("@rules.example(counter, next, body)"),
+          pattern_guard: Some("@greptools.example(counter, next, body)"),
         },
       ],
     },
   ])
   assert_true(
     source.contains(
-      "let __moongrep_name_opt_meta_counter_1 = @rules.normalize_metavar_name(counter)",
+      "let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(counter)",
     ),
   )
   assert_true(
     source.contains(
-      "let __moongrep_name_opt_meta_counter_2 = @rules.normalize_metavar_name(meta_counter_2)",
+      "let __moongrep_name_opt_meta_counter_2 = @greptools.normalize_metavar_name(meta_counter_2)",
     ),
   )
   assert_true(
@@ -225,7 +225,7 @@ test "emit matcher source checks nameonly normalization without guard" {
   ])
   assert_true(
     source.contains(
-      "let __moongrep_name_opt_meta_left_1 = @rules.normalize_metavar_name(left)",
+      "let __moongrep_name_opt_meta_left_1 = @greptools.normalize_metavar_name(left)",
     ),
   )
   assert_true(source.contains("match __moongrep_name_opt_meta_left_1 {"))

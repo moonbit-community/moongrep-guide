@@ -39,17 +39,7 @@ pub fn normalize_metavar_name(ast : Json) -> String? {
 }
 
 ///|
-// Guard helper for rules that need to inspect loop-control AST fragments.
-pub fn is_cstyle_for_with_unused_loop_var(
-  counter : String,
-  next : Json,
-  body : Json,
-) -> Bool {
-  contains_ident(next, counter) && !contains_ident(body, counter)
-}
-
-///|
-fn contains_ident(ast : Json, name : String) -> Bool {
+pub fn contains_ident(ast : Json, name : String) -> Bool {
   let matches : Array[Unit] = []
   ignore(
     try? @references.traverse_ast_json_repr(ast, context=matches, (
@@ -96,27 +86,8 @@ fn contains_ident(ast : Json, name : String) -> Bool {
 
 ///|
 fn interp_source_contains_ident(source : String, name : String) -> Bool {
-  if source.trim().to_string() == name {
-    return true
-  }
-  let parsed = try? parse_expr_json_repr(source)
-  match parsed {
-    Ok(ast) => contains_ident(ast, name)
-    Err(_) => false
-  }
-}
-
-///|
-fn parse_expr_json_repr(expr : String) -> Json raise {
-  let (expr, reports) = @lexer.tokens_from_string(
-      expr,
-      comment=true,
-      name="interpolation source",
-    ).tokens
-    |> @handrolled_parser.parse_expr
-  if reports.is_empty() {
-    expr.json_repr()
-  } else {
-    fail(reports.to_json().stringify(indent=2))
+  (source.trim().to_string() == name ||
+  contains_ident(dump_expr_json_repr(source), name)) catch {
+    _ => false
   }
 }

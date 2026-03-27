@@ -6447,7 +6447,8 @@ fn lang_cstyle_for_unused_loop_var(
         ignore(next)
         ignore(body)
         ignore(counter)
-        @greptools.is_cstyle_for_with_unused_loop_var(counter, next, body)
+        @greptools.contains_ident(next, counter) &&
+        !@greptools.contains_ident(body, counter)
       }
       let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(
         counter,

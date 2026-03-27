@@ -12,8 +12,4 @@ patterns:
       structural: [_start, upper_limit, next, body]
       nameonly: [counter]
     guard: |
-      @greptools.is_cstyle_for_with_unused_loop_var(
-        counter,
-        next,
-        body,
-      )
+      @greptools.contains_ident(next, counter) && !@greptools.contains_ident(body, counter)

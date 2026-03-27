@@ -2,9 +2,9 @@
 package "moonbit-community/moongrep-guide/greptools"
 
 // Values
-pub fn dump_expr_json_repr(String) -> Json raise
+pub fn contains_ident(Json, String) -> Bool
 
-pub fn is_cstyle_for_with_unused_loop_var(String, Json, Json) -> Bool
+pub fn dump_expr_json_repr(String) -> Json raise
 
 pub fn normalize_metavar_name(Json) -> String?
 
