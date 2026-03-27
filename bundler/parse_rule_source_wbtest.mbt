@@ -1,8 +1,8 @@
 ///|
-test "parse rule source supports describle" {
+test "parse rule source reads description" {
   let source =
     #|package: moonbit-community/example
-    #|describle: |
+    #|description: |
     #|  Example rule description.
     #|patterns:
     #|  - shape: |
@@ -17,6 +17,26 @@ test "parse rule source supports describle" {
   inspect(rule.rule_id, content="example/test")
   inspect(rule.package_name, content="moonbit-community/example")
   inspect(rule.description, content="Example rule description.\n")
+}
+
+///|
+test "parse rule source rejects legacy describle key" {
+  let source =
+    #|package: moonbit-community/example
+    #|describle: old spelling
+    #|patterns:
+    #|  - shape: |
+    #|      @foo()
+  let result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  match result {
+    Err(InvalidRule(path~, info~)) => {
+      inspect(path, content="references/rules/example/test.yaml")
+      inspect(info, content="top-level rule contains unsupported key describle")
+    }
+    _ => fail("expected legacy describle key to be rejected")
+  }
 }
 
 ///|
