@@ -2,7 +2,6 @@
 package "moonbit-community/moongrep-guide/dump_expr"
 
 // Values
-pub fn dump_expr_json_repr(String) -> Json raise
 
 // Errors
 

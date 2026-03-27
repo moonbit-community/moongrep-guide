@@ -1,0 +1,18 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moongrep-guide/rules"
+
+import {
+  "moonbit-community/moongrep-guide/greptools",
+}
+
+// Values
+pub let moongrep_rules_table : Map[String, (String, Json, Array[@greptools.MatchHit]) -> Bool]
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

@@ -9,18 +9,6 @@ package "moonbit-community/moongrep-guide/moongrep"
 type DirectoryScanResult
 pub impl Eq for DirectoryScanResult
 
-pub(all) struct MatchHit {
-  file : String
-  rule_id : String
-  package_name : String
-  description : String
-  pattern_index : Int
-  loc : Json
-}
-pub impl Eq for MatchHit
-pub impl Show for MatchHit
-pub impl ToJson for MatchHit
-
 type SkippedFile
 pub impl Eq for SkippedFile
 
