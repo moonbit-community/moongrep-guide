@@ -6480,7 +6480,8 @@ fn lang_cstyle_for_unused_loop_var(
         ignore(upper_limit)
         ignore(body)
         ignore(counter)
-        !@greptools.is_unused_var(body, counter)
+        @greptools.is_unused_var(upper_limit, counter) &&
+        @greptools.is_unused_var(body, counter)
       }
       let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(
         counter,

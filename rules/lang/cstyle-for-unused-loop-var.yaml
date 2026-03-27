@@ -12,4 +12,4 @@ patterns:
       structural: [_start, upper_limit, body]
       nameonly: [counter]
     guard: |
-      !@greptools.is_unused_var(body, counter)
+      @greptools.is_unused_var(upper_limit, counter) && @greptools.is_unused_var(body, counter)
