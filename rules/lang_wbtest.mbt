@@ -30,7 +30,7 @@ test "lang/cstyle-for-unused-loop-var: if + is" {
     ast,
   ) => lang_cstyle_for_unused_loop_var("<memory>", ast, hits))
   // bug: is expression `foo is some(i)` in if condition should shadowing loop variable `i`
-  assert_true(hits is [])
+  assert_true(hits is [{ rule_id: "lang/cstyle-for-unused-loop-var", .. }])
   // if condition have is expression that shadowed loop variable 
   // but use loop variable in else branch
   let source =

@@ -86,6 +86,18 @@ fn contains_ident_with_shadow(
       contains_ident_with_shadow(body, name, body_shadowed)
     }
     {
+      "kind": "Expr::If",
+      "children": { "cond": cond, "ifso": ifso, "ifnot": ifnot, .. },
+      ..
+    } => {
+      if contains_ident_with_shadow(cond, name, shadowed) {
+        return true
+      }
+      let ifso_shadowed = shadowed || binds_name(cond, name)
+      contains_ident_with_shadow(ifso, name, ifso_shadowed) ||
+      contains_ident_with_shadow(ifnot, name, shadowed)
+    }
+    {
       "kind": "Case",
       "children": { "pattern": pattern, "guard": guard_, "body": body, .. },
       ..
@@ -294,6 +306,11 @@ fn binds_name_in_children(
   name : String,
 ) -> Bool {
   match kind {
+    "Expr::Is" =>
+      match children {
+        { "pat": pat, .. } => binds_name(pat, name)
+        _ => false
+      }
     "Parameter::Positional"
     | "Parameter::Labelled"
     | "Parameter::Optional"
