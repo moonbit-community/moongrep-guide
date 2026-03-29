@@ -1,4 +1,26 @@
 ///|
+fn collect_hits(source : String) -> Array[MatchHit] raise {
+  let hits = []
+  @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
+    hits,
+    ast,
+  ) => lang_cstyle_for_unused_loop_var("<memory>", ast, hits))
+  hits
+}
+
+///|
+fn assert_single_unused_loop_var_hit(source : String) -> Unit raise {
+  let hits = collect_hits(source)
+  assert_true(hits is [{ rule_id: "lang/cstyle-for-unused-loop-var", .. }])
+}
+
+///|
+fn assert_no_unused_loop_var_hit(source : String) -> Unit raise {
+  let hits = collect_hits(source)
+  assert_true(hits is [])
+}
+
+///|
 test "lang/cstyle-for-unused-loop-var: basic" {
   let source =
     #|fn main {
@@ -6,12 +28,196 @@ test "lang/cstyle-for-unused-loop-var: basic" {
     #|    println("foo")
     #|  }
     #|}
-  let hits = []
-  @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
-    hits,
-    ast,
-  ) => lang_cstyle_for_unused_loop_var("<memory>", ast, hits))
-  assert_true(hits is [{ rule_id: "lang/cstyle-for-unused-loop-var", .. }])
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: upper limit uses counter" {
+  let source =
+    #|fn main(limit : Int) {
+    #|  for i = 0; i < limit - i; i = i + 1 {
+    #|    println("foo")
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: body uses counter" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    println(i)
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: let shadow" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    let i = 42
+    #|    println(i)
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: let mut shadow" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    let mut i = 42
+    #|    i = i + 1
+    #|    println(i)
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: match case shadow" {
+  let source =
+    #|fn main(value : Int?) {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    match value {
+    #|      Some(i) => println(i)
+    #|      None => println("none")
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: match mixed shadow and outer use" {
+  let source =
+    #|fn main(value : Int?) {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    match value {
+    #|      Some(i) => println(i)
+    #|      None => println(i)
+    #|    }
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: match guard shadow only" {
+  let source =
+    #|fn main(value : Int?) {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    match value {
+    #|      Some(i) if i > 0 => println(i)
+    #|      Some(_) => println(0)
+    #|      None => println("none")
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: match guard shadow plus outer use in fallback" {
+  let source =
+    #|fn main(value : Int?) {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    match value {
+    #|      Some(i) if i > 0 => println(i)
+    #|      Some(_) => println(0)
+    #|      None => println(i)
+    #|    }
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: lambda parameter shadow in body" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    let f = fn(i : Int) { i + 1 }
+    #|    println(f(0))
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: lambda captures outer counter in body" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    let f = fn(x : Int) { i + x }
+    #|    println(f(0))
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: lambda parameter shadow in upper limit" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < (fn(i : Int) -> Int { i + 10 })(0); i = i + 1 {
+    #|    println("foo")
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: lambda captures outer counter in upper limit" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < (fn(x : Int) -> Int { i + x + 10 })(1); i = i + 1 {
+    #|    println("foo")
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: nested inner for shadows outer counter" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    for i = 0; i < 3; i = i + 1 {
+    #|      println(i)
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: nested inner for plus outer use after inner loop" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    for i = 0; i < 3; i = i + 1 {
+    #|      println(i)
+    #|    }
+    #|    println(i)
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: string interpolation uses outer counter" {
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    println("\{i}")
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
 }
 
 ///|
@@ -19,34 +225,24 @@ test "lang/cstyle-for-unused-loop-var: if + is" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
-    #|    if foo is some(i) {
+    #|    if foo is Some(i) {
     #|      println(i)
     #|    }
     #|  }
     #|}
-  let hits = []
-  @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
-    hits,
-    ast,
-  ) => lang_cstyle_for_unused_loop_var("<memory>", ast, hits))
-  // bug: is expression `foo is some(i)` in if condition should shadowing loop variable `i`
-  assert_true(hits is [{ rule_id: "lang/cstyle-for-unused-loop-var", .. }])
+  // is expression `foo is Some(i)` in if condition should shadowing loop variable `i`
+  assert_single_unused_loop_var_hit(source)
   // if condition have is expression that shadowed loop variable 
   // but use loop variable in else branch
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
-    #|    if foo is some(i) {
+    #|    if foo is Some(i) {
     #|      println(i)
     #|    } else {
     #|      println(i)
     #|    }
     #|  }
     #|}
-  let hits = []
-  @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
-    hits,
-    ast,
-  ) => lang_cstyle_for_unused_loop_var("<memory>", ast, hits))
-  assert_true(hits is [])
+  assert_no_unused_loop_var_hit(source)
 }
