@@ -129,6 +129,7 @@ a metavariable if:
 Current supported AST positions are:
 
 - `Expr::Ident`
+- `Var`
 - `Binder`
 - `Pattern::Var`
 
@@ -181,6 +182,7 @@ raw AST equality.
 
 Current normalization succeeds only for:
 
+- simple variable targets represented as `Var` with `LongIdent::Ident`
 - `Binder`
 - simple identifier expressions represented as `Expr::Ident`
 - `Pattern::Var`

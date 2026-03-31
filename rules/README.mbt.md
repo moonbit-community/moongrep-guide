@@ -130,6 +130,10 @@ Here `counter` appears as both a binder and later identifier expressions. The
 same spelling should match, but the raw AST nodes are different, so
 `identifier` is the right tool.
 
+`identifier` also works for simple assignment targets represented in the AST as
+`Var`, so rules like `x = x + 1` can bind the left-hand target by normalized
+name instead of treating it as a literal string.
+
 ### 4. Add a `guard` only for logic shape matching cannot express
 
 Reach for a guard when the structure alone is not enough.
