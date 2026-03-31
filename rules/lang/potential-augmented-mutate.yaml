@@ -1,0 +1,36 @@
+package: moonbitlang/core
+description: |
+  This assignment mutates a variable by combining it with another value.
+  Prefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the
+  in-place update explicit.
+patterns:
+  - shape: |
+      variable = variable + _number
+    metavars:
+      subtree: [_number]
+      identifier: [variable]
+  # - shape: |
+  #     variable = _number + variable
+  #   metavars:
+  #     subtree: [_number]
+  #     identifier: [variable]
+  - shape: |
+      variable = variable * _number
+    metavars:
+      subtree: [_number]
+      identifier: [variable]
+  # - shape: |
+  #     variable = _number * variable
+  #   metavars:
+  #     subtree: [_number]
+  #     identifier: [variable]
+  - shape: |
+      variable = variable - _number
+    metavars:
+      subtree: [_number]
+      identifier: [variable]
+  - shape: |
+      variable = variable / _number
+    metavars:
+      subtree: [_number]
+      identifier: [variable]
