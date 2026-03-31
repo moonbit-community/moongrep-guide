@@ -20,6 +20,18 @@ fn recognize_metavar(node : Json, ctx : PatternEmitContext) -> String? {
       },
       ..
     } if ctx.declared_metavars.contains(name) => Some(record_binding(ctx, name))
+    {
+      "kind": "Var",
+      "children": {
+        "name": {
+          "kind": "LongIdent::Ident",
+          "children": { "value": String(name), .. },
+          ..
+        },
+        ..
+      },
+      ..
+    } if ctx.declared_metavars.contains(name) => Some(record_binding(ctx, name))
     { "kind": "Binder", "children": { "name": String(name), .. }, .. } if ctx.declared_metavars.contains(
         name,
       ) => Some(record_binding(ctx, name))

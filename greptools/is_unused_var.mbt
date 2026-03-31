@@ -4,6 +4,18 @@ pub fn normalize_identifier_name(ast : Json) -> String? {
     { "kind": "Binder", "children": { "name": String(name), .. }, .. } =>
       Some(name)
     {
+      "kind": "Var",
+      "children": {
+        "name": {
+          "kind": "LongIdent::Ident",
+          "children": { "value": String(name), .. },
+          ..
+        },
+        ..
+      },
+      ..
+    } => Some(name)
+    {
       "kind": "Expr::Ident",
       "children": {
         "id": {

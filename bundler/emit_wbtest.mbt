@@ -263,3 +263,33 @@ test "emit matcher source checks identifier normalization without guard" {
   )
   assert_false(source.contains("fn __moongrep_guard("))
 }
+
+///|
+test "emit matcher source captures identifier metavars in Var targets" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/assignment-target",
+      package_name: "moonbit-community/example",
+      description: "assignment target identifier rule",
+      patterns: [
+        {
+          shape: "variable = variable + value",
+          subtree_metavars: ["value"],
+          identifier_metavars: ["variable"],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"var\": variable"))
+  assert_true(
+    source.contains(
+      "let __moongrep_identifier_opt_meta_variable_1 = @greptools.normalize_identifier_name(variable)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "let __moongrep_identifier_opt_meta_variable_2 = @greptools.normalize_identifier_name(meta_variable_2)",
+    ),
+  )
+}
