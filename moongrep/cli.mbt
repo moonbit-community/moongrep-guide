@@ -1,13 +1,20 @@
 ///|
+fn[T] fatal(message : String, code? : Int = 1) -> T {
+  println(message)
+  @sys.exit(code)
+  panic()
+}
+
+///|
 fn main {
-  let scan_root = match @sys.get_cli_args() {
-    [_] => "."
-    [_, scan_root] => scan_root
-    otherwise => {
-      println("invalid cli arguments: \{otherwise}")
-      println("usage: moon run moongrep [scan-root]")
-      panic()
-    }
+  let args = @sys.get_cli_args()
+  let argv = match args {
+    [_] => []
+    [_, ..] => args[1:].to_array()
+    _ => []
+  }
+  let scan_root = parse_scan_root(argv) catch {
+    err => fatal(err.to_string(), code=2)
   }
   try {
     let scan_result = collect_directory_hits(scan_root)
@@ -29,13 +36,7 @@ fn main {
       }
     }
   } catch {
-    Failure::Failure(err) => {
-      println(err)
-      panic()
-    }
-    err => {
-      println(err)
-      panic()
-    }
+    Failure::Failure(err) => fatal(err)
+    err => fatal(err.to_string())
   }
 }
