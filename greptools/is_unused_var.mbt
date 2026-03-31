@@ -1,5 +1,5 @@
 ///|
-pub fn normalize_metavar_name(ast : Json) -> String? {
+pub fn normalize_identifier_name(ast : Json) -> String? {
   match ast {
     { "kind": "Binder", "children": { "name": String(name), .. }, .. } =>
       Some(name)

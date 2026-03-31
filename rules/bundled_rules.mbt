@@ -6516,34 +6516,37 @@ fn lang_cstyle_for_unused_loop_var(
         @greptools.is_unused_var(upper_limit, counter) &&
         @greptools.is_unused_var(body, counter)
       }
-      let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(
+      let __moongrep_identifier_opt_meta_counter_1 = @greptools.normalize_identifier_name(
         counter,
       )
-      let __moongrep_name_opt_meta_counter_2 = @greptools.normalize_metavar_name(
+      let __moongrep_identifier_opt_meta_counter_2 = @greptools.normalize_identifier_name(
         meta_counter_2,
       )
-      let __moongrep_name_opt_meta_counter_3 = @greptools.normalize_metavar_name(
+      let __moongrep_identifier_opt_meta_counter_3 = @greptools.normalize_identifier_name(
         meta_counter_3,
       )
-      let __moongrep_name_opt_meta_counter_4 = @greptools.normalize_metavar_name(
+      let __moongrep_identifier_opt_meta_counter_4 = @greptools.normalize_identifier_name(
         meta_counter_4,
       )
       match
         (
-          __moongrep_name_opt_meta_counter_1, __moongrep_name_opt_meta_counter_2,
-          __moongrep_name_opt_meta_counter_3, __moongrep_name_opt_meta_counter_4,
+          __moongrep_identifier_opt_meta_counter_1, __moongrep_identifier_opt_meta_counter_2,
+          __moongrep_identifier_opt_meta_counter_3, __moongrep_identifier_opt_meta_counter_4,
         ) {
         (
-          Some(__moongrep_name_meta_counter_1),
-          Some(__moongrep_name_meta_counter_2),
-          Some(__moongrep_name_meta_counter_3),
-          Some(__moongrep_name_meta_counter_4),
+          Some(__moongrep_identifier_name_meta_counter_1),
+          Some(__moongrep_identifier_name_meta_counter_2),
+          Some(__moongrep_identifier_name_meta_counter_3),
+          Some(__moongrep_identifier_name_meta_counter_4),
         ) =>
-          if __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_2 &&
-            __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_3 &&
-            __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_4 {
+          if __moongrep_identifier_name_meta_counter_1 ==
+            __moongrep_identifier_name_meta_counter_2 &&
+            __moongrep_identifier_name_meta_counter_1 ==
+            __moongrep_identifier_name_meta_counter_3 &&
+            __moongrep_identifier_name_meta_counter_1 ==
+            __moongrep_identifier_name_meta_counter_4 {
             if __moongrep_guard(
-                _start, upper_limit, body, __moongrep_name_meta_counter_1,
+                _start, upper_limit, body, __moongrep_identifier_name_meta_counter_1,
               ) {
               hits.push(MatchHit::{
                 file,

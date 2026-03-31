@@ -6,4 +6,4 @@ patterns:
   - shape: |
       _message.read_all()
     metavars:
-      structural: [_message]
+      subtree: [_message]

@@ -74,18 +74,18 @@ fn parse_rule_source(
       "shape", "metavars", "guard",
     ])
     let shape = expect_yaml_string(pattern_map, path, "shape")
-    let (structural_metavars, nameonly_metavars) = expect_metavars(
+    let (subtree_metavars, identifier_metavars) = expect_metavars(
       pattern_map, path, index,
     )
     let metavars = pattern_declared_metavars(
-      structural_metavars, nameonly_metavars,
+      subtree_metavars, identifier_metavars,
     )
     ensure_metavars_safe(path, index, metavars)
     let pattern_guard = expect_pattern_guard(pattern_map, path, index)
     patterns.push({
       shape,
-      structural_metavars,
-      nameonly_metavars,
+      subtree_metavars,
+      identifier_metavars,
       pattern_guard,
     })
   }
@@ -191,16 +191,16 @@ fn expect_metavars(
         path,
         "patterns[\{pattern_index}].metavars",
         meta_map,
-        ["structural", "nameonly"],
+        ["subtree", "identifier"],
       )
-      let structural = expect_metavar_bucket(
-        meta_map, path, pattern_index, "structural",
+      let subtree = expect_metavar_bucket(
+        meta_map, path, pattern_index, "subtree",
       )
-      let nameonly = expect_metavar_bucket(
-        meta_map, path, pattern_index, "nameonly",
+      let identifier = expect_metavar_bucket(
+        meta_map, path, pattern_index, "identifier",
       )
-      ensure_metavar_buckets_disjoint(path, pattern_index, structural, nameonly)
-      (structural, nameonly)
+      ensure_metavar_buckets_disjoint(path, pattern_index, subtree, identifier)
+      (subtree, identifier)
     }
     Some(_) =>
       raise InvalidRule(
@@ -251,11 +251,11 @@ fn expect_metavar_bucket(
 fn ensure_metavar_buckets_disjoint(
   path : String,
   pattern_index : Int,
-  structural : Array[String],
-  nameonly : Array[String],
+  subtree : Array[String],
+  identifier : Array[String],
 ) -> Unit raise {
-  for meta_name in nameonly {
-    if structural.contains(meta_name) {
+  for meta_name in identifier {
+    if subtree.contains(meta_name) {
       raise InvalidRule(
         path~,
         info="patterns[\{pattern_index}].metavars contains duplicate metavar \{meta_name}",
@@ -266,14 +266,14 @@ fn ensure_metavar_buckets_disjoint(
 
 ///|
 fn pattern_declared_metavars(
-  structural_metavars : Array[String],
-  nameonly_metavars : Array[String],
+  subtree_metavars : Array[String],
+  identifier_metavars : Array[String],
 ) -> Array[String] {
   let metavars : Array[String] = []
-  for meta_name in structural_metavars {
+  for meta_name in subtree_metavars {
     metavars.push(meta_name)
   }
-  for meta_name in nameonly_metavars {
+  for meta_name in identifier_metavars {
     metavars.push(meta_name)
   }
   metavars

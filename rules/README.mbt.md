@@ -82,7 +82,7 @@ To make it a metavar, declare it explicitly:
 patterns:
   - shape: _expr == _expr
     metavars:
-      structural: [_expr]
+      subtree: [_expr]
 ```
 
 If bundling says a declared metavar is unused, the usual causes are:
@@ -93,16 +93,16 @@ If bundling says a declared metavar is unused, the usual causes are:
 
 The exact supported positions are listed in [RuleSpec.mbt.md](RuleSpec.mbt.md).
 
-### 3. Choose `structural` or `nameonly`
+### 3. Choose `subtree` or `identifier`
 
-Use `structural` when you want the full matched AST subtree as `Json`, or when
+Use `subtree` when you want the full matched AST subtree as `Json`, or when
 repeating a metavar should mean "the subtree is structurally identical".
 
 ```yaml
 patterns:
   - shape: _expr == _expr
     metavars:
-      structural: [_expr]
+      subtree: [_expr]
 ```
 
 This is a good fit for matches such as:
@@ -111,7 +111,7 @@ This is a good fit for matches such as:
 - `items[i] == items[i]`
 - `user.profile.name == user.profile.name`
 
-Use `nameonly` when you want to compare identifier spelling across positions
+Use `identifier` when you want to compare identifier spelling across positions
 that are not the same raw AST node kind, especially binder positions versus
 identifier uses.
 
@@ -122,13 +122,13 @@ patterns:
         body
       }
     metavars:
-      structural: [_start, upper_limit, body]
-      nameonly: [counter]
+      subtree: [_start, upper_limit, body]
+      identifier: [counter]
 ```
 
 Here `counter` appears as both a binder and later identifier expressions. The
 same spelling should match, but the raw AST nodes are different, so
-`nameonly` is the right tool.
+`identifier` is the right tool.
 
 ### 4. Add a `guard` only for logic shape matching cannot express
 
@@ -152,8 +152,8 @@ patterns:
         body
       }
     metavars:
-      structural: [_start, upper_limit, body]
-      nameonly: [counter]
+      subtree: [_start, upper_limit, body]
+      identifier: [counter]
     guard: |
       @greptools.is_unused_var(upper_limit, counter) &&
       @greptools.is_unused_var(body, counter)
@@ -176,11 +176,11 @@ patterns:
   - shape: |
       _conn.read_request()
     metavars:
-      structural: [_conn]
+      subtree: [_conn]
   - shape: |
       _client.end_request()
     metavars:
-      structural: [_client]
+      subtree: [_client]
 ```
 
 Use separate rule files only when the rule id, message, or ownership should be
@@ -216,12 +216,12 @@ description: |
 patterns:
   - shape: _expr == _expr
     metavars:
-      structural: [_expr]
+      subtree: [_expr]
 ```
 
 Why it works:
 
-- `_expr` is declared as a structural metavar
+- `_expr` is declared as a subtree metavar
 - both occurrences must bind to structurally equal AST JSON
 - the rule can match more than simple names
 
@@ -237,8 +237,8 @@ patterns:
         body
       }
     metavars:
-      structural: [_start, upper_limit, body]
-      nameonly: [counter]
+      subtree: [_start, upper_limit, body]
+      identifier: [counter]
 ```
 
 Why it works:
@@ -255,10 +255,10 @@ description: |
 patterns:
   - shape: _command.output_collect(_args)
     metavars:
-      structural: [_command, _args]
+      subtree: [_command, _args]
   - shape: _command.stderr_collect(_args)
     metavars:
-      structural: [_command, _args]
+      subtree: [_command, _args]
 ```
 
 Why it works:
@@ -282,7 +282,7 @@ Check, in order:
 - the name appears in a metavariable-capable position
 - you declared it in the correct bucket
 
-### A `nameonly` rule looks right but never hits
+### An `identifier` rule looks right but never hits
 
 The matched node may not normalize to a simple identifier name in every
 occurrence. Review the exact supported normalization cases in

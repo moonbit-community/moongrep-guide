@@ -7,36 +7,36 @@ patterns:
   - shape: |
       @http.Client::new(_url, headers=_headers)
     metavars:
-      structural: [_url, _headers]
+      subtree: [_url, _headers]
   - shape: |
       _client.request(_method, _path)
     metavars:
-      structural: [_client, _method, _path]
+      subtree: [_client, _method, _path]
   - shape: |
       @http.get(_url)
     metavars:
-      structural: [_url]
+      subtree: [_url]
   - shape: |
       @http.post(_url, _content)
     metavars:
-      structural: [_url, _content]
+      subtree: [_url, _content]
   - shape: |
       @http.put(_url, _content)
     metavars:
-      structural: [_url, _content]
+      subtree: [_url, _content]
   - shape: |
       @http.get_stream(_url)
     metavars:
-      structural: [_url]
+      subtree: [_url]
   - shape: |
       @http.post_stream(_url, headers=_headers)
     metavars:
-      structural: [_url, _headers]
+      subtree: [_url, _headers]
   - shape: |
       @http.put_stream(_url, headers=_headers)
     metavars:
-      structural: [_url, _headers]
+      subtree: [_url, _headers]
   - shape: |
       _conn.send_response(_status, _reason)
     metavars:
-      structural: [_conn, _status, _reason]
+      subtree: [_conn, _status, _reason]

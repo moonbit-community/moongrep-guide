@@ -6,16 +6,16 @@ patterns:
   - shape: |
       @process.collect_stdout(_command, _args)
     metavars:
-      structural: [_command, _args]
+      subtree: [_command, _args]
   - shape: |
       @process.collect_stderr(_command, _args)
     metavars:
-      structural: [_command, _args]
+      subtree: [_command, _args]
   - shape: |
       @process.collect_output(_command, _args)
     metavars:
-      structural: [_command, _args]
+      subtree: [_command, _args]
   - shape: |
       @process.collect_output_merged(_command, _args)
     metavars:
-      structural: [_command, _args]
+      subtree: [_command, _args]

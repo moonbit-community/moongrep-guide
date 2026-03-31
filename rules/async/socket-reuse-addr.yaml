@@ -7,4 +7,4 @@ patterns:
   - shape: |
       @socket.TcpServer::new(_addr, reuse_addr=true)
     metavars:
-      structural: [_addr]
+      subtree: [_addr]

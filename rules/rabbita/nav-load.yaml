@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @nav.load(_url)
     metavars:
-      structural: [_url]
+      subtree: [_url]

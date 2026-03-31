@@ -6,8 +6,8 @@ patterns:
   - shape: |
       _reader.read_all()
     metavars:
-      structural: [_reader]
+      subtree: [_reader]
   - shape: |
       _reader.read_until(_delim)
     metavars:
-      structural: [_reader, _delim]
+      subtree: [_reader, _delim]

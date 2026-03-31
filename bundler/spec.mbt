@@ -1,8 +1,8 @@
 ///|
 priv struct RulePatternSpec {
   shape : String
-  structural_metavars : Array[String]
-  nameonly_metavars : Array[String]
+  subtree_metavars : Array[String]
+  identifier_metavars : Array[String]
   pattern_guard : String?
 }
 

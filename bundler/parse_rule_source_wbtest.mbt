@@ -8,7 +8,7 @@ test "parse rule source reads description" {
     #|  - shape: |
     #|      node.set_inner_html(html)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - node
     #|        - html
   let rule = parse_rule_source(
@@ -40,6 +40,56 @@ test "parse rule source rejects legacy describle key" {
 }
 
 ///|
+test "parse rule source rejects legacy metavar bucket keys" {
+  let legacy_subtree_source =
+    #|package: moonbit-community/example
+    #|description: legacy subtree key
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|    metavars:
+    #|      structural:
+    #|        - foo
+  let legacy_identifier_source =
+    #|package: moonbit-community/example
+    #|description: legacy identifier key
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|    metavars:
+    #|      subtree:
+    #|        - foo
+    #|      nameonly:
+    #|        - bar
+  let legacy_subtree_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", legacy_subtree_source,
+  )
+  let legacy_identifier_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", legacy_identifier_source,
+  )
+  match legacy_subtree_result {
+    Err(InvalidRule(path~, info~)) => {
+      inspect(path, content="references/rules/example/test.yaml")
+      inspect(
+        info,
+        content="patterns[0].metavars contains unsupported key structural",
+      )
+    }
+    _ => fail("expected legacy structural key to be rejected")
+  }
+  match legacy_identifier_result {
+    Err(InvalidRule(path~, info~)) => {
+      inspect(path, content="references/rules/example/test.yaml")
+      inspect(
+        info,
+        content="patterns[0].metavars contains unsupported key nameonly",
+      )
+    }
+    _ => fail("expected legacy nameonly key to be rejected")
+  }
+}
+
+///|
 test "parse rule source defaults omitted metavars to empty" {
   let source =
     #|package: moonbit-community/example
@@ -50,8 +100,8 @@ test "parse rule source defaults omitted metavars to empty" {
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].structural_metavars, content="[]")
-  inspect(rule.patterns[0].nameonly_metavars, content="[]")
+  inspect(rule.patterns[0].subtree_metavars, content="[]")
+  inspect(rule.patterns[0].identifier_metavars, content="[]")
 }
 
 ///|
@@ -63,7 +113,7 @@ test "parse rule source stores trimmed pattern guard" {
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - bar
     #|    guard: |
@@ -74,46 +124,46 @@ test "parse rule source stores trimmed pattern guard" {
     "references/rules/example/test.yaml", "references/rules", source,
   )
   inspect(rule.patterns[0].pattern_guard, content="Some(\"bar != foo\")")
-  inspect(rule.patterns[0].nameonly_metavars, content="[]")
+  inspect(rule.patterns[0].identifier_metavars, content="[]")
 }
 
 ///|
-test "parse rule source defaults omitted nameonly metavars to empty" {
+test "parse rule source defaults omitted identifier metavars to empty" {
   let source =
     #|package: moonbit-community/example
-    #|description: structural-only rule
+    #|description: subtree-only rule
     #|patterns:
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - bar
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].structural_metavars, content="[\"foo\", \"bar\"]")
-  inspect(rule.patterns[0].nameonly_metavars, content="[]")
+  inspect(rule.patterns[0].subtree_metavars, content="[\"foo\", \"bar\"]")
+  inspect(rule.patterns[0].identifier_metavars, content="[]")
 }
 
 ///|
-test "parse rule source stores nameonly metavars" {
+test "parse rule source stores identifier metavars" {
   let source =
     #|package: moonbit-community/example
-    #|description: nameonly rule
+    #|description: identifier rule
     #|patterns:
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
-    #|      nameonly:
+    #|      identifier:
     #|        - bar
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].structural_metavars, content="[\"foo\"]")
-  inspect(rule.patterns[0].nameonly_metavars, content="[\"bar\"]")
+  inspect(rule.patterns[0].subtree_metavars, content="[\"foo\"]")
+  inspect(rule.patterns[0].identifier_metavars, content="[\"bar\"]")
 }
 
 ///|
@@ -125,7 +175,7 @@ test "reject duplicate metavars" {
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - bar
     #|        - bar
   let result = try? parse_rule_source(
@@ -143,7 +193,7 @@ test "reject non-string blank and invalid pattern guard" {
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - bar
     #|    guard:
@@ -155,7 +205,7 @@ test "reject non-string blank and invalid pattern guard" {
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - bar
     #|    guard: |
@@ -167,7 +217,7 @@ test "reject non-string blank and invalid pattern guard" {
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - bar
     #|    guard: |
@@ -187,28 +237,28 @@ test "reject non-string blank and invalid pattern guard" {
 }
 
 ///|
-test "reject invalid nameonly declarations" {
+test "reject invalid identifier declarations" {
   let non_array_source =
     #|package: moonbit-community/example
-    #|description: invalid nameonly
+    #|description: invalid identifier
     #|patterns:
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
-    #|      nameonly:
+    #|      identifier:
     #|        value: nope
   let duplicate_source =
     #|package: moonbit-community/example
-    #|description: duplicate nameonly
+    #|description: duplicate identifier
     #|patterns:
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
-    #|      nameonly:
+    #|      identifier:
     #|        - bar
     #|        - bar
   let overlap_source =
@@ -218,9 +268,9 @@ test "reject invalid nameonly declarations" {
     #|  - shape: |
     #|      foo(bar)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
-    #|      nameonly:
+    #|      identifier:
     #|        - foo
   let non_array_result = try? parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", non_array_source,
@@ -262,7 +312,7 @@ test "reject reserved metavars that conflict with generated locals" {
     #|  - shape: |
     #|      foo(file)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - file
   let result = try? parse_rule_source(
@@ -289,7 +339,7 @@ test "reject reserved generated-local prefix in metavars" {
     #|  - shape: |
     #|      foo(__moongrep_counter)
     #|    metavars:
-    #|      structural:
+    #|      subtree:
     #|        - foo
     #|        - __moongrep_counter
   let result = try? parse_rule_source(

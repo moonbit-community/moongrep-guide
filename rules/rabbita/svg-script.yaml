@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @svg.script([@svg.text(_script)])
     metavars:
-      structural: [_script]
+      subtree: [_script]

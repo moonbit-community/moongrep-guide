@@ -9,7 +9,7 @@ patterns:
         body
       }
     metavars:
-      structural: [_start, upper_limit, body]
-      nameonly: [counter]
+      subtree: [_start, upper_limit, body]
+      identifier: [counter]
     guard: |
       @greptools.is_unused_var(upper_limit, counter) && @greptools.is_unused_var(body, counter)

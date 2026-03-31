@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @svg.node("a", @svg.Attrs::build().href(_url).target("_blank"), _children)
     metavars:
-      structural: [_url, _children]
+      subtree: [_url, _children]

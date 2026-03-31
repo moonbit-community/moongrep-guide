@@ -5,4 +5,4 @@ patterns:
   - shape: |
       _node.set_inner_html(_html)
     metavars:
-      structural: [_node, _html]
+      subtree: [_node, _html]

@@ -6,8 +6,8 @@ patterns:
   - shape: |
       @html.a(href=_url, _text)
     metavars:
-      structural: [_url, _text]
+      subtree: [_url, _text]
   - shape: |
       @html.node("a", @html.Attrs::build().href(_url), _children)
     metavars:
-      structural: [_url, _children]
+      subtree: [_url, _children]

@@ -7,8 +7,8 @@ patterns:
   - shape: |
       @websocket.connect(_url, headers=_headers)
     metavars:
-      structural: [_url, _headers]
+      subtree: [_url, _headers]
   - shape: |
       @websocket.from_http_client(_client, _path)
     metavars:
-      structural: [_client, _path]
+      subtree: [_client, _path]

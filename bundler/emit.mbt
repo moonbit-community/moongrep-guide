@@ -1,5 +1,5 @@
 ///|
-priv struct NameOnlyBinding {
+priv struct IdentifierBinding {
   meta_name : String
   occurrence : Int
   bind_name : String
@@ -153,13 +153,13 @@ fn emit_generated_local_name(
 }
 
 ///|
-fn emit_name_only_option_name(meta_name : String, occurrence : Int) -> String {
-  emit_generated_local_name("name_opt", meta_name, occurrence)
+fn emit_identifier_option_name(meta_name : String, occurrence : Int) -> String {
+  emit_generated_local_name("identifier_opt", meta_name, occurrence)
 }
 
 ///|
-fn emit_name_only_value_name(meta_name : String, occurrence : Int) -> String {
-  emit_generated_local_name("name", meta_name, occurrence)
+fn emit_identifier_value_name(meta_name : String, occurrence : Int) -> String {
+  emit_generated_local_name("identifier_name", meta_name, occurrence)
 }
 
 ///|
@@ -170,10 +170,10 @@ fn emit_guard_function_name() -> String {
 ///|
 fn emit_pattern_metavars(pattern : RulePatternSpec) -> Array[String] {
   let metavars : Array[String] = []
-  for meta_name in pattern.structural_metavars {
+  for meta_name in pattern.subtree_metavars {
     metavars.push(meta_name)
   }
-  for meta_name in pattern.nameonly_metavars {
+  for meta_name in pattern.identifier_metavars {
     metavars.push(meta_name)
   }
   metavars
@@ -255,7 +255,7 @@ fn emit_rule_arm(
   )
   builder.write_string("      \{pattern_source} => {\n")
   let push_source = emit_push_source(rule, pattern_index, ctx)
-  emit_name_only_guard_function_source(builder, pattern, ctx)
+  emit_identifier_guard_function_source(builder, pattern, ctx)
   emit_rule_arm_body(builder, pattern, ctx, push_source)
   builder.write_string("        true\n")
   builder.write_string("      }\n")
@@ -348,14 +348,14 @@ fn emit_duplicate_condition(
   let conditions : Array[String] = []
   for binding in ctx.bindings {
     if binding.bind_names.length() >= 2 {
-      let first = if pattern.nameonly_metavars.contains(binding.meta_name) {
-        emit_name_only_value_name(binding.meta_name, 1)
+      let first = if pattern.identifier_metavars.contains(binding.meta_name) {
+        emit_identifier_value_name(binding.meta_name, 1)
       } else {
         binding.bind_names[0]
       }
       for index in 1..<binding.bind_names.length() {
-        let other = if pattern.nameonly_metavars.contains(binding.meta_name) {
-          emit_name_only_value_name(binding.meta_name, index + 1)
+        let other = if pattern.identifier_metavars.contains(binding.meta_name) {
+          emit_identifier_value_name(binding.meta_name, index + 1)
         } else {
           binding.bind_names[index]
         }
@@ -405,23 +405,23 @@ fn emit_rule_arm_body(
 ) -> Unit {
   let duplicate_condition = emit_duplicate_condition(pattern, ctx)
   let guard_source = emit_guard_source(pattern, ctx)
-  let name_only_bindings = collect_name_only_bindings(pattern, ctx)
-  if name_only_bindings.is_empty() {
+  let identifier_bindings = collect_identifier_bindings(pattern, ctx)
+  if identifier_bindings.is_empty() {
     emit_guarded_push_source(
       builder, duplicate_condition, guard_source, push_source, "        ",
     )
     return
   }
-  for binding in name_only_bindings {
+  for binding in identifier_bindings {
     builder.write_string(
-      "        let \{emit_name_only_option_name(binding.meta_name, binding.occurrence)} = @greptools.normalize_metavar_name(\{binding.bind_name})\n",
+      "        let \{emit_identifier_option_name(binding.meta_name, binding.occurrence)} = @greptools.normalize_identifier_name(\{binding.bind_name})\n",
     )
   }
   builder.write_string(
-    "        match \{emit_name_only_match_expr(name_only_bindings)} {\n",
+    "        match \{emit_identifier_match_expr(identifier_bindings)} {\n",
   )
   builder.write_string(
-    "          \{emit_name_only_match_pattern(name_only_bindings)} => {\n",
+    "          \{emit_identifier_match_pattern(identifier_bindings)} => {\n",
   )
   emit_guarded_push_source(
     builder, duplicate_condition, guard_source, push_source, "            ",
@@ -432,15 +432,15 @@ fn emit_rule_arm_body(
 }
 
 ///|
-fn collect_name_only_bindings(
+fn collect_identifier_bindings(
   pattern : RulePatternSpec,
   ctx : PatternEmitContext,
-) -> Array[NameOnlyBinding] {
-  let name_only_bindings : Array[NameOnlyBinding] = []
+) -> Array[IdentifierBinding] {
+  let identifier_bindings : Array[IdentifierBinding] = []
   for binding in ctx.bindings {
-    if pattern.nameonly_metavars.contains(binding.meta_name) {
+    if pattern.identifier_metavars.contains(binding.meta_name) {
       for index in 0..<binding.bind_names.length() {
-        name_only_bindings.push({
+        identifier_bindings.push({
           meta_name: binding.meta_name,
           occurrence: index + 1,
           bind_name: binding.bind_names[index],
@@ -448,18 +448,18 @@ fn collect_name_only_bindings(
       }
     }
   }
-  name_only_bindings
+  identifier_bindings
 }
 
 ///|
-fn emit_name_only_match_expr(bindings : Array[NameOnlyBinding]) -> String {
+fn emit_identifier_match_expr(bindings : Array[IdentifierBinding]) -> String {
   if bindings.length() == 1 {
-    emit_name_only_option_name(bindings[0].meta_name, bindings[0].occurrence)
+    emit_identifier_option_name(bindings[0].meta_name, bindings[0].occurrence)
   } else {
     let entries : Array[String] = []
     for binding in bindings {
       entries.push(
-        emit_name_only_option_name(binding.meta_name, binding.occurrence),
+        emit_identifier_option_name(binding.meta_name, binding.occurrence),
       )
     }
     let joined = entries.join(", ")
@@ -468,14 +468,14 @@ fn emit_name_only_match_expr(bindings : Array[NameOnlyBinding]) -> String {
 }
 
 ///|
-fn emit_name_only_match_pattern(bindings : Array[NameOnlyBinding]) -> String {
+fn emit_identifier_match_pattern(bindings : Array[IdentifierBinding]) -> String {
   if bindings.length() == 1 {
-    "Some(\{emit_name_only_value_name(bindings[0].meta_name, bindings[0].occurrence)})"
+    "Some(\{emit_identifier_value_name(bindings[0].meta_name, bindings[0].occurrence)})"
   } else {
     let entries : Array[String] = []
     for binding in bindings {
       entries.push(
-        "Some(\{emit_name_only_value_name(binding.meta_name, binding.occurrence)})",
+        "Some(\{emit_identifier_value_name(binding.meta_name, binding.occurrence)})",
       )
     }
     let joined = entries.join(", ")
@@ -491,13 +491,13 @@ fn emit_guard_source(
   match pattern.pattern_guard {
     None => None
     Some(guard_source) =>
-      if pattern.nameonly_metavars.is_empty() {
+      if pattern.identifier_metavars.is_empty() {
         Some(guard_source)
       } else {
         let args : Array[String] = []
         for meta_name in emit_pattern_metavars(pattern) {
-          if pattern.nameonly_metavars.contains(meta_name) {
-            args.push(emit_name_only_value_name(meta_name, 1))
+          if pattern.identifier_metavars.contains(meta_name) {
+            args.push(emit_identifier_value_name(meta_name, 1))
           } else {
             let binding = find_binding_record(ctx, meta_name).unwrap()
             args.push(binding.bind_names[0])
@@ -510,19 +510,19 @@ fn emit_guard_source(
 }
 
 ///|
-fn emit_name_only_guard_function_source(
+fn emit_identifier_guard_function_source(
   builder : StringBuilder,
   pattern : RulePatternSpec,
   ctx : PatternEmitContext,
 ) -> Unit {
   ignore(ctx)
   guard pattern.pattern_guard is Some(guard_source) else { return }
-  if pattern.nameonly_metavars.is_empty() {
+  if pattern.identifier_metavars.is_empty() {
     return
   }
   let params : Array[String] = []
   for meta_name in emit_pattern_metavars(pattern) {
-    let param_type = if pattern.nameonly_metavars.contains(meta_name) {
+    let param_type = if pattern.identifier_metavars.contains(meta_name) {
       "String"
     } else {
       "Json"

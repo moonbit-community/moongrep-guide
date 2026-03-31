@@ -65,8 +65,8 @@ Any other key inside a pattern object is rejected.
 
 If `metavars` is present, it must be a mapping. Only these keys are accepted:
 
-- `structural` (optional): array of strings
-- `nameonly` (optional): array of strings
+- `subtree` (optional): array of strings
+- `identifier` (optional): array of strings
 
 If either bucket is omitted, it defaults to the empty array.
 
@@ -78,7 +78,7 @@ Each bucket:
 
 Across buckets:
 
-- a metavar name must not appear in both `structural` and `nameonly`
+- a metavar name must not appear in both `subtree` and `identifier`
 
 ## `shape`
 
@@ -147,14 +147,14 @@ binding is generated for that name.
 Undeclared names are matched literally according to the AST JSON produced from
 `shape`.
 
-## `structural` Semantics
+## `subtree` Semantics
 
-A `structural` metavar binds the matched AST subtree as raw `Json`.
+A `subtree` metavar binds the matched AST subtree as raw `Json`.
 
 Consequences:
 
 - the guard receives that metavar as `Json`
-- repeating the same `structural` metavar in one pattern requires raw AST
+- repeating the same `subtree` metavar in one pattern requires raw AST
   equality across all occurrences
 - the equality check is performed in generated matcher code before the guard
 
@@ -164,19 +164,19 @@ Example:
 patterns:
   - shape: _expr == _expr
     metavars:
-      structural: [_expr]
+      subtree: [_expr]
 ```
 
 This can match repeated non-trivial subtrees such as `items[i] == items[i]`
 because the whole expression subtree is compared structurally.
 
-`structural` is usually the wrong choice when the same source-level variable
+`subtree` is usually the wrong choice when the same source-level variable
 name appears once as a binder and later as an identifier expression, because
 those are different AST node kinds and therefore not structurally equal.
 
-## `nameonly` Semantics
+## `identifier` Semantics
 
-A `nameonly` metavar binds by normalized simple identifier name rather than by
+An `identifier` metavar binds by normalized simple identifier name rather than by
 raw AST equality.
 
 Current normalization succeeds only for:
@@ -188,7 +188,7 @@ Current normalization succeeds only for:
 If normalization succeeds:
 
 - the guard receives the metavar as `String`
-- repeating the same `nameonly` metavar requires all normalized strings to be
+- repeating the same `identifier` metavar requires all normalized strings to be
   equal
 
 If normalization fails for any occurrence:
@@ -211,14 +211,14 @@ is rejected during bundling.
 
 Guard parameter types are:
 
-- `structural` metavars -> `Json`
-- `nameonly` metavars -> `String`
+- `subtree` metavars -> `Json`
+- `identifier` metavars -> `String`
 
 Guard evaluation order for a matching pattern is:
 
 1. bind all declared metavars that occur in supported positions
-2. for `nameonly`, normalize each occurrence to `String?`
-3. if any `nameonly` normalization fails, do not emit a hit
+2. for `identifier`, normalize each occurrence to `String?`
+3. if any `identifier` normalization fails, do not emit a hit
 4. if a repeated metavar appears multiple times, check generated equality
 5. if a guard is present, evaluate it
 6. if the guard yields `true`, push a hit
@@ -260,7 +260,7 @@ Bundling is rejected in the following cases:
 - a metavar bucket is present but not an array
 - a metavar bucket contains a non-string entry
 - a metavar name is duplicated within one bucket
-- a metavar name appears in both `structural` and `nameonly`
+- a metavar name appears in both `subtree` and `identifier`
 - a metavar uses a reserved name
 - a declared metavar is never bound in a supported position
 - `guard` is present but not a string
@@ -273,7 +273,7 @@ Bundling is rejected in the following cases:
 
 The generated bundle exports:
 
-```moonbit
+```moonbit nocheck
 pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool raise]
 ```
 
@@ -300,7 +300,7 @@ Each emitted hit contains:
 
 ## Normative Examples
 
-### Structural repeated subtree
+### Repeated subtree equality
 
 ```yaml
 package: moonbitlang/core
@@ -309,7 +309,7 @@ description: |
 patterns:
   - shape: _expr == _expr
     metavars:
-      structural: [_expr]
+      subtree: [_expr]
 ```
 
 Semantics:
@@ -331,8 +331,8 @@ patterns:
         body
       }
     metavars:
-      structural: [_start, upper_limit, body]
-      nameonly: [counter]
+      subtree: [_start, upper_limit, body]
+      identifier: [counter]
 ```
 
 Semantics:
@@ -352,11 +352,11 @@ patterns:
   - shape: |
       _conn.read_request()
     metavars:
-      structural: [_conn]
+      subtree: [_conn]
   - shape: |
       _client.end_request()
     metavars:
-      structural: [_client]
+      subtree: [_client]
 ```
 
 Semantics:

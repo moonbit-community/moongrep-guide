@@ -10,7 +10,7 @@ pub fn dump_expr_json_repr(String) -> Json raise
 
 pub fn is_unused_var(Json, String) -> Bool
 
-pub fn normalize_metavar_name(Json) -> String?
+pub fn normalize_identifier_name(Json) -> String?
 
 pub fn[C] traverse_ast_json_repr(Json, (C, Json) -> Bool raise, context~ : C) -> Unit raise
 

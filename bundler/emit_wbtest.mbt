@@ -8,8 +8,8 @@ test "emit bundle source builds package-local matcher file" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          structural_metavars: ["node", "html"],
-          nameonly_metavars: [],
+          subtree_metavars: ["node", "html"],
+          identifier_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -35,8 +35,8 @@ test "emit matcher source marks bundled rule functions as raising" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          structural_metavars: ["node", "html"],
-          nameonly_metavars: [],
+          subtree_metavars: ["node", "html"],
+          identifier_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -64,14 +64,14 @@ test "emit bundle source generates one matcher function per rule" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          structural_metavars: ["node", "html"],
-          nameonly_metavars: [],
+          subtree_metavars: ["node", "html"],
+          identifier_metavars: [],
           pattern_guard: None,
         },
         {
           shape: "node.set_outer_html(html)",
-          structural_metavars: ["node", "html"],
-          nameonly_metavars: [],
+          subtree_metavars: ["node", "html"],
+          identifier_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -83,8 +83,8 @@ test "emit bundle source generates one matcher function per rule" {
       patterns: [
         {
           shape: "value.apply(args)",
-          structural_metavars: ["value", "args"],
-          nameonly_metavars: [],
+          subtree_metavars: ["value", "args"],
+          identifier_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -109,8 +109,8 @@ test "emit matcher source does not capture metavars in match hits" {
       patterns: [
         {
           shape: "node.set_inner_html(html)",
-          structural_metavars: ["node", "html"],
-          nameonly_metavars: [],
+          subtree_metavars: ["node", "html"],
+          identifier_metavars: [],
           pattern_guard: None,
         },
       ],
@@ -163,8 +163,8 @@ test "emit matcher source checks duplicate equality before guard" {
       patterns: [
         {
           shape: "pair(left, left)",
-          structural_metavars: ["pair", "left"],
-          nameonly_metavars: [],
+          subtree_metavars: ["pair", "left"],
+          identifier_metavars: [],
           pattern_guard: Some("left != pair"),
         },
       ],
@@ -182,17 +182,17 @@ test "emit matcher source checks duplicate equality before guard" {
 }
 
 ///|
-test "emit matcher source normalizes nameonly metavars before guard" {
+test "emit matcher source normalizes identifier metavars before guard" {
   let source = emit_matcher_source([
     {
-      rule_id: "example/name-only-guarded",
+      rule_id: "example/identifier-guarded",
       package_name: "moonbit-community/example",
-      description: "name-only guarded rule",
+      description: "identifier guarded rule",
       patterns: [
         {
           shape: "for counter = start; counter < limit; counter = next { body }",
-          structural_metavars: ["start", "limit", "next", "body"],
-          nameonly_metavars: ["counter"],
+          subtree_metavars: ["start", "limit", "next", "body"],
+          identifier_metavars: ["counter"],
           pattern_guard: Some("@greptools.example(counter, next, body)"),
         },
       ],
@@ -200,22 +200,22 @@ test "emit matcher source normalizes nameonly metavars before guard" {
   ])
   assert_true(
     source.contains(
-      "let __moongrep_name_opt_meta_counter_1 = @greptools.normalize_metavar_name(counter)",
+      "let __moongrep_identifier_opt_meta_counter_1 = @greptools.normalize_identifier_name(counter)",
     ),
   )
   assert_true(
     source.contains(
-      "let __moongrep_name_opt_meta_counter_2 = @greptools.normalize_metavar_name(meta_counter_2)",
+      "let __moongrep_identifier_opt_meta_counter_2 = @greptools.normalize_identifier_name(meta_counter_2)",
     ),
   )
   assert_true(
     source.contains(
-      "match (__moongrep_name_opt_meta_counter_1, __moongrep_name_opt_meta_counter_2, __moongrep_name_opt_meta_counter_3)",
+      "match (__moongrep_identifier_opt_meta_counter_1, __moongrep_identifier_opt_meta_counter_2, __moongrep_identifier_opt_meta_counter_3)",
     ),
   )
   assert_true(
     source.contains(
-      "(Some(__moongrep_name_meta_counter_1), Some(__moongrep_name_meta_counter_2), Some(__moongrep_name_meta_counter_3)) => {",
+      "(Some(__moongrep_identifier_name_meta_counter_1), Some(__moongrep_identifier_name_meta_counter_2), Some(__moongrep_identifier_name_meta_counter_3)) => {",
     ),
   )
   assert_true(
@@ -225,28 +225,28 @@ test "emit matcher source normalizes nameonly metavars before guard" {
   )
   assert_true(
     source.contains(
-      "if __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_2 && __moongrep_name_meta_counter_1 == __moongrep_name_meta_counter_3 {",
+      "if __moongrep_identifier_name_meta_counter_1 == __moongrep_identifier_name_meta_counter_2 && __moongrep_identifier_name_meta_counter_1 == __moongrep_identifier_name_meta_counter_3 {",
     ),
   )
   assert_true(
     source.contains(
-      "if __moongrep_guard(start, limit, next, body, __moongrep_name_meta_counter_1) {",
+      "if __moongrep_guard(start, limit, next, body, __moongrep_identifier_name_meta_counter_1) {",
     ),
   )
 }
 
 ///|
-test "emit matcher source checks nameonly normalization without guard" {
+test "emit matcher source checks identifier normalization without guard" {
   let source = emit_matcher_source([
     {
-      rule_id: "example/name-only",
+      rule_id: "example/identifier",
       package_name: "moonbit-community/example",
-      description: "name-only rule",
+      description: "identifier rule",
       patterns: [
         {
           shape: "pair(left, right)",
-          structural_metavars: ["pair", "right"],
-          nameonly_metavars: ["left"],
+          subtree_metavars: ["pair", "right"],
+          identifier_metavars: ["left"],
           pattern_guard: None,
         },
       ],
@@ -254,10 +254,12 @@ test "emit matcher source checks nameonly normalization without guard" {
   ])
   assert_true(
     source.contains(
-      "let __moongrep_name_opt_meta_left_1 = @greptools.normalize_metavar_name(left)",
+      "let __moongrep_identifier_opt_meta_left_1 = @greptools.normalize_identifier_name(left)",
     ),
   )
-  assert_true(source.contains("match __moongrep_name_opt_meta_left_1 {"))
-  assert_true(source.contains("Some(__moongrep_name_meta_left_1) => {"))
+  assert_true(source.contains("match __moongrep_identifier_opt_meta_left_1 {"))
+  assert_true(
+    source.contains("Some(__moongrep_identifier_name_meta_left_1) => {"),
+  )
   assert_false(source.contains("fn __moongrep_guard("))
 }

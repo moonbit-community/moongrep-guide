@@ -7,8 +7,8 @@ patterns:
   - shape: |
       _conn.read_request()
     metavars:
-      structural: [_conn]
+      subtree: [_conn]
   - shape: |
       _client.end_request()
     metavars:
-      structural: [_client]
+      subtree: [_client]

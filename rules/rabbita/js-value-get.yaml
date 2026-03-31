@@ -6,12 +6,12 @@ patterns:
   - shape: |
       _value.get_with_string(_key)
     metavars:
-      structural: [_value, _key]
+      subtree: [_value, _key]
   - shape: |
       _value.get_with_index(_index)
     metavars:
-      structural: [_value, _index]
+      subtree: [_value, _index]
   - shape: |
       _value.get_with_symbol(_symbol)
     metavars:
-      structural: [_value, _symbol]
+      subtree: [_value, _symbol]

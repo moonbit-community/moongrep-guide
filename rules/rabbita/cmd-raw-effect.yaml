@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @cmd.raw_effect(_effect)
     metavars:
-      structural: [_effect]
+      subtree: [_effect]

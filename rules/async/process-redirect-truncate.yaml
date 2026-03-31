@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @process.redirect_to_file(_path, truncate=true)
     metavars:
-      structural: [_path]
+      subtree: [_path]

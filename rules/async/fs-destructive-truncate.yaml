@@ -7,16 +7,16 @@ patterns:
   - shape: |
       @fs.open(_path, mode=_mode, truncate=true)
     metavars:
-      structural: [_path, _mode]
+      subtree: [_path, _mode]
   - shape: |
       @fs.open(_path, mode~, truncate=true)
     metavars:
-      structural: [_path]
+      subtree: [_path]
   - shape: |
       @fs.write_file(_path, _content)
     metavars:
-      structural: [_path, _content]
+      subtree: [_path, _content]
   - shape: |
       @fs.write_file(_path, _content, truncate=true)
     metavars:
-      structural: [_path, _content]
+      subtree: [_path, _content]

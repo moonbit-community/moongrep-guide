@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @fs.read_file(_path)
     metavars:
-      structural: [_path]
+      subtree: [_path]

@@ -7,12 +7,12 @@ patterns:
   - shape: |
       @tls.Tls::client(_stream, verify=true)
     metavars:
-      structural: [_stream]
+      subtree: [_stream]
   - shape: |
       @tls.Tls::client(_stream, verify=false, host=_host)
     metavars:
-      structural: [_stream, _host]
+      subtree: [_stream, _host]
   - shape: |
       @tls.Tls::client_from_pair(_reader, _writer, verify=true)
     metavars:
-      structural: [_reader, _writer]
+      subtree: [_reader, _writer]

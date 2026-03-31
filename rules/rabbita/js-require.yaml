@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @js.require(_module_name, keys=[_export_name])
     metavars:
-      structural: [_module_name, _export_name]
+      subtree: [_module_name, _export_name]

@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @dom.window().load_url(_url)
     metavars:
-      structural: [_url]
+      subtree: [_url]

@@ -6,4 +6,4 @@ patterns:
   - shape: |
       @svg.Attrs::build().inner_html(_svg)
     metavars:
-      structural: [_svg]
+      subtree: [_svg]
