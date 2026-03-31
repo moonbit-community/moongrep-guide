@@ -222,6 +222,7 @@ test "lang/cstyle-for-unused-loop-var: string interpolation uses outer counter" 
 
 ///|
 test "lang/cstyle-for-unused-loop-var: if + is" {
+  // is expression `foo is Some(i)` in if condition should shadowing loop variable `i`
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -230,7 +231,6 @@ test "lang/cstyle-for-unused-loop-var: if + is" {
     #|    }
     #|  }
     #|}
-  // is expression `foo is Some(i)` in if condition should shadowing loop variable `i`
   assert_single_unused_loop_var_hit(source)
   // if condition have is expression that shadowed loop variable 
   // but use loop variable in else branch
@@ -241,6 +241,146 @@ test "lang/cstyle-for-unused-loop-var: if + is" {
     #|      println(i)
     #|    } else {
     #|      println(i)
+    #|    }
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: guard + is" {
+  // is expression `foo is Some(i)` in guard condition should shadowing loop variable `i`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    guard foo is Some(i) else {
+    #|      continue
+    #|    }
+    #|    println(i)
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+  // is expression `foo is Some(i)` in guard condition should shadowing loop variable `i`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    guard foo is Some(i)
+    #|    println(i)
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+  // guard condition have is expression that shadowed loop variable 
+  // but use loop variable after guard
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    guard foo is Some(i) else {
+    #|      println(i)
+    #|    }
+    #|    println(i)
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+  // no shadow
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    guard i is 0
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: while + is" {
+  // is expression `foo is Some(i)` in while condition should shadowing loop variable `i`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    while foo is Some(i) {
+    #|      println(i)
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+  // while condition have is expression that shadowed loop variable
+  // but use loop variable after while body
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    while foo is Some(i) {
+    #|      println(i)
+    #|    }
+    #|    println(i)
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: while + is + nobreak" {
+  // nobreak branch does not use outer loop variable `i`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    while foo is Some(i) {
+    #|      println(i)
+    #|    } nobreak {
+    #|      println("done")
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+  // nobreak branch uses outer loop variable `i`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    while foo is Some(i) {
+    #|      println(i)
+    #|    } nobreak {
+    #|      println(i)
+    #|    }
+    #|  }
+    #|}
+  assert_no_unused_loop_var_hit(source)
+  // while condition shadowing should not leak into nobreak branch,
+  // but nobreak can establish its own shadowing with `is`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    while foo is Some(i) {
+    #|      println(i)
+    #|    } nobreak {
+    #|      if bar is Some(i) {
+    #|        println(i)
+    #|      }
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/cstyle-for-unused-loop-var: match guard + is" {
+  // is expression `foo is Some(i)` in match guard condition should shadowing loop variable `i`
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    match foo {
+    #|      foo if foo is Some(i) => println(i)
+    #|      None => println("foo")
+    #|    }
+    #|  }
+    #|}
+  assert_single_unused_loop_var_hit(source)
+  // guard condition have is expression that shadowed loop variable 
+  // but use loop variable in `None` branch
+  let source =
+    #|fn main {
+    #|  for i = 0; i < 10; i = i + 1 {
+    #|    match foo {
+    #|      foo if foo is Some(i) => println(i)
+    #|      None => println(i)
     #|    }
     #|  }
     #|}

@@ -98,6 +98,18 @@ fn contains_ident_with_shadow(
       contains_ident_with_shadow(ifnot, name, shadowed)
     }
     {
+      "kind": "Expr::Guard",
+      "children": { "cond": cond, "otherwise": otherwise, "body": body, .. },
+      ..
+    } => {
+      if contains_ident_with_shadow(cond, name, shadowed) {
+        return true
+      }
+      let body_shadowed = shadowed || binds_name(cond, name)
+      contains_ident_with_shadow(body, name, body_shadowed) ||
+      contains_ident_with_shadow(otherwise, name, shadowed)
+    }
+    {
       "kind": "Case",
       "children": { "pattern": pattern, "guard": guard_, "body": body, .. },
       ..
@@ -105,8 +117,11 @@ fn contains_ident_with_shadow(
       if contains_ident_with_shadow(pattern, name, shadowed) {
         return true
       }
-      let body_shadowed = shadowed || binds_name(pattern, name)
-      contains_ident_with_shadow(guard_, name, body_shadowed) ||
+      let guard_shadowed = shadowed || binds_name(pattern, name)
+      if contains_ident_with_shadow(guard_, name, guard_shadowed) {
+        return true
+      }
+      let body_shadowed = guard_shadowed || binds_name(guard_, name)
       contains_ident_with_shadow(body, name, body_shadowed)
     }
     {
@@ -117,8 +132,11 @@ fn contains_ident_with_shadow(
       if contains_ident_with_shadow(pattern, name, shadowed) {
         return true
       }
-      let body_shadowed = shadowed || binds_name(pattern, name)
-      contains_ident_with_shadow(guard_, name, body_shadowed) ||
+      let guard_shadowed = shadowed || binds_name(pattern, name)
+      if contains_ident_with_shadow(guard_, name, guard_shadowed) {
+        return true
+      }
+      let body_shadowed = guard_shadowed || binds_name(guard_, name)
       contains_ident_with_shadow(body, name, body_shadowed)
     }
     {
@@ -215,6 +233,23 @@ fn contains_ident_with_shadow(
       let loop_shadowed = shadowed || binds_name(binders, name)
       contains_ident_with_shadow(body, name, loop_shadowed) ||
       contains_ident_with_shadow(else_block, name, shadowed)
+    }
+    {
+      "kind": "Expr::While",
+      "children": {
+        "loop_cond": loop_cond,
+        "loop_body": loop_body,
+        "while_else": while_else,
+        ..
+      },
+      ..
+    } => {
+      if contains_ident_with_shadow(loop_cond, name, shadowed) {
+        return true
+      }
+      let body_shadowed = shadowed || binds_name(loop_cond, name)
+      contains_ident_with_shadow(loop_body, name, body_shadowed) ||
+      contains_ident_with_shadow(while_else, name, shadowed)
     }
     { "children": children, .. } =>
       contains_ident_with_shadow(children, name, shadowed)
