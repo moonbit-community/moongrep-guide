@@ -26,8 +26,7 @@ pub(all) struct MatchHit {
   description : String
   pattern_index : Int
   loc : Json
-}
-pub impl Eq for MatchHit
+} derive(Eq)
 pub impl Show for MatchHit
 pub impl ToJson for MatchHit
 

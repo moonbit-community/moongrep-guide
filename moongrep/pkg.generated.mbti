@@ -6,11 +6,9 @@ package "moonbit-community/moongrep-guide/moongrep"
 // Errors
 
 // Types and methods
-type DirectoryScanResult
-pub impl Eq for DirectoryScanResult
+type DirectoryScanResult derive(Eq)
 
-type SkippedFile
-pub impl Eq for SkippedFile
+type SkippedFile derive(Eq)
 
 // Type aliases
 
