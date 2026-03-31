@@ -6567,6 +6567,263 @@ fn lang_cstyle_for_unused_loop_var(
 }
 
 ///|
+// bundled rule: lang/potential-augmented-mutate
+#warnings("-unused_error_type")
+fn lang_potential_augmented_mutate(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool raise {
+  match ast {
+    // rule: lang/potential-augmented-mutate pattern 0
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "+", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _number,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } => {
+      let __moongrep_identifier_opt_meta_variable_1 = @greptools.normalize_identifier_name(
+        variable,
+      )
+      let __moongrep_identifier_opt_meta_variable_2 = @greptools.normalize_identifier_name(
+        meta_variable_2,
+      )
+      match
+        (
+          __moongrep_identifier_opt_meta_variable_1, __moongrep_identifier_opt_meta_variable_2,
+        ) {
+        (
+          Some(__moongrep_identifier_name_meta_variable_1),
+          Some(__moongrep_identifier_name_meta_variable_2),
+        ) =>
+          if __moongrep_identifier_name_meta_variable_1 ==
+            __moongrep_identifier_name_meta_variable_2 {
+            hits.push(MatchHit::{
+              file,
+              rule_id: "lang/potential-augmented-mutate",
+              package_name: "moonbitlang/core",
+              description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, or `/=` to make the\nin-place update explicit.\n",
+              pattern_index: 0,
+              loc,
+            })
+          }
+        _ => ()
+      }
+      true
+    }
+    // rule: lang/potential-augmented-mutate pattern 1
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "*", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _number,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } => {
+      let __moongrep_identifier_opt_meta_variable_1 = @greptools.normalize_identifier_name(
+        variable,
+      )
+      let __moongrep_identifier_opt_meta_variable_2 = @greptools.normalize_identifier_name(
+        meta_variable_2,
+      )
+      match
+        (
+          __moongrep_identifier_opt_meta_variable_1, __moongrep_identifier_opt_meta_variable_2,
+        ) {
+        (
+          Some(__moongrep_identifier_name_meta_variable_1),
+          Some(__moongrep_identifier_name_meta_variable_2),
+        ) =>
+          if __moongrep_identifier_name_meta_variable_1 ==
+            __moongrep_identifier_name_meta_variable_2 {
+            hits.push(MatchHit::{
+              file,
+              rule_id: "lang/potential-augmented-mutate",
+              package_name: "moonbitlang/core",
+              description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, or `/=` to make the\nin-place update explicit.\n",
+              pattern_index: 1,
+              loc,
+            })
+          }
+        _ => ()
+      }
+      true
+    }
+    // rule: lang/potential-augmented-mutate pattern 2
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "-", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _number,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } => {
+      let __moongrep_identifier_opt_meta_variable_1 = @greptools.normalize_identifier_name(
+        variable,
+      )
+      let __moongrep_identifier_opt_meta_variable_2 = @greptools.normalize_identifier_name(
+        meta_variable_2,
+      )
+      match
+        (
+          __moongrep_identifier_opt_meta_variable_1, __moongrep_identifier_opt_meta_variable_2,
+        ) {
+        (
+          Some(__moongrep_identifier_name_meta_variable_1),
+          Some(__moongrep_identifier_name_meta_variable_2),
+        ) =>
+          if __moongrep_identifier_name_meta_variable_1 ==
+            __moongrep_identifier_name_meta_variable_2 {
+            hits.push(MatchHit::{
+              file,
+              rule_id: "lang/potential-augmented-mutate",
+              package_name: "moonbitlang/core",
+              description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, or `/=` to make the\nin-place update explicit.\n",
+              pattern_index: 2,
+              loc,
+            })
+          }
+        _ => ()
+      }
+      true
+    }
+    // rule: lang/potential-augmented-mutate pattern 3
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "/", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _number,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } => {
+      let __moongrep_identifier_opt_meta_variable_1 = @greptools.normalize_identifier_name(
+        variable,
+      )
+      let __moongrep_identifier_opt_meta_variable_2 = @greptools.normalize_identifier_name(
+        meta_variable_2,
+      )
+      match
+        (
+          __moongrep_identifier_opt_meta_variable_1, __moongrep_identifier_opt_meta_variable_2,
+        ) {
+        (
+          Some(__moongrep_identifier_name_meta_variable_1),
+          Some(__moongrep_identifier_name_meta_variable_2),
+        ) =>
+          if __moongrep_identifier_name_meta_variable_1 ==
+            __moongrep_identifier_name_meta_variable_2 {
+            hits.push(MatchHit::{
+              file,
+              rule_id: "lang/potential-augmented-mutate",
+              package_name: "moonbitlang/core",
+              description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, or `/=` to make the\nin-place update explicit.\n",
+              pattern_index: 3,
+              loc,
+            })
+          }
+        _ => ()
+      }
+      true
+    }
+    _ => true
+  }
+}
+
+///|
 // bundled rule: async/websocket-message-read-all
 #warnings("-unused_error_type")
 fn async_websocket_message_read_all(
@@ -8548,6 +8805,7 @@ pub let moongrep_rules_table : Map[
   "async/process-redirect-truncate": async_process_redirect_truncate,
   "async/process-unbounded-collect": async_process_unbounded_collect,
   "lang/cstyle-for-unused-loop-var": lang_cstyle_for_unused_loop_var,
+  "lang/potential-augmented-mutate": lang_potential_augmented_mutate,
   "async/websocket-message-read-all": async_websocket_message_read_all,
   "async/websocket-http-handshake-crlf": async_websocket_http_handshake_crlf,
   "async/http-request-transfer-encoding": async_http_request_transfer_encoding,
