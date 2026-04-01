@@ -1,5 +1,5 @@
 ///|
-let moongrep_command_name = "moon run moongrep"
+let moongrep_command_name = "moongrep"
 
 ///|
 fn moongrep_command() -> @argparse.Command {
