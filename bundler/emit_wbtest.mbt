@@ -170,11 +170,8 @@ test "emit matcher source checks duplicate equality before guard" {
       ],
     },
   ])
-  assert_false(source.contains("} if left != pair => {"))
-  assert_true(source.contains("if left == meta_left_2 {"))
-  assert_true(source.contains("if left != pair {"))
   assert_true(
-    source.contains("if left == meta_left_2 {\n          if left != pair {"),
+    source.contains("} if left == meta_left_2 && (left != pair) => {"),
   )
   assert_false(source.contains("\"pair\": pair"))
   assert_false(source.contains("\"left\": left"))
@@ -200,38 +197,17 @@ test "emit matcher source normalizes identifier metavars before guard" {
   ])
   assert_true(
     source.contains(
-      "let __moongrep_identifier_opt_meta_counter_1 = @greptools.normalize_identifier_name(counter)",
+      "fn __moongrep_guard_0(start : Json, limit : Json, next : Json, body : Json, counter : String) -> Bool raise {",
     ),
   )
   assert_true(
     source.contains(
-      "let __moongrep_identifier_opt_meta_counter_2 = @greptools.normalize_identifier_name(meta_counter_2)",
+      "} if @greptools.normalize_identifier_name(counter) is Some(__moongrep_identifier_name_meta_counter_1) && @greptools.normalize_identifier_name(meta_counter_2) is Some(__moongrep_identifier_name_meta_counter_2) && @greptools.normalize_identifier_name(meta_counter_3) is Some(__moongrep_identifier_name_meta_counter_3) && __moongrep_identifier_name_meta_counter_1 == __moongrep_identifier_name_meta_counter_2 && __moongrep_identifier_name_meta_counter_1 == __moongrep_identifier_name_meta_counter_3 && __moongrep_guard_0(start, limit, next, body, __moongrep_identifier_name_meta_counter_1) => {",
     ),
   )
-  assert_true(
-    source.contains(
-      "match (__moongrep_identifier_opt_meta_counter_1, __moongrep_identifier_opt_meta_counter_2, __moongrep_identifier_opt_meta_counter_3)",
-    ),
-  )
-  assert_true(
-    source.contains(
-      "(Some(__moongrep_identifier_name_meta_counter_1), Some(__moongrep_identifier_name_meta_counter_2), Some(__moongrep_identifier_name_meta_counter_3)) => {",
-    ),
-  )
-  assert_true(
-    source.contains(
-      "fn __moongrep_guard(start : Json, limit : Json, next : Json, body : Json, counter : String) -> Bool raise {",
-    ),
-  )
-  assert_true(
-    source.contains(
-      "if __moongrep_identifier_name_meta_counter_1 == __moongrep_identifier_name_meta_counter_2 && __moongrep_identifier_name_meta_counter_1 == __moongrep_identifier_name_meta_counter_3 {",
-    ),
-  )
-  assert_true(
-    source.contains(
-      "if __moongrep_guard(start, limit, next, body, __moongrep_identifier_name_meta_counter_1) {",
-    ),
+  assert_false(source.contains("let __moongrep_identifier_opt_meta_counter_1"))
+  assert_false(
+    source.contains("match (__moongrep_identifier_opt_meta_counter_1"),
   )
 }
 
@@ -254,12 +230,8 @@ test "emit matcher source checks identifier normalization without guard" {
   ])
   assert_true(
     source.contains(
-      "let __moongrep_identifier_opt_meta_left_1 = @greptools.normalize_identifier_name(left)",
+      "} if @greptools.normalize_identifier_name(left) is Some(__moongrep_identifier_name_meta_left_1) => {",
     ),
-  )
-  assert_true(source.contains("match __moongrep_identifier_opt_meta_left_1 {"))
-  assert_true(
-    source.contains("Some(__moongrep_identifier_name_meta_left_1) => {"),
   )
   assert_false(source.contains("fn __moongrep_guard("))
 }
@@ -284,12 +256,47 @@ test "emit matcher source captures identifier metavars in Var targets" {
   assert_true(source.contains("\"var\": variable"))
   assert_true(
     source.contains(
-      "let __moongrep_identifier_opt_meta_variable_1 = @greptools.normalize_identifier_name(variable)",
+      "@greptools.normalize_identifier_name(variable) is Some(__moongrep_identifier_name_meta_variable_1)",
     ),
   )
   assert_true(
     source.contains(
-      "let __moongrep_identifier_opt_meta_variable_2 = @greptools.normalize_identifier_name(meta_variable_2)",
+      "@greptools.normalize_identifier_name(meta_variable_2) is Some(__moongrep_identifier_name_meta_variable_2)",
+    ),
+  )
+}
+
+///|
+test "emit matcher source uses unique helper names per guarded identifier pattern" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/multi-guarded",
+      package_name: "moonbit-community/example",
+      description: "multi guarded rule",
+      patterns: [
+        {
+          shape: "for counter = start; counter < limit; counter = next { body }",
+          subtree_metavars: ["start", "limit", "next", "body"],
+          identifier_metavars: ["counter"],
+          pattern_guard: Some("@greptools.example(counter, next, body)"),
+        },
+        {
+          shape: "for index = begin; index < end_; index = step { body2 }",
+          subtree_metavars: ["begin", "end_", "step", "body2"],
+          identifier_metavars: ["index"],
+          pattern_guard: Some("@greptools.example(index, step, body2)"),
+        },
+      ],
+    },
+  ])
+  assert_true(
+    source.contains(
+      "fn __moongrep_guard_0(start : Json, limit : Json, next : Json, body : Json, counter : String) -> Bool raise {",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "fn __moongrep_guard_1(begin : Json, end_ : Json, step : Json, body2 : Json, index : String) -> Bool raise {",
     ),
   )
 }

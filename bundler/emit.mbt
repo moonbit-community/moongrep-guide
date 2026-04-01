@@ -153,18 +153,13 @@ fn emit_generated_local_name(
 }
 
 ///|
-fn emit_identifier_option_name(meta_name : String, occurrence : Int) -> String {
-  emit_generated_local_name("identifier_opt", meta_name, occurrence)
-}
-
-///|
 fn emit_identifier_value_name(meta_name : String, occurrence : Int) -> String {
   emit_generated_local_name("identifier_name", meta_name, occurrence)
 }
 
 ///|
-fn emit_guard_function_name() -> String {
-  "__moongrep_guard"
+fn emit_guard_function_name(pattern_index : Int) -> String {
+  "__moongrep_guard_\{pattern_index}"
 }
 
 ///|
@@ -253,10 +248,14 @@ fn emit_rule_arm(
   builder.write_string(
     "      // rule: \{rule.rule_id} pattern \{pattern_index}\n",
   )
-  builder.write_string("      \{pattern_source} => {\n")
+  let guard_source = emit_rule_arm_guard_source(pattern, pattern_index, ctx)
+  match guard_source {
+    Some(guard_source) =>
+      builder.write_string("      \{pattern_source} if \{guard_source} => {\n")
+    None => builder.write_string("      \{pattern_source} => {\n")
+  }
   let push_source = emit_push_source(rule, pattern_index, ctx)
-  emit_identifier_guard_function_source(builder, pattern, ctx)
-  emit_rule_arm_body(builder, pattern, ctx, push_source)
+  builder.write_string("        \{push_source}\n")
   builder.write_string("        true\n")
   builder.write_string("      }\n")
   builder.to_string()
@@ -274,6 +273,7 @@ fn emit_rule_matcher_source(
   builder.write_string(
     "fn \{rule_function_name}(file : String, ast : Json, hits : Array[MatchHit]) -> Bool raise {\n",
   )
+  builder.write_string(emit_rule_guard_function_sources(rule))
   builder.write_string("  match ast {\n")
   for pattern_index in 0..<rule.patterns.length() {
     let pattern = rule.patterns[pattern_index]
@@ -367,68 +367,67 @@ fn emit_duplicate_condition(
 }
 
 ///|
-fn emit_guarded_push_source(
-  builder : StringBuilder,
-  duplicate_condition : String,
-  guard_source : String?,
-  push_source : String,
-  indent : String,
-) -> Unit {
-  match (duplicate_condition, guard_source) {
-    ("", None) => builder.write_string("\{indent}\{push_source}\n")
-    ("", Some(guard_source)) => {
-      builder.write_string("\{indent}if \{guard_source} {\n")
-      builder.write_string("\{indent}  \{push_source}\n")
-      builder.write_string("\{indent}}\n")
-    }
-    (_, None) => {
-      builder.write_string("\{indent}if \{duplicate_condition} {\n")
-      builder.write_string("\{indent}  \{push_source}\n")
-      builder.write_string("\{indent}}\n")
-    }
-    (_, Some(guard_source)) => {
-      builder.write_string("\{indent}if \{duplicate_condition} {\n")
-      builder.write_string("\{indent}  if \{guard_source} {\n")
-      builder.write_string("\{indent}    \{push_source}\n")
-      builder.write_string("\{indent}  }\n")
-      builder.write_string("\{indent}}\n")
-    }
+fn emit_rule_arm_guard_source(
+  pattern : RulePatternSpec,
+  pattern_index : Int,
+  ctx : PatternEmitContext,
+) -> String? {
+  let clauses : Array[String] = []
+  for condition in emit_identifier_normalization_conditions(pattern, ctx) {
+    clauses.push(condition)
+  }
+  let duplicate_condition = emit_duplicate_condition(pattern, ctx)
+  if duplicate_condition != "" {
+    clauses.push(duplicate_condition)
+  }
+  match emit_guard_source(pattern, pattern_index, ctx) {
+    Some(guard_source) => clauses.push(guard_source)
+    None => ()
+  }
+  if clauses.is_empty() {
+    None
+  } else {
+    Some(clauses.join(" && "))
   }
 }
 
 ///|
-fn emit_rule_arm_body(
-  builder : StringBuilder,
+fn emit_identifier_normalization_conditions(
   pattern : RulePatternSpec,
   ctx : PatternEmitContext,
-  push_source : String,
-) -> Unit {
-  let duplicate_condition = emit_duplicate_condition(pattern, ctx)
-  let guard_source = emit_guard_source(pattern, ctx)
-  let identifier_bindings = collect_identifier_bindings(pattern, ctx)
-  if identifier_bindings.is_empty() {
-    emit_guarded_push_source(
-      builder, duplicate_condition, guard_source, push_source, "        ",
+) -> Array[String] {
+  let conditions : Array[String] = []
+  for binding in collect_identifier_bindings(pattern, ctx) {
+    let normalized_name = emit_identifier_value_name(
+      binding.meta_name,
+      binding.occurrence,
     )
-    return
-  }
-  for binding in identifier_bindings {
-    builder.write_string(
-      "        let \{emit_identifier_option_name(binding.meta_name, binding.occurrence)} = @greptools.normalize_identifier_name(\{binding.bind_name})\n",
+    conditions.push(
+      "@greptools.normalize_identifier_name(\{binding.bind_name}) is Some(\{normalized_name})",
     )
   }
-  builder.write_string(
-    "        match \{emit_identifier_match_expr(identifier_bindings)} {\n",
-  )
-  builder.write_string(
-    "          \{emit_identifier_match_pattern(identifier_bindings)} => {\n",
-  )
-  emit_guarded_push_source(
-    builder, duplicate_condition, guard_source, push_source, "            ",
-  )
-  builder.write_string("          }\n")
-  builder.write_string("          _ => ()\n")
-  builder.write_string("        }\n")
+  conditions
+}
+
+///|
+fn emit_rule_guard_function_sources(rule : RuleSpec) -> String {
+  let builder = StringBuilder::new()
+  let mut has_helper = false
+  for pattern_index in 0..<rule.patterns.length() {
+    let helper_source = emit_identifier_guard_function_source(
+      pattern_index,
+      rule.patterns[pattern_index],
+    )
+    if helper_source != "" {
+      builder.write_string(helper_source)
+      builder.write_string("\n")
+      has_helper = true
+    }
+  }
+  if has_helper {
+    builder.write_string("\n")
+  }
+  builder.to_string()
 }
 
 ///|
@@ -452,47 +451,16 @@ fn collect_identifier_bindings(
 }
 
 ///|
-fn emit_identifier_match_expr(bindings : Array[IdentifierBinding]) -> String {
-  if bindings.length() == 1 {
-    emit_identifier_option_name(bindings[0].meta_name, bindings[0].occurrence)
-  } else {
-    let entries : Array[String] = []
-    for binding in bindings {
-      entries.push(
-        emit_identifier_option_name(binding.meta_name, binding.occurrence),
-      )
-    }
-    let joined = entries.join(", ")
-    "(\{joined})"
-  }
-}
-
-///|
-fn emit_identifier_match_pattern(bindings : Array[IdentifierBinding]) -> String {
-  if bindings.length() == 1 {
-    "Some(\{emit_identifier_value_name(bindings[0].meta_name, bindings[0].occurrence)})"
-  } else {
-    let entries : Array[String] = []
-    for binding in bindings {
-      entries.push(
-        "Some(\{emit_identifier_value_name(binding.meta_name, binding.occurrence)})",
-      )
-    }
-    let joined = entries.join(", ")
-    "(\{joined})"
-  }
-}
-
-///|
 fn emit_guard_source(
   pattern : RulePatternSpec,
+  pattern_index : Int,
   ctx : PatternEmitContext,
 ) -> String? {
   match pattern.pattern_guard {
     None => None
     Some(guard_source) =>
       if pattern.identifier_metavars.is_empty() {
-        Some(guard_source)
+        Some("(\{guard_source})")
       } else {
         let args : Array[String] = []
         for meta_name in emit_pattern_metavars(pattern) {
@@ -504,22 +472,21 @@ fn emit_guard_source(
           }
         }
         let joined_args = args.join(", ")
-        Some("\{emit_guard_function_name()}(\{joined_args})")
+        Some("\{emit_guard_function_name(pattern_index)}(\{joined_args})")
       }
   }
 }
 
 ///|
 fn emit_identifier_guard_function_source(
-  builder : StringBuilder,
+  pattern_index : Int,
   pattern : RulePatternSpec,
-  ctx : PatternEmitContext,
-) -> Unit {
-  ignore(ctx)
-  guard pattern.pattern_guard is Some(guard_source) else { return }
+) -> String {
+  guard pattern.pattern_guard is Some(guard_source) else { return "" }
   if pattern.identifier_metavars.is_empty() {
-    return
+    return ""
   }
+  let builder = StringBuilder::new()
   let params : Array[String] = []
   for meta_name in emit_pattern_metavars(pattern) {
     let param_type = if pattern.identifier_metavars.contains(meta_name) {
@@ -531,11 +498,12 @@ fn emit_identifier_guard_function_source(
   }
   let joined_params = params.join(", ")
   builder.write_string(
-    "        fn \{emit_guard_function_name()}(\{joined_params}) -> Bool raise {\n",
+    "  fn \{emit_guard_function_name(pattern_index)}(\{joined_params}) -> Bool raise {\n",
   )
   for meta_name in emit_pattern_metavars(pattern) {
-    builder.write_string("          ignore(\{meta_name})\n")
+    builder.write_string("    ignore(\{meta_name})\n")
   }
-  builder.write_string("          \{guard_source}\n")
-  builder.write_string("        }\n")
+  builder.write_string("    \{guard_source}\n")
+  builder.write_string("  }\n")
+  builder.to_string()
 }
