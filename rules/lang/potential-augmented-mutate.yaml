@@ -9,21 +9,21 @@ patterns:
     metavars:
       subtree: [_number]
       identifier: [variable]
-  # - shape: |
-  #     variable = _number + variable
-  #   metavars:
-  #     subtree: [_number]
-  #     identifier: [variable]
+  - shape: |
+      variable = _number + variable
+    metavars:
+      subtree: [_number]
+      identifier: [variable]
   - shape: |
       variable = variable * _number
     metavars:
       subtree: [_number]
       identifier: [variable]
-  # - shape: |
-  #     variable = _number * variable
-  #   metavars:
-  #     subtree: [_number]
-  #     identifier: [variable]
+  - shape: |
+      variable = _number * variable
+    metavars:
+      subtree: [_number]
+      identifier: [variable]
   - shape: |
       variable = variable - _number
     metavars:
