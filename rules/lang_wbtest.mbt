@@ -21,6 +21,30 @@ fn assert_no_unused_loop_var_hit(source : String) -> Unit raise {
 }
 
 ///|
+fn collect_potential_augmented_mutate_hits(
+  source : String,
+) -> Array[MatchHit] raise {
+  let hits = []
+  @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
+    hits,
+    ast,
+  ) => lang_potential_augmented_mutate("<memory>", ast, hits))
+  hits
+}
+
+///|
+fn assert_single_potential_augmented_mutate_hit(source : String) -> Unit raise {
+  let hits = collect_potential_augmented_mutate_hits(source)
+  assert_true(hits is [{ rule_id: "lang/potential-augmented-mutate", .. }])
+}
+
+///|
+fn assert_no_potential_augmented_mutate_hit(source : String) -> Unit raise {
+  let hits = collect_potential_augmented_mutate_hits(source)
+  assert_true(hits is [])
+}
+
+///|
 test "lang/cstyle-for-unused-loop-var: basic" {
   let source =
     #|fn main {
@@ -385,4 +409,72 @@ test "lang/cstyle-for-unused-loop-var: match guard + is" {
     #|  }
     #|}
   assert_no_unused_loop_var_hit(source)
+}
+
+///|
+test "lang/potential-augmented-mutate: detects basic arithmetic updates" {
+  let source =
+    #|fn main {
+    #|  let mut total = 0
+    #|  total = total + 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 0
+    #|  total = 1 + total
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 1
+    #|  total = total * 2
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 1
+    #|  total = 2 * total
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 3
+    #|  total = total - 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 8
+    #|  total = total / 2
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+}
+
+///|
+test "lang/potential-augmented-mutate: ignores nearby non-matches" {
+  let source =
+    #|fn main {
+    #|  let mut total = 0
+    #|  total += 1
+    #|}
+  assert_no_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main(other : Int) {
+    #|  let mut total = 0
+    #|  total = other + 1
+    #|}
+  assert_no_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 0
+    #|  total = 1 - total
+    #|}
+  assert_no_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let mut total = 1
+    #|  total = 2 / total
+    #|}
+  assert_no_potential_augmented_mutate_hit(source)
 }
