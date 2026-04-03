@@ -1,18 +1,18 @@
 ///|
-struct SkippedFile {
+priv struct SkippedFile {
   file : String
   reason : String
-} derive(Eq)
+}
 
 ///|
-struct DirectoryScanResult {
+priv struct DirectoryScanResult {
   hits : Array[@greptools.MatchHit]
   skipped_files : Array[SkippedFile]
-} derive(Eq)
+}
 
 ///|
 fn render_skipped_file_message(skipped : SkippedFile) -> String {
-  "warning: skipping \{skipped.file}: parse failed"
+  "warning: skipping \{skipped.file}: parse failed due to \{skipped.reason}"
 }
 
 ///|
