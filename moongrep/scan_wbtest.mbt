@@ -35,7 +35,7 @@ test "collect directory hits skips files that fail to parse" {
   let result = collect_directory_hits(dir)
   assert_true(result.hits.length() == 1)
   inspect(result.hits[0].file, content=valid_file)
-  inspect(result.hits[0].rule_id, content="lang/cstyle-for-unused-loop-var")
+  inspect(result.hits[0].rule_id, content="language/cstyle-for-unused-loop-var")
   assert_true(result.skipped_files.length() == 1)
   inspect(result.skipped_files[0].file, content=broken_file)
   assert_true(result.skipped_files[0].reason != "")

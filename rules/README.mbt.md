@@ -323,7 +323,7 @@ After changing a rule:
 2. add or update a focused wbtest for the generated matcher
 3. cover both a positive case and at least one nearby negative case
 
-[rules/lang_wbtest.mbt](lang_wbtest.mbt) is the model to follow. It shows the
+[rules/language_wbtest.mbt](language_wbtest.mbt) is the model to follow. It shows the
 recommended pattern:
 
 - create an in-memory source string

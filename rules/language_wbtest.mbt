@@ -4,14 +4,14 @@ fn collect_hits(source : String) -> Array[MatchHit] raise {
   @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
     hits,
     ast,
-  ) => lang_cstyle_for_unused_loop_var("<memory>", ast, hits))
+  ) => language_cstyle_for_unused_loop_var("<memory>", ast, hits))
   hits
 }
 
 ///|
 fn assert_single_unused_loop_var_hit(source : String) -> Unit raise {
   let hits = collect_hits(source)
-  assert_true(hits is [{ rule_id: "lang/cstyle-for-unused-loop-var", .. }])
+  assert_true(hits is [{ rule_id: "language/cstyle-for-unused-loop-var", .. }])
 }
 
 ///|
@@ -28,14 +28,14 @@ fn collect_potential_augmented_mutate_hits(
   @greptools.traverse_top_impls(name="<memory>", source, context=hits, (
     hits,
     ast,
-  ) => lang_potential_augmented_mutate("<memory>", ast, hits))
+  ) => language_potential_augmented_mutate("<memory>", ast, hits))
   hits
 }
 
 ///|
 fn assert_single_potential_augmented_mutate_hit(source : String) -> Unit raise {
   let hits = collect_potential_augmented_mutate_hits(source)
-  assert_true(hits is [{ rule_id: "lang/potential-augmented-mutate", .. }])
+  assert_true(hits is [{ rule_id: "language/potential-augmented-mutate", .. }])
 }
 
 ///|
@@ -45,7 +45,7 @@ fn assert_no_potential_augmented_mutate_hit(source : String) -> Unit raise {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: basic" {
+test "language/cstyle-for-unused-loop-var: basic" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -56,7 +56,7 @@ test "lang/cstyle-for-unused-loop-var: basic" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: upper limit uses counter" {
+test "language/cstyle-for-unused-loop-var: upper limit uses counter" {
   let source =
     #|fn main(limit : Int) {
     #|  for i = 0; i < limit - i; i = i + 1 {
@@ -67,7 +67,7 @@ test "lang/cstyle-for-unused-loop-var: upper limit uses counter" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: body uses counter" {
+test "language/cstyle-for-unused-loop-var: body uses counter" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -78,7 +78,7 @@ test "lang/cstyle-for-unused-loop-var: body uses counter" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: let shadow" {
+test "language/cstyle-for-unused-loop-var: let shadow" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -90,7 +90,7 @@ test "lang/cstyle-for-unused-loop-var: let shadow" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: let mut shadow" {
+test "language/cstyle-for-unused-loop-var: let mut shadow" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -103,7 +103,7 @@ test "lang/cstyle-for-unused-loop-var: let mut shadow" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: match case shadow" {
+test "language/cstyle-for-unused-loop-var: match case shadow" {
   let source =
     #|fn main(value : Int?) {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -117,7 +117,7 @@ test "lang/cstyle-for-unused-loop-var: match case shadow" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: match mixed shadow and outer use" {
+test "language/cstyle-for-unused-loop-var: match mixed shadow and outer use" {
   let source =
     #|fn main(value : Int?) {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -131,7 +131,7 @@ test "lang/cstyle-for-unused-loop-var: match mixed shadow and outer use" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: match guard shadow only" {
+test "language/cstyle-for-unused-loop-var: match guard shadow only" {
   let source =
     #|fn main(value : Int?) {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -146,7 +146,7 @@ test "lang/cstyle-for-unused-loop-var: match guard shadow only" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: match guard shadow plus outer use in fallback" {
+test "language/cstyle-for-unused-loop-var: match guard shadow plus outer use in fallback" {
   let source =
     #|fn main(value : Int?) {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -161,7 +161,7 @@ test "lang/cstyle-for-unused-loop-var: match guard shadow plus outer use in fall
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: lambda parameter shadow in body" {
+test "language/cstyle-for-unused-loop-var: lambda parameter shadow in body" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -173,7 +173,7 @@ test "lang/cstyle-for-unused-loop-var: lambda parameter shadow in body" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: lambda captures outer counter in body" {
+test "language/cstyle-for-unused-loop-var: lambda captures outer counter in body" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -185,7 +185,7 @@ test "lang/cstyle-for-unused-loop-var: lambda captures outer counter in body" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: lambda parameter shadow in upper limit" {
+test "language/cstyle-for-unused-loop-var: lambda parameter shadow in upper limit" {
   let source =
     #|fn main {
     #|  for i = 0; i < (fn(i : Int) -> Int { i + 10 })(0); i = i + 1 {
@@ -196,7 +196,7 @@ test "lang/cstyle-for-unused-loop-var: lambda parameter shadow in upper limit" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: lambda captures outer counter in upper limit" {
+test "language/cstyle-for-unused-loop-var: lambda captures outer counter in upper limit" {
   let source =
     #|fn main {
     #|  for i = 0; i < (fn(x : Int) -> Int { i + x + 10 })(1); i = i + 1 {
@@ -207,7 +207,7 @@ test "lang/cstyle-for-unused-loop-var: lambda captures outer counter in upper li
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: nested inner for shadows outer counter" {
+test "language/cstyle-for-unused-loop-var: nested inner for shadows outer counter" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -220,7 +220,7 @@ test "lang/cstyle-for-unused-loop-var: nested inner for shadows outer counter" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: nested inner for plus outer use after inner loop" {
+test "language/cstyle-for-unused-loop-var: nested inner for plus outer use after inner loop" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -234,7 +234,7 @@ test "lang/cstyle-for-unused-loop-var: nested inner for plus outer use after inn
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: string interpolation uses outer counter" {
+test "language/cstyle-for-unused-loop-var: string interpolation uses outer counter" {
   let source =
     #|fn main {
     #|  for i = 0; i < 10; i = i + 1 {
@@ -245,7 +245,7 @@ test "lang/cstyle-for-unused-loop-var: string interpolation uses outer counter" 
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: if + is" {
+test "language/cstyle-for-unused-loop-var: if + is" {
   // is expression `foo is Some(i)` in if condition should shadowing loop variable `i`
   let source =
     #|fn main {
@@ -272,7 +272,7 @@ test "lang/cstyle-for-unused-loop-var: if + is" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: guard + is" {
+test "language/cstyle-for-unused-loop-var: guard + is" {
   // is expression `foo is Some(i)` in guard condition should shadowing loop variable `i`
   let source =
     #|fn main {
@@ -316,7 +316,7 @@ test "lang/cstyle-for-unused-loop-var: guard + is" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: while + is" {
+test "language/cstyle-for-unused-loop-var: while + is" {
   // is expression `foo is Some(i)` in while condition should shadowing loop variable `i`
   let source =
     #|fn main {
@@ -342,7 +342,7 @@ test "lang/cstyle-for-unused-loop-var: while + is" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: while + is + nobreak" {
+test "language/cstyle-for-unused-loop-var: while + is + nobreak" {
   // nobreak branch does not use outer loop variable `i`
   let source =
     #|fn main {
@@ -385,7 +385,7 @@ test "lang/cstyle-for-unused-loop-var: while + is + nobreak" {
 }
 
 ///|
-test "lang/cstyle-for-unused-loop-var: match guard + is" {
+test "language/cstyle-for-unused-loop-var: match guard + is" {
   // is expression `foo is Some(i)` in match guard condition should shadowing loop variable `i`
   let source =
     #|fn main {
@@ -412,7 +412,7 @@ test "lang/cstyle-for-unused-loop-var: match guard + is" {
 }
 
 ///|
-test "lang/potential-augmented-mutate: detects basic arithmetic updates" {
+test "language/potential-augmented-mutate: detects basic arithmetic updates" {
   let source =
     #|fn main {
     #|  let mut total = 0
@@ -452,7 +452,7 @@ test "lang/potential-augmented-mutate: detects basic arithmetic updates" {
 }
 
 ///|
-test "lang/potential-augmented-mutate: ignores nearby non-matches" {
+test "language/potential-augmented-mutate: ignores nearby non-matches" {
   let source =
     #|fn main {
     #|  let mut total = 0

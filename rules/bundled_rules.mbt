@@ -6404,443 +6404,6 @@ fn async_process_unbounded_collect(
 }
 
 ///|
-// bundled rule: lang/cstyle-for-unused-loop-var
-#warnings("-unused_error_type")
-fn lang_cstyle_for_unused_loop_var(
-  file : String,
-  ast : Json,
-  hits : Array[MatchHit],
-) -> Bool raise {
-  fn __moongrep_guard_0(
-    upper_limit : Json,
-    body : Json,
-    counter : String,
-  ) -> Bool raise {
-    ignore(upper_limit)
-    ignore(body)
-    ignore(counter)
-    @greptools.is_unused_var(upper_limit, counter) &&
-    @greptools.is_unused_var(body, counter)
-  }
-
-  match ast {
-    // rule: lang/cstyle-for-unused-loop-var pattern 0
-    {
-      "kind": "Expr::For",
-      "loc": loc,
-      "children": {
-        "body": body,
-        "label": Null,
-        "binders": {
-          "kind": "Expr::For::BindingList",
-          "children": [
-            {
-              "kind": "For::Binding",
-              "children": { "expr": _, "binder": counter, .. },
-              ..
-            },
-          ],
-          ..
-        },
-        "for_else": Null,
-        "condition": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "<", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": meta_counter_2,
-            "rhs": upper_limit,
-            ..
-          },
-          ..
-        },
-        "where_clause": Null,
-        "continue_block": {
-          "kind": "Expr::For::ContBindingList",
-          "children": [
-            {
-              "kind": "For::ContBinding",
-              "children": {
-                "expr": {
-                  "kind": "Expr::Infix",
-                  "children": {
-                    "op": {
-                      "kind": "Var",
-                      "children": {
-                        "name": {
-                          "kind": "LongIdent::Ident",
-                          "children": { "value": "+", .. },
-                          ..
-                        },
-                        ..
-                      },
-                      ..
-                    },
-                    "lhs": meta_counter_3,
-                    "rhs": {
-                      "kind": "Expr::Constant",
-                      "children": {
-                        "constant": {
-                          "kind": "Constant::Int",
-                          "children": { "value": "1", .. },
-                          ..
-                        },
-                        ..
-                      },
-                      ..
-                    },
-                    ..
-                  },
-                  ..
-                },
-                "binder": meta_counter_4,
-                ..
-              },
-              ..
-            },
-          ],
-          ..
-        },
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(counter)
-      is Some(__moongrep_identifier_name_meta_counter_1) &&
-      @greptools.normalize_identifier_name(meta_counter_2)
-      is Some(__moongrep_identifier_name_meta_counter_2) &&
-      @greptools.normalize_identifier_name(meta_counter_3)
-      is Some(__moongrep_identifier_name_meta_counter_3) &&
-      @greptools.normalize_identifier_name(meta_counter_4)
-      is Some(__moongrep_identifier_name_meta_counter_4) &&
-      __moongrep_identifier_name_meta_counter_1 ==
-      __moongrep_identifier_name_meta_counter_2 &&
-      __moongrep_identifier_name_meta_counter_1 ==
-      __moongrep_identifier_name_meta_counter_3 &&
-      __moongrep_identifier_name_meta_counter_1 ==
-      __moongrep_identifier_name_meta_counter_4 &&
-      __moongrep_guard_0(
-        upper_limit, body, __moongrep_identifier_name_meta_counter_1,
-      ) => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/cstyle-for-unused-loop-var",
-        package_name: "moonbitlang/core",
-        description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n",
-        pattern_index: 0,
-        loc,
-      })
-      true
-    }
-    _ => true
-  }
-}
-
-///|
-// bundled rule: lang/potential-augmented-mutate
-#warnings("-unused_error_type")
-fn lang_potential_augmented_mutate(
-  file : String,
-  ast : Json,
-  hits : Array[MatchHit],
-) -> Bool raise {
-  match ast {
-    // rule: lang/potential-augmented-mutate pattern 0
-    {
-      "kind": "Expr::Assign",
-      "loc": loc,
-      "children": {
-        "var": variable,
-        "expr": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "+", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": meta_variable_2,
-            "rhs": _,
-            ..
-          },
-          ..
-        },
-        "augmented_by": Null,
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(variable)
-      is Some(__moongrep_identifier_name_meta_variable_1) &&
-      @greptools.normalize_identifier_name(meta_variable_2)
-      is Some(__moongrep_identifier_name_meta_variable_2) &&
-      __moongrep_identifier_name_meta_variable_1 ==
-      __moongrep_identifier_name_meta_variable_2 => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/potential-augmented-mutate",
-        package_name: "moonbitlang/core",
-        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
-        pattern_index: 0,
-        loc,
-      })
-      true
-    }
-    // rule: lang/potential-augmented-mutate pattern 1
-    {
-      "kind": "Expr::Assign",
-      "loc": loc,
-      "children": {
-        "var": variable,
-        "expr": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "+", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": _,
-            "rhs": meta_variable_2,
-            ..
-          },
-          ..
-        },
-        "augmented_by": Null,
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(variable)
-      is Some(__moongrep_identifier_name_meta_variable_1) &&
-      @greptools.normalize_identifier_name(meta_variable_2)
-      is Some(__moongrep_identifier_name_meta_variable_2) &&
-      __moongrep_identifier_name_meta_variable_1 ==
-      __moongrep_identifier_name_meta_variable_2 => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/potential-augmented-mutate",
-        package_name: "moonbitlang/core",
-        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
-        pattern_index: 1,
-        loc,
-      })
-      true
-    }
-    // rule: lang/potential-augmented-mutate pattern 2
-    {
-      "kind": "Expr::Assign",
-      "loc": loc,
-      "children": {
-        "var": variable,
-        "expr": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "*", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": meta_variable_2,
-            "rhs": _,
-            ..
-          },
-          ..
-        },
-        "augmented_by": Null,
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(variable)
-      is Some(__moongrep_identifier_name_meta_variable_1) &&
-      @greptools.normalize_identifier_name(meta_variable_2)
-      is Some(__moongrep_identifier_name_meta_variable_2) &&
-      __moongrep_identifier_name_meta_variable_1 ==
-      __moongrep_identifier_name_meta_variable_2 => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/potential-augmented-mutate",
-        package_name: "moonbitlang/core",
-        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
-        pattern_index: 2,
-        loc,
-      })
-      true
-    }
-    // rule: lang/potential-augmented-mutate pattern 3
-    {
-      "kind": "Expr::Assign",
-      "loc": loc,
-      "children": {
-        "var": variable,
-        "expr": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "*", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": _,
-            "rhs": meta_variable_2,
-            ..
-          },
-          ..
-        },
-        "augmented_by": Null,
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(variable)
-      is Some(__moongrep_identifier_name_meta_variable_1) &&
-      @greptools.normalize_identifier_name(meta_variable_2)
-      is Some(__moongrep_identifier_name_meta_variable_2) &&
-      __moongrep_identifier_name_meta_variable_1 ==
-      __moongrep_identifier_name_meta_variable_2 => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/potential-augmented-mutate",
-        package_name: "moonbitlang/core",
-        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
-        pattern_index: 3,
-        loc,
-      })
-      true
-    }
-    // rule: lang/potential-augmented-mutate pattern 4
-    {
-      "kind": "Expr::Assign",
-      "loc": loc,
-      "children": {
-        "var": variable,
-        "expr": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "-", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": meta_variable_2,
-            "rhs": _,
-            ..
-          },
-          ..
-        },
-        "augmented_by": Null,
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(variable)
-      is Some(__moongrep_identifier_name_meta_variable_1) &&
-      @greptools.normalize_identifier_name(meta_variable_2)
-      is Some(__moongrep_identifier_name_meta_variable_2) &&
-      __moongrep_identifier_name_meta_variable_1 ==
-      __moongrep_identifier_name_meta_variable_2 => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/potential-augmented-mutate",
-        package_name: "moonbitlang/core",
-        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
-        pattern_index: 4,
-        loc,
-      })
-      true
-    }
-    // rule: lang/potential-augmented-mutate pattern 5
-    {
-      "kind": "Expr::Assign",
-      "loc": loc,
-      "children": {
-        "var": variable,
-        "expr": {
-          "kind": "Expr::Infix",
-          "children": {
-            "op": {
-              "kind": "Var",
-              "children": {
-                "name": {
-                  "kind": "LongIdent::Ident",
-                  "children": { "value": "/", .. },
-                  ..
-                },
-                ..
-              },
-              ..
-            },
-            "lhs": meta_variable_2,
-            "rhs": _,
-            ..
-          },
-          ..
-        },
-        "augmented_by": Null,
-        ..
-      },
-      ..
-    } if @greptools.normalize_identifier_name(variable)
-      is Some(__moongrep_identifier_name_meta_variable_1) &&
-      @greptools.normalize_identifier_name(meta_variable_2)
-      is Some(__moongrep_identifier_name_meta_variable_2) &&
-      __moongrep_identifier_name_meta_variable_1 ==
-      __moongrep_identifier_name_meta_variable_2 => {
-      hits.push(MatchHit::{
-        file,
-        rule_id: "lang/potential-augmented-mutate",
-        package_name: "moonbitlang/core",
-        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
-        pattern_index: 5,
-        loc,
-      })
-      true
-    }
-    _ => true
-  }
-}
-
-///|
 // bundled rule: async/websocket-message-read-all
 #warnings("-unused_error_type")
 fn async_websocket_message_read_all(
@@ -7039,6 +6602,443 @@ fn async_websocket_http_handshake_crlf(
         package_name: "moonbitlang/async/websocket",
         description: "Passing user-controlled WebSocket handshake URLs, paths, or header maps into\nthese APIs can inject raw HTTP bytes into the Upgrade request if the value\ncontains `\\r` or `\\n`.\n",
         pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    _ => true
+  }
+}
+
+///|
+// bundled rule: language/cstyle-for-unused-loop-var
+#warnings("-unused_error_type")
+fn language_cstyle_for_unused_loop_var(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool raise {
+  fn __moongrep_guard_0(
+    upper_limit : Json,
+    body : Json,
+    counter : String,
+  ) -> Bool raise {
+    ignore(upper_limit)
+    ignore(body)
+    ignore(counter)
+    @greptools.is_unused_var(upper_limit, counter) &&
+    @greptools.is_unused_var(body, counter)
+  }
+
+  match ast {
+    // rule: language/cstyle-for-unused-loop-var pattern 0
+    {
+      "kind": "Expr::For",
+      "loc": loc,
+      "children": {
+        "body": body,
+        "label": Null,
+        "binders": {
+          "kind": "Expr::For::BindingList",
+          "children": [
+            {
+              "kind": "For::Binding",
+              "children": { "expr": _, "binder": counter, .. },
+              ..
+            },
+          ],
+          ..
+        },
+        "for_else": Null,
+        "condition": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "<", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_counter_2,
+            "rhs": upper_limit,
+            ..
+          },
+          ..
+        },
+        "where_clause": Null,
+        "continue_block": {
+          "kind": "Expr::For::ContBindingList",
+          "children": [
+            {
+              "kind": "For::ContBinding",
+              "children": {
+                "expr": {
+                  "kind": "Expr::Infix",
+                  "children": {
+                    "op": {
+                      "kind": "Var",
+                      "children": {
+                        "name": {
+                          "kind": "LongIdent::Ident",
+                          "children": { "value": "+", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    "lhs": meta_counter_3,
+                    "rhs": {
+                      "kind": "Expr::Constant",
+                      "children": {
+                        "constant": {
+                          "kind": "Constant::Int",
+                          "children": { "value": "1", .. },
+                          ..
+                        },
+                        ..
+                      },
+                      ..
+                    },
+                    ..
+                  },
+                  ..
+                },
+                "binder": meta_counter_4,
+                ..
+              },
+              ..
+            },
+          ],
+          ..
+        },
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(counter)
+      is Some(__moongrep_identifier_name_meta_counter_1) &&
+      @greptools.normalize_identifier_name(meta_counter_2)
+      is Some(__moongrep_identifier_name_meta_counter_2) &&
+      @greptools.normalize_identifier_name(meta_counter_3)
+      is Some(__moongrep_identifier_name_meta_counter_3) &&
+      @greptools.normalize_identifier_name(meta_counter_4)
+      is Some(__moongrep_identifier_name_meta_counter_4) &&
+      __moongrep_identifier_name_meta_counter_1 ==
+      __moongrep_identifier_name_meta_counter_2 &&
+      __moongrep_identifier_name_meta_counter_1 ==
+      __moongrep_identifier_name_meta_counter_3 &&
+      __moongrep_identifier_name_meta_counter_1 ==
+      __moongrep_identifier_name_meta_counter_4 &&
+      __moongrep_guard_0(
+        upper_limit, body, __moongrep_identifier_name_meta_counter_1,
+      ) => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/cstyle-for-unused-loop-var",
+        package_name: "moonbitlang/core",
+        description: "This C-style `for` loop updates a loop variable that the body never reads.\nPrefer a construct that makes the unused counter explicit, such as a range\nloop with `_`, or refactor the loop body to use the counter intentionally.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    _ => true
+  }
+}
+
+///|
+// bundled rule: language/potential-augmented-mutate
+#warnings("-unused_error_type")
+fn language_potential_augmented_mutate(
+  file : String,
+  ast : Json,
+  hits : Array[MatchHit],
+) -> Bool raise {
+  match ast {
+    // rule: language/potential-augmented-mutate pattern 0
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "+", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(variable)
+      is Some(__moongrep_identifier_name_meta_variable_1) &&
+      @greptools.normalize_identifier_name(meta_variable_2)
+      is Some(__moongrep_identifier_name_meta_variable_2) &&
+      __moongrep_identifier_name_meta_variable_1 ==
+      __moongrep_identifier_name_meta_variable_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 0,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 1
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "+", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": _,
+            "rhs": meta_variable_2,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(variable)
+      is Some(__moongrep_identifier_name_meta_variable_1) &&
+      @greptools.normalize_identifier_name(meta_variable_2)
+      is Some(__moongrep_identifier_name_meta_variable_2) &&
+      __moongrep_identifier_name_meta_variable_1 ==
+      __moongrep_identifier_name_meta_variable_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 1,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 2
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "*", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(variable)
+      is Some(__moongrep_identifier_name_meta_variable_1) &&
+      @greptools.normalize_identifier_name(meta_variable_2)
+      is Some(__moongrep_identifier_name_meta_variable_2) &&
+      __moongrep_identifier_name_meta_variable_1 ==
+      __moongrep_identifier_name_meta_variable_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 2,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 3
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "*", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": _,
+            "rhs": meta_variable_2,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(variable)
+      is Some(__moongrep_identifier_name_meta_variable_1) &&
+      @greptools.normalize_identifier_name(meta_variable_2)
+      is Some(__moongrep_identifier_name_meta_variable_2) &&
+      __moongrep_identifier_name_meta_variable_1 ==
+      __moongrep_identifier_name_meta_variable_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 3,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 4
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "-", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(variable)
+      is Some(__moongrep_identifier_name_meta_variable_1) &&
+      @greptools.normalize_identifier_name(meta_variable_2)
+      is Some(__moongrep_identifier_name_meta_variable_2) &&
+      __moongrep_identifier_name_meta_variable_1 ==
+      __moongrep_identifier_name_meta_variable_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 4,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 5
+    {
+      "kind": "Expr::Assign",
+      "loc": loc,
+      "children": {
+        "var": variable,
+        "expr": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "/", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": meta_variable_2,
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(variable)
+      is Some(__moongrep_identifier_name_meta_variable_1) &&
+      @greptools.normalize_identifier_name(meta_variable_2)
+      is Some(__moongrep_identifier_name_meta_variable_2) &&
+      __moongrep_identifier_name_meta_variable_1 ==
+      __moongrep_identifier_name_meta_variable_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 5,
         loc,
       })
       true
@@ -8821,10 +8821,10 @@ pub let moongrep_rules_table : Map[
   "async/fs-tmpdir-weak-randomness": async_fs_tmpdir_weak_randomness,
   "async/process-redirect-truncate": async_process_redirect_truncate,
   "async/process-unbounded-collect": async_process_unbounded_collect,
-  "lang/cstyle-for-unused-loop-var": lang_cstyle_for_unused_loop_var,
-  "lang/potential-augmented-mutate": lang_potential_augmented_mutate,
   "async/websocket-message-read-all": async_websocket_message_read_all,
   "async/websocket-http-handshake-crlf": async_websocket_http_handshake_crlf,
+  "language/cstyle-for-unused-loop-var": language_cstyle_for_unused_loop_var,
+  "language/potential-augmented-mutate": language_potential_augmented_mutate,
   "async/http-request-transfer-encoding": async_http_request_transfer_encoding,
   "async/tls-client-verification-footgun": async_tls_client_verification_footgun,
   "rabbita/dom-dangerous-attribute-write": rabbita_dom_dangerous_attribute_write,
