@@ -5,38 +5,20 @@ description: |
   or response splitting if the value contains `\r` or `\n`.
 patterns:
   - shape: |
-      @http.Client::new(_url, headers=_headers)
-    metavars:
-      subtree: [_url, _headers]
+      @http.Client::new(__, headers=__)
   - shape: |
-      _client.request(_method, _path)
-    metavars:
-      subtree: [_client, _method, _path]
+      __.request(__, __)
   - shape: |
-      @http.get(_url)
-    metavars:
-      subtree: [_url]
+      @http.get(__)
   - shape: |
-      @http.post(_url, _content)
-    metavars:
-      subtree: [_url, _content]
+      @http.post(__, __)
   - shape: |
-      @http.put(_url, _content)
-    metavars:
-      subtree: [_url, _content]
+      @http.put(__, __)
   - shape: |
-      @http.get_stream(_url)
-    metavars:
-      subtree: [_url]
+      @http.get_stream(__)
   - shape: |
-      @http.post_stream(_url, headers=_headers)
-    metavars:
-      subtree: [_url, _headers]
+      @http.post_stream(__, headers=__)
   - shape: |
-      @http.put_stream(_url, headers=_headers)
-    metavars:
-      subtree: [_url, _headers]
+      @http.put_stream(__, headers=__)
   - shape: |
-      _conn.send_response(_status, _reason)
-    metavars:
-      subtree: [_conn, _status, _reason]
+      __.send_response(__, __)

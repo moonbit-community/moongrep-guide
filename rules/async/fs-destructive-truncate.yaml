@@ -5,18 +5,10 @@ description: |
   destroy arbitrary writable files.
 patterns:
   - shape: |
-      @fs.open(_path, mode=_mode, truncate=true)
-    metavars:
-      subtree: [_path, _mode]
+      @fs.open(__, mode=__, truncate=true)
   - shape: |
-      @fs.open(_path, mode~, truncate=true)
-    metavars:
-      subtree: [_path]
+      @fs.open(__, mode~, truncate=true)
   - shape: |
-      @fs.write_file(_path, _content)
-    metavars:
-      subtree: [_path, _content]
+      @fs.write_file(__, __)
   - shape: |
-      @fs.write_file(_path, _content, truncate=true)
-    metavars:
-      subtree: [_path, _content]
+      @fs.write_file(__, __, truncate=true)

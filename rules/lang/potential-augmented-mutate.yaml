@@ -5,32 +5,26 @@ description: |
   in-place update explicit.
 patterns:
   - shape: |
-      variable = variable + _number
+      variable = variable + __
     metavars:
-      subtree: [_number]
       identifier: [variable]
   - shape: |
-      variable = _number + variable
+      variable = __ + variable
     metavars:
-      subtree: [_number]
       identifier: [variable]
   - shape: |
-      variable = variable * _number
+      variable = variable * __
     metavars:
-      subtree: [_number]
       identifier: [variable]
   - shape: |
-      variable = _number * variable
+      variable = __ * variable
     metavars:
-      subtree: [_number]
       identifier: [variable]
   - shape: |
-      variable = variable - _number
+      variable = variable - __
     metavars:
-      subtree: [_number]
       identifier: [variable]
   - shape: |
-      variable = variable / _number
+      variable = variable / __
     metavars:
-      subtree: [_number]
       identifier: [variable]

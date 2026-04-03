@@ -5,10 +5,6 @@ description: |
   when a proxy and endpoint disagree on framing.
 patterns:
   - shape: |
-      _conn.read_request()
-    metavars:
-      subtree: [_conn]
+      __.read_request()
   - shape: |
-      _client.end_request()
-    metavars:
-      subtree: [_client]
+      __.end_request()

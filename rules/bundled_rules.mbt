@@ -25,7 +25,7 @@ fn rabbita_nav_load(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -96,7 +96,7 @@ fn rabbita_js_require(
                   "children": { .. },
                   ..
                 },
-                "value": _module_name,
+                "value": _,
                 ..
               },
               ..
@@ -121,7 +121,7 @@ fn rabbita_js_require(
                   "children": {
                     "exprs": {
                       "kind": "Expr::Array::ExprList",
-                      "children": [_export_name],
+                      "children": [_],
                       ..
                     },
                     ..
@@ -218,7 +218,7 @@ fn rabbita_svg_script(
                                       "children": { .. },
                                       ..
                                     },
-                                    "value": _script,
+                                    "value": _,
                                     ..
                                   },
                                   ..
@@ -335,7 +335,7 @@ fn rabbita_js_value_get(
                   "children": { .. },
                   ..
                 },
-                "value": _key,
+                "value": _,
                 ..
               },
               ..
@@ -344,7 +344,7 @@ fn rabbita_js_value_get(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get_with_string", .. },
@@ -381,7 +381,7 @@ fn rabbita_js_value_get(
                   "children": { .. },
                   ..
                 },
-                "value": _index,
+                "value": _,
                 ..
               },
               ..
@@ -390,7 +390,7 @@ fn rabbita_js_value_get(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get_with_index", .. },
@@ -427,7 +427,7 @@ fn rabbita_js_value_get(
                   "children": { .. },
                   ..
                 },
-                "value": _symbol,
+                "value": _,
                 ..
               },
               ..
@@ -436,7 +436,7 @@ fn rabbita_js_value_get(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get_with_symbol", .. },
@@ -486,7 +486,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -495,7 +495,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _ctor,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new", .. },
@@ -532,7 +532,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _name,
+                "value": _,
                 ..
               },
               ..
@@ -545,7 +545,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -554,7 +554,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new_with_string", .. },
@@ -591,7 +591,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _index,
+                "value": _,
                 ..
               },
               ..
@@ -604,7 +604,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -613,7 +613,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new_with_index", .. },
@@ -650,7 +650,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _symbol,
+                "value": _,
                 ..
               },
               ..
@@ -663,7 +663,7 @@ fn rabbita_js_value_new(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -672,7 +672,7 @@ fn rabbita_js_value_new(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "new_with_symbol", .. },
@@ -722,7 +722,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": _key,
+                "value": _,
                 ..
               },
               ..
@@ -735,7 +735,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": _payload,
+                "value": _,
                 ..
               },
               ..
@@ -744,7 +744,7 @@ fn rabbita_js_value_set(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_with_string", .. },
@@ -781,7 +781,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": _index,
+                "value": _,
                 ..
               },
               ..
@@ -794,7 +794,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": _payload,
+                "value": _,
                 ..
               },
               ..
@@ -803,7 +803,7 @@ fn rabbita_js_value_set(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_with_index", .. },
@@ -840,7 +840,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": _symbol,
+                "value": _,
                 ..
               },
               ..
@@ -853,7 +853,7 @@ fn rabbita_js_value_set(
                   "children": { .. },
                   ..
                 },
-                "value": _payload,
+                "value": _,
                 ..
               },
               ..
@@ -862,7 +862,7 @@ fn rabbita_js_value_set(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_with_symbol", .. },
@@ -950,7 +950,7 @@ fn rabbita_svg_href_url(
                               "children": { .. },
                               ..
                             },
-                            "value": _url,
+                            "value": _,
                             ..
                           },
                           ..
@@ -1031,7 +1031,7 @@ fn rabbita_svg_href_url(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -1096,7 +1096,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -1116,7 +1116,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": _x,
+                "value": _,
                 ..
               },
               ..
@@ -1136,7 +1136,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": _y,
+                "value": _,
                 ..
               },
               ..
@@ -1201,7 +1201,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -1221,7 +1221,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": _x,
+                "value": _,
                 ..
               },
               ..
@@ -1241,7 +1241,7 @@ fn rabbita_svg_href_url(
                   },
                   ..
                 },
-                "value": _y,
+                "value": _,
                 ..
               },
               ..
@@ -1319,7 +1319,7 @@ fn rabbita_html_href_url(
                   },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -1332,7 +1332,7 @@ fn rabbita_html_href_url(
                   "children": { .. },
                   ..
                 },
-                "value": _text,
+                "value": _,
                 ..
               },
               ..
@@ -1428,7 +1428,7 @@ fn rabbita_html_href_url(
                               "children": { .. },
                               ..
                             },
-                            "value": _url,
+                            "value": _,
                             ..
                           },
                           ..
@@ -1509,7 +1509,7 @@ fn rabbita_html_href_url(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -1580,7 +1580,7 @@ fn rabbita_cmd_raw_effect(
                   "children": { .. },
                   ..
                 },
-                "value": _effect,
+                "value": _,
                 ..
               },
               ..
@@ -1651,7 +1651,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -1660,7 +1660,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply", .. },
@@ -1697,7 +1697,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _name,
+                "value": _,
                 ..
               },
               ..
@@ -1710,7 +1710,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -1719,7 +1719,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply_with_string", .. },
@@ -1756,7 +1756,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _index,
+                "value": _,
                 ..
               },
               ..
@@ -1769,7 +1769,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -1778,7 +1778,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply_with_index", .. },
@@ -1815,7 +1815,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _symbol,
+                "value": _,
                 ..
               },
               ..
@@ -1828,7 +1828,7 @@ fn rabbita_js_value_apply(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -1837,7 +1837,7 @@ fn rabbita_js_value_apply(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _value,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "apply_with_symbol", .. },
@@ -1887,7 +1887,7 @@ fn rabbita_svg_inner_html(
                   "children": { .. },
                   ..
                 },
-                "value": _svg,
+                "value": _,
                 ..
               },
               ..
@@ -1970,7 +1970,7 @@ fn async_io_unbounded_read(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _reader,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_all", .. },
@@ -2007,7 +2007,7 @@ fn async_io_unbounded_read(
                   "children": { .. },
                   ..
                 },
-                "value": _delim,
+                "value": _,
                 ..
               },
               ..
@@ -2016,7 +2016,7 @@ fn async_io_unbounded_read(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _reader,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_until", .. },
@@ -2066,7 +2066,7 @@ fn async_socket_reuse_addr(
                   "children": { .. },
                   ..
                 },
-                "value": _addr,
+                "value": _,
                 ..
               },
               ..
@@ -2174,7 +2174,7 @@ fn rabbita_html_inner_html(
                   "children": { .. },
                   ..
                 },
-                "value": _html,
+                "value": _,
                 ..
               },
               ..
@@ -2342,7 +2342,7 @@ fn rabbita_svg_target_blank(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": _url,
+                                "value": _,
                                 ..
                               },
                               ..
@@ -2433,7 +2433,7 @@ fn rabbita_svg_target_blank(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -2504,7 +2504,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -2524,7 +2524,7 @@ fn async_http_crlf_injection(
                   },
                   ..
                 },
-                "value": _headers,
+                "value": _,
                 ..
               },
               ..
@@ -2588,7 +2588,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _method,
+                "value": _,
                 ..
               },
               ..
@@ -2601,7 +2601,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -2610,7 +2610,7 @@ fn async_http_crlf_injection(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _client,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "request", .. },
@@ -2647,7 +2647,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -2705,7 +2705,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -2718,7 +2718,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -2776,7 +2776,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -2789,7 +2789,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -2847,7 +2847,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -2905,7 +2905,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -2925,7 +2925,7 @@ fn async_http_crlf_injection(
                   },
                   ..
                 },
-                "value": _headers,
+                "value": _,
                 ..
               },
               ..
@@ -2983,7 +2983,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -3003,7 +3003,7 @@ fn async_http_crlf_injection(
                   },
                   ..
                 },
-                "value": _headers,
+                "value": _,
                 ..
               },
               ..
@@ -3061,7 +3061,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _status,
+                "value": _,
                 ..
               },
               ..
@@ -3074,7 +3074,7 @@ fn async_http_crlf_injection(
                   "children": { .. },
                   ..
                 },
-                "value": _reason,
+                "value": _,
                 ..
               },
               ..
@@ -3083,7 +3083,7 @@ fn async_http_crlf_injection(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _conn,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "send_response", .. },
@@ -3140,7 +3140,7 @@ fn rabbita_html_target_blank(
                   },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -3196,7 +3196,7 @@ fn rabbita_html_target_blank(
                   "children": { .. },
                   ..
                 },
-                "value": _text,
+                "value": _,
                 ..
               },
               ..
@@ -3342,7 +3342,7 @@ fn rabbita_html_target_blank(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": _url,
+                                "value": _,
                                 ..
                               },
                               ..
@@ -3433,7 +3433,7 @@ fn rabbita_html_target_blank(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -3495,7 +3495,7 @@ fn async_http_cl_te_ambiguity(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _conn,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_request", .. },
@@ -3523,7 +3523,7 @@ fn async_http_cl_te_ambiguity(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _client,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "end_request", .. },
@@ -3573,7 +3573,7 @@ fn rabbita_dom_set_inner_html(
                   "children": { .. },
                   ..
                 },
-                "value": _html,
+                "value": _,
                 ..
               },
               ..
@@ -3582,7 +3582,7 @@ fn rabbita_dom_set_inner_html(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _node,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_inner_html", .. },
@@ -3632,7 +3632,7 @@ fn rabbita_js_global_this_get(
                   "children": { .. },
                   ..
                 },
-                "value": _name,
+                "value": _,
                 ..
               },
               ..
@@ -3709,7 +3709,7 @@ fn rabbita_dom_window_load_url(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -3802,7 +3802,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": _src,
+                "value": _,
                 ..
               },
               ..
@@ -3815,7 +3815,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -3911,7 +3911,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -3969,7 +3969,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": _html,
+                "value": _,
                 ..
               },
               ..
@@ -4055,7 +4055,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -4120,7 +4120,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -4199,7 +4199,7 @@ fn rabbita_html_active_content(
                               "children": { .. },
                               ..
                             },
-                            "value": _mime,
+                            "value": _,
                             ..
                           },
                           ..
@@ -4226,7 +4226,7 @@ fn rabbita_html_active_content(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": _url,
+                                "value": _,
                                 ..
                               },
                               ..
@@ -4317,7 +4317,7 @@ fn rabbita_html_active_content(
                   "children": { .. },
                   ..
                 },
-                "value": _children,
+                "value": _,
                 ..
               },
               ..
@@ -4396,7 +4396,7 @@ fn rabbita_html_active_content(
                               "children": { .. },
                               ..
                             },
-                            "value": _mime,
+                            "value": _,
                             ..
                           },
                           ..
@@ -4423,7 +4423,7 @@ fn rabbita_html_active_content(
                                   "children": { .. },
                                   ..
                                 },
-                                "value": _url,
+                                "value": _,
                                 ..
                               },
                               ..
@@ -4566,7 +4566,7 @@ fn rabbita_html_active_content(
                   },
                   ..
                 },
-                "value": _base,
+                "value": _,
                 ..
               },
               ..
@@ -4689,7 +4689,7 @@ fn rabbita_html_active_content(
                       },
                       ..
                     },
-                    "rhs": _url,
+                    "rhs": _,
                     ..
                   },
                   ..
@@ -4764,7 +4764,7 @@ fn async_fs_read_file_unbounded(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -4835,7 +4835,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -4855,7 +4855,7 @@ fn async_fs_destructive_truncate(
                   },
                   ..
                 },
-                "value": _mode,
+                "value": _,
                 ..
               },
               ..
@@ -4944,7 +4944,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -5071,7 +5071,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -5084,7 +5084,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -5142,7 +5142,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -5155,7 +5155,7 @@ fn async_fs_destructive_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -5257,7 +5257,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -5291,7 +5291,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": _handler,
+                            "value": _,
                             ..
                           },
                           ..
@@ -5389,7 +5389,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -5402,7 +5402,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _body,
+                "value": _,
                 ..
               },
               ..
@@ -5436,7 +5436,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": _handler,
+                            "value": _,
                             ..
                           },
                           ..
@@ -5534,7 +5534,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -5547,7 +5547,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _body,
+                "value": _,
                 ..
               },
               ..
@@ -5581,7 +5581,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": _handler,
+                            "value": _,
                             ..
                           },
                           ..
@@ -5679,7 +5679,7 @@ fn rabbita_http_status_ok_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -5713,7 +5713,7 @@ fn rabbita_http_status_ok_footgun(
                               "children": { .. },
                               ..
                             },
-                            "value": _handler,
+                            "value": _,
                             ..
                           },
                           ..
@@ -5871,7 +5871,7 @@ fn async_fs_tmpdir_weak_randomness(
                   },
                   ..
                 },
-                "value": _prefix,
+                "value": _,
                 ..
               },
               ..
@@ -6025,7 +6025,7 @@ fn async_process_redirect_truncate(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -6127,7 +6127,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _command,
+                "value": _,
                 ..
               },
               ..
@@ -6140,7 +6140,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -6198,7 +6198,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _command,
+                "value": _,
                 ..
               },
               ..
@@ -6211,7 +6211,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -6269,7 +6269,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _command,
+                "value": _,
                 ..
               },
               ..
@@ -6282,7 +6282,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -6340,7 +6340,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _command,
+                "value": _,
                 ..
               },
               ..
@@ -6353,7 +6353,7 @@ fn async_process_unbounded_collect(
                   "children": { .. },
                   ..
                 },
-                "value": _args,
+                "value": _,
                 ..
               },
               ..
@@ -6412,12 +6412,10 @@ fn lang_cstyle_for_unused_loop_var(
   hits : Array[MatchHit],
 ) -> Bool raise {
   fn __moongrep_guard_0(
-    _start : Json,
     upper_limit : Json,
     body : Json,
     counter : String,
   ) -> Bool raise {
-    ignore(_start)
     ignore(upper_limit)
     ignore(body)
     ignore(counter)
@@ -6438,7 +6436,7 @@ fn lang_cstyle_for_unused_loop_var(
           "children": [
             {
               "kind": "For::Binding",
-              "children": { "expr": _start, "binder": counter, .. },
+              "children": { "expr": _, "binder": counter, .. },
               ..
             },
           ],
@@ -6531,7 +6529,7 @@ fn lang_cstyle_for_unused_loop_var(
       __moongrep_identifier_name_meta_counter_1 ==
       __moongrep_identifier_name_meta_counter_4 &&
       __moongrep_guard_0(
-        _start, upper_limit, body, __moongrep_identifier_name_meta_counter_1,
+        upper_limit, body, __moongrep_identifier_name_meta_counter_1,
       ) => {
       hits.push(MatchHit::{
         file,
@@ -6578,7 +6576,7 @@ fn lang_potential_augmented_mutate(
               ..
             },
             "lhs": meta_variable_2,
-            "rhs": _number,
+            "rhs": _,
             ..
           },
           ..
@@ -6624,7 +6622,7 @@ fn lang_potential_augmented_mutate(
               },
               ..
             },
-            "lhs": _number,
+            "lhs": _,
             "rhs": meta_variable_2,
             ..
           },
@@ -6672,7 +6670,7 @@ fn lang_potential_augmented_mutate(
               ..
             },
             "lhs": meta_variable_2,
-            "rhs": _number,
+            "rhs": _,
             ..
           },
           ..
@@ -6718,7 +6716,7 @@ fn lang_potential_augmented_mutate(
               },
               ..
             },
-            "lhs": _number,
+            "lhs": _,
             "rhs": meta_variable_2,
             ..
           },
@@ -6766,7 +6764,7 @@ fn lang_potential_augmented_mutate(
               ..
             },
             "lhs": meta_variable_2,
-            "rhs": _number,
+            "rhs": _,
             ..
           },
           ..
@@ -6813,7 +6811,7 @@ fn lang_potential_augmented_mutate(
               ..
             },
             "lhs": meta_variable_2,
-            "rhs": _number,
+            "rhs": _,
             ..
           },
           ..
@@ -6858,7 +6856,7 @@ fn async_websocket_message_read_all(
       "children": {
         "args": { "kind": "Expr::DotApply::ArgList", "children": [], .. },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _message,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "read_all", .. },
@@ -6908,7 +6906,7 @@ fn async_websocket_http_handshake_crlf(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -6928,7 +6926,7 @@ fn async_websocket_http_handshake_crlf(
                   },
                   ..
                 },
-                "value": _headers,
+                "value": _,
                 ..
               },
               ..
@@ -6986,7 +6984,7 @@ fn async_websocket_http_handshake_crlf(
                   "children": { .. },
                   ..
                 },
-                "value": _client,
+                "value": _,
                 ..
               },
               ..
@@ -6999,7 +6997,7 @@ fn async_websocket_http_handshake_crlf(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -7074,7 +7072,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -7108,7 +7106,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7183,7 +7181,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _method,
+                "value": _,
                 ..
               },
               ..
@@ -7196,7 +7194,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -7230,7 +7228,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7250,7 +7248,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _client,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "request", .. },
@@ -7287,7 +7285,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -7321,7 +7319,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7341,7 +7339,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _client,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "get", .. },
@@ -7378,7 +7376,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -7391,7 +7389,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -7425,7 +7423,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7445,7 +7443,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _client,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "put", .. },
@@ -7482,7 +7480,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _path,
+                "value": _,
                 ..
               },
               ..
@@ -7495,7 +7493,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -7529,7 +7527,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7549,7 +7547,7 @@ fn async_http_request_transfer_encoding(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _client,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "post", .. },
@@ -7586,7 +7584,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -7620,7 +7618,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7689,7 +7687,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -7702,7 +7700,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -7736,7 +7734,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7805,7 +7803,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -7818,7 +7816,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _content,
+                "value": _,
                 ..
               },
               ..
@@ -7852,7 +7850,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -7921,7 +7919,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -7955,7 +7953,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -8024,7 +8022,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -8058,7 +8056,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -8127,7 +8125,7 @@ fn async_http_request_transfer_encoding(
                   "children": { .. },
                   ..
                 },
-                "value": _url,
+                "value": _,
                 ..
               },
               ..
@@ -8161,7 +8159,7 @@ fn async_http_request_transfer_encoding(
                               "children": { "value": "Transfer-Encoding", .. },
                               ..
                             },
-                            "expr": _value,
+                            "expr": _,
                             ..
                           },
                           ..
@@ -8243,7 +8241,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _stream,
+                "value": _,
                 ..
               },
               ..
@@ -8338,7 +8336,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _stream,
+                "value": _,
                 ..
               },
               ..
@@ -8389,7 +8387,7 @@ fn async_tls_client_verification_footgun(
                   },
                   ..
                 },
-                "value": _host,
+                "value": _,
                 ..
               },
               ..
@@ -8453,7 +8451,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _reader,
+                "value": _,
                 ..
               },
               ..
@@ -8466,7 +8464,7 @@ fn async_tls_client_verification_footgun(
                   "children": { .. },
                   ..
                 },
-                "value": _writer,
+                "value": _,
                 ..
               },
               ..
@@ -8598,7 +8596,7 @@ fn rabbita_dom_dangerous_attribute_write(
                   "children": { .. },
                   ..
                 },
-                "value": _html,
+                "value": _,
                 ..
               },
               ..
@@ -8607,7 +8605,7 @@ fn rabbita_dom_dangerous_attribute_write(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _node,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_attribute", .. },
@@ -8668,7 +8666,7 @@ fn rabbita_dom_dangerous_attribute_write(
                   "children": { .. },
                   ..
                 },
-                "value": _value,
+                "value": _,
                 ..
               },
               ..
@@ -8677,7 +8675,7 @@ fn rabbita_dom_dangerous_attribute_write(
           ..
         },
         "attr": { "kind": "ApplyAttr::NoAttr", "children": { .. }, .. },
-        "self": _node,
+        "self": _,
         "method_name": {
           "kind": "Label",
           "children": { "name": "set_property", .. },
@@ -8727,7 +8725,7 @@ fn async_websocket_server_upgrade_unchecked(
                   "children": { .. },
                   ..
                 },
-                "value": _request,
+                "value": _,
                 ..
               },
               ..
@@ -8740,7 +8738,7 @@ fn async_websocket_server_upgrade_unchecked(
                   "children": { .. },
                   ..
                 },
-                "value": _conn,
+                "value": _,
                 ..
               },
               ..

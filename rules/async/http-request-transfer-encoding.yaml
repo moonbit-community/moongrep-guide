@@ -8,46 +8,24 @@ description: |
   request smuggling.
 patterns:
   - shape: |
-      @http.Client::new(_url, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _value]
+      @http.Client::new(__, headers={ "Transfer-Encoding": __ })
   - shape: |
-      _client.request(_method, _path, extra_headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_client, _method, _path, _value]
+      __.request(__, __, extra_headers={ "Transfer-Encoding": __ })
   - shape: |
-      _client.get(_path, extra_headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_client, _path, _value]
+      __.get(__, extra_headers={ "Transfer-Encoding": __ })
   - shape: |
-      _client.put(_path, _content, extra_headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_client, _path, _content, _value]
+      __.put(__, __, extra_headers={ "Transfer-Encoding": __ })
   - shape: |
-      _client.post(_path, _content, extra_headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_client, _path, _content, _value]
+      __.post(__, __, extra_headers={ "Transfer-Encoding": __ })
   - shape: |
-      @http.get(_url, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _value]
+      @http.get(__, headers={ "Transfer-Encoding": __ })
   - shape: |
-      @http.put(_url, _content, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _content, _value]
+      @http.put(__, __, headers={ "Transfer-Encoding": __ })
   - shape: |
-      @http.post(_url, _content, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _content, _value]
+      @http.post(__, __, headers={ "Transfer-Encoding": __ })
   - shape: |
-      @http.get_stream(_url, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _value]
+      @http.get_stream(__, headers={ "Transfer-Encoding": __ })
   - shape: |
-      @http.put_stream(_url, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _value]
+      @http.put_stream(__, headers={ "Transfer-Encoding": __ })
   - shape: |
-      @http.post_stream(_url, headers={ "Transfer-Encoding": _value })
-    metavars:
-      subtree: [_url, _value]
+      @http.post_stream(__, headers={ "Transfer-Encoding": __ })

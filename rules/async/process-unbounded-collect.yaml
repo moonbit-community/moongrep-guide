@@ -4,18 +4,10 @@ description: |
   returning. A noisy or non-terminating process can exhaust memory.
 patterns:
   - shape: |
-      @process.collect_stdout(_command, _args)
-    metavars:
-      subtree: [_command, _args]
+      @process.collect_stdout(__, __)
   - shape: |
-      @process.collect_stderr(_command, _args)
-    metavars:
-      subtree: [_command, _args]
+      @process.collect_stderr(__, __)
   - shape: |
-      @process.collect_output(_command, _args)
-    metavars:
-      subtree: [_command, _args]
+      @process.collect_output(__, __)
   - shape: |
-      @process.collect_output_merged(_command, _args)
-    metavars:
-      subtree: [_command, _args]
+      @process.collect_output_merged(__, __)

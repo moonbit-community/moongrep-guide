@@ -5,10 +5,6 @@ description: |
   HTML or script.
 patterns:
   - shape: |
-      _node.set_attribute("srcdoc", _html)
-    metavars:
-      subtree: [_node, _html]
+      __.set_attribute("srcdoc", __)
   - shape: |
-      _node.set_property("srcdoc", _value)
-    metavars:
-      subtree: [_node, _value]
+      __.set_property("srcdoc", __)

@@ -4,10 +4,6 @@ description: |
   untrusted inputs they can grow memory without a configured upper bound.
 patterns:
   - shape: |
-      _reader.read_all()
-    metavars:
-      subtree: [_reader]
+      __.read_all()
   - shape: |
-      _reader.read_until(_delim)
-    metavars:
-      subtree: [_reader, _delim]
+      __.read_until(__)

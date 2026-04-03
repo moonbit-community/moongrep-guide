@@ -4,10 +4,6 @@ description: |
   `rel="noopener noreferrer"` allows reverse tabnabbing via `window.opener`.
 patterns:
   - shape: |
-      @html.a(href=_url, target=Blank, _text)
-    metavars:
-      subtree: [_url, _text]
+      @html.a(href=__, target=Blank, __)
   - shape: |
-      @html.node("a", @html.Attrs::build().href(_url).target(Blank), _children)
-    metavars:
-      subtree: [_url, _children]
+      @html.node("a", @html.Attrs::build().href(__).target(Blank), __)

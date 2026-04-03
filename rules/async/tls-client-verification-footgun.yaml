@@ -5,14 +5,8 @@ description: |
   entirely.
 patterns:
   - shape: |
-      @tls.Tls::client(_stream, verify=true)
-    metavars:
-      subtree: [_stream]
+      @tls.Tls::client(__, verify=true)
   - shape: |
-      @tls.Tls::client(_stream, verify=false, host=_host)
-    metavars:
-      subtree: [_stream, _host]
+      @tls.Tls::client(__, verify=false, host=__)
   - shape: |
-      @tls.Tls::client_from_pair(_reader, _writer, verify=true)
-    metavars:
-      subtree: [_reader, _writer]
+      @tls.Tls::client_from_pair(__, __, verify=true)
