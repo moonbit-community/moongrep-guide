@@ -336,18 +336,19 @@ fn emit_duplicate_condition(
   let conditions : Array[String] = []
   for binding in ctx.bindings {
     if binding.bind_names.length() >= 2 {
-      let first = if pattern.identifier_metavars.contains(binding.meta_name) {
-        emit_identifier_value_name(binding.meta_name, 1)
-      } else {
-        "@greptools.normalize_structural_json(\{binding.bind_names[0]})"
-      }
+      let is_identifier = pattern.identifier_metavars.contains(
+        binding.meta_name,
+      )
       for index in 1..<binding.bind_names.length() {
-        let other = if pattern.identifier_metavars.contains(binding.meta_name) {
-          emit_identifier_value_name(binding.meta_name, index + 1)
+        if is_identifier {
+          let first = emit_identifier_value_name(binding.meta_name, 1)
+          let other = emit_identifier_value_name(binding.meta_name, index + 1)
+          conditions.push("\{first} == \{other}")
         } else {
-          "@greptools.normalize_structural_json(\{binding.bind_names[index]})"
+          conditions.push(
+            "@greptools.ast_json_repr_equal(\{binding.bind_names[0]}, \{binding.bind_names[index]})",
+          )
         }
-        conditions.push("\{first} == \{other}")
       }
     }
   }

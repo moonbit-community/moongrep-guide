@@ -1,51 +1,69 @@
 ///|
-/// Returns a stable string form for structural AST comparisons.
+/// Returns whether two AST JSON subtrees are structurally equal.
 ///
-/// The normalization drops every object field named `loc`, sorts object keys,
-/// and recursively normalizes child values. Array element order is preserved.
+/// The comparison ignores every object field named `loc`, recursively compares
+/// object children by key, and preserves array element order.
 ///
 /// This is intended for comparing MoonBit AST fragments while ignoring source
-/// locations. It is not a general-purpose JSON canonicalization function.
-pub fn normalize_structural_json(ast : Json) -> String {
-  match ast {
-    Object(entries) => {
-      let keys : Array[String] = []
-      for key, _ in entries.iter2() {
-        if key != "loc" {
-          keys.push(key)
-        }
-      }
-      keys.sort()
-      let builder = StringBuilder::new()
-      builder.write_char('{')
-      for index in 0..<keys.length() {
-        if index != 0 {
-          builder.write_char(',')
-        }
-        let key = keys[index]
-        builder.write_string(Json::string(key).stringify())
-        builder.write_char(':')
-        builder.write_string(
-          normalize_structural_json(entries.get(key).unwrap()),
-        )
-      }
-      builder.write_char('}')
-      builder.to_string()
-    }
-    Array(items) => {
-      let builder = StringBuilder::new()
-      builder.write_char('[')
-      for index in 0..<items.length() {
-        if index != 0 {
-          builder.write_char(',')
-        }
-        builder.write_string(normalize_structural_json(items[index]))
-      }
-      builder.write_char(']')
-      builder.to_string()
-    }
-    _ => ast.stringify()
+/// locations. It is not a general-purpose JSON equivalence relation.
+pub fn ast_json_repr_equal(lhs : Json, rhs : Json) -> Bool {
+  match (lhs, rhs) {
+    (Object(lhs_entries), Object(rhs_entries)) =>
+      ast_json_repr_equal_object(lhs_entries, rhs_entries)
+    (Array(lhs_items), Array(rhs_items)) =>
+      ast_json_repr_equal_array(lhs_items, rhs_items)
+    _ => lhs == rhs
   }
+}
+
+///|
+fn ast_json_repr_equal_object(
+  lhs_entries : Map[String, Json],
+  rhs_entries : Map[String, Json],
+) -> Bool {
+  if ast_json_repr_field_count(lhs_entries) !=
+    ast_json_repr_field_count(rhs_entries) {
+    return false
+  }
+  for key, lhs_value in lhs_entries.iter2() {
+    if key != "loc" {
+      match rhs_entries.get(key) {
+        Some(rhs_value) =>
+          if !ast_json_repr_equal(lhs_value, rhs_value) {
+            return false
+          }
+        None => return false
+      }
+    }
+  }
+  true
+}
+
+///|
+fn ast_json_repr_equal_array(
+  lhs_items : Array[Json],
+  rhs_items : Array[Json],
+) -> Bool {
+  if lhs_items.length() != rhs_items.length() {
+    return false
+  }
+  for index in 0..<lhs_items.length() {
+    if !ast_json_repr_equal(lhs_items[index], rhs_items[index]) {
+      return false
+    }
+  }
+  true
+}
+
+///|
+fn ast_json_repr_field_count(entries : Map[String, Json]) -> Int {
+  let mut count = 0
+  for key, _ in entries.iter2() {
+    if key != "loc" {
+      count = count + 1
+    }
+  }
+  count
 }
 
 ///|

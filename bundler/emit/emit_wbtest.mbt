@@ -180,7 +180,7 @@ test "emit matcher source checks duplicate equality before guard" {
   ])
   assert_true(
     source.contains(
-      "} if @greptools.normalize_structural_json(left) == @greptools.normalize_structural_json(meta_left_2) && (left != pair) => {",
+      "} if @greptools.ast_json_repr_equal(left, meta_left_2) && (left != pair) => {",
     ),
   )
   assert_false(source.contains("\"pair\": pair"))
@@ -305,9 +305,7 @@ test "emit matcher source captures identifier metavars in field Labels" {
     ),
   )
   assert_true(
-    source.contains(
-      "@greptools.normalize_structural_json(record) == @greptools.normalize_structural_json(meta_record_2)",
-    ),
+    source.contains("@greptools.ast_json_repr_equal(record, meta_record_2)"),
   )
   assert_true(
     source.contains(

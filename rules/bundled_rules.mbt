@@ -7095,8 +7095,7 @@ fn language_potential_augmented_mutate(
       is Some(__moongrep_identifier_name_meta_field_1) &&
       @greptools.normalize_identifier_name(meta_field_2)
       is Some(__moongrep_identifier_name_meta_field_2) &&
-      @greptools.normalize_structural_json(record) ==
-      @greptools.normalize_structural_json(meta_record_2) &&
+      @greptools.ast_json_repr_equal(record, meta_record_2) &&
       __moongrep_identifier_name_meta_field_1 ==
       __moongrep_identifier_name_meta_field_2 => {
       hits.push(MatchHit::{
@@ -7161,8 +7160,7 @@ fn language_potential_augmented_mutate(
       is Some(__moongrep_identifier_name_meta_field_1) &&
       @greptools.normalize_identifier_name(meta_field_2)
       is Some(__moongrep_identifier_name_meta_field_2) &&
-      @greptools.normalize_structural_json(record) ==
-      @greptools.normalize_structural_json(meta_record_2) &&
+      @greptools.ast_json_repr_equal(record, meta_record_2) &&
       __moongrep_identifier_name_meta_field_1 ==
       __moongrep_identifier_name_meta_field_2 => {
       hits.push(MatchHit::{
@@ -7227,8 +7225,7 @@ fn language_potential_augmented_mutate(
       is Some(__moongrep_identifier_name_meta_field_1) &&
       @greptools.normalize_identifier_name(meta_field_2)
       is Some(__moongrep_identifier_name_meta_field_2) &&
-      @greptools.normalize_structural_json(record) ==
-      @greptools.normalize_structural_json(meta_record_2) &&
+      @greptools.ast_json_repr_equal(record, meta_record_2) &&
       __moongrep_identifier_name_meta_field_1 ==
       __moongrep_identifier_name_meta_field_2 => {
       hits.push(MatchHit::{
@@ -7293,8 +7290,7 @@ fn language_potential_augmented_mutate(
       is Some(__moongrep_identifier_name_meta_field_1) &&
       @greptools.normalize_identifier_name(meta_field_2)
       is Some(__moongrep_identifier_name_meta_field_2) &&
-      @greptools.normalize_structural_json(record) ==
-      @greptools.normalize_structural_json(meta_record_2) &&
+      @greptools.ast_json_repr_equal(record, meta_record_2) &&
       __moongrep_identifier_name_meta_field_1 ==
       __moongrep_identifier_name_meta_field_2 => {
       hits.push(MatchHit::{
@@ -7359,8 +7355,7 @@ fn language_potential_augmented_mutate(
       is Some(__moongrep_identifier_name_meta_field_1) &&
       @greptools.normalize_identifier_name(meta_field_2)
       is Some(__moongrep_identifier_name_meta_field_2) &&
-      @greptools.normalize_structural_json(record) ==
-      @greptools.normalize_structural_json(meta_record_2) &&
+      @greptools.ast_json_repr_equal(record, meta_record_2) &&
       __moongrep_identifier_name_meta_field_1 ==
       __moongrep_identifier_name_meta_field_2 => {
       hits.push(MatchHit::{
@@ -7425,8 +7420,7 @@ fn language_potential_augmented_mutate(
       is Some(__moongrep_identifier_name_meta_field_1) &&
       @greptools.normalize_identifier_name(meta_field_2)
       is Some(__moongrep_identifier_name_meta_field_2) &&
-      @greptools.normalize_structural_json(record) ==
-      @greptools.normalize_structural_json(meta_record_2) &&
+      @greptools.ast_json_repr_equal(record, meta_record_2) &&
       __moongrep_identifier_name_meta_field_1 ==
       __moongrep_identifier_name_meta_field_2 => {
       hits.push(MatchHit::{
