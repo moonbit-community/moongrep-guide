@@ -286,7 +286,12 @@ fn ensure_metavars_safe(
   metavars : Array[String],
 ) -> Unit raise {
   for meta_name in metavars {
-    if meta_name == "file" || meta_name == "hits" || meta_name == "loc" {
+    if is_builtin_ignore_metavar_name(meta_name) {
+      raise InvalidRule(
+        path~,
+        info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because it is a built-in ignore placeholder",
+      )
+    } else if meta_name == "file" || meta_name == "hits" || meta_name == "loc" {
       raise InvalidRule(
         path~,
         info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because it conflicts with generated matcher locals",

@@ -85,6 +85,20 @@ patterns:
       subtree: [_expr]
 ```
 
+The built-in exceptions are names made only of two or more underscores, such as
+`__`, `___`, and `____`. They are special ignore placeholders inside `shape`,
+so you must not declare them under `metavars`.
+
+```yaml
+patterns:
+  - shape: foo(__)
+```
+
+When one of these names appears in a supported metavar position, it matches
+anything there without binding a guard parameter or participating in
+repeated-name equality. In unsupported positions such as method names, it stays
+literal. This rule is separate from MoonBit's own special handling of `_`.
+
 If bundling says a declared metavar is unused, the usual causes are:
 
 - a typo between `shape` and `metavars`
