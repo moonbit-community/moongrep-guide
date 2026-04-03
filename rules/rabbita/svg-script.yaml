@@ -4,6 +4,4 @@ description: |
   into `@svg.script(...)` as code execution.
 patterns:
   - shape: |
-      @svg.script([@svg.text(_script)])
-    metavars:
-      subtree: [_script]
+      @svg.script([@svg.text(__)])

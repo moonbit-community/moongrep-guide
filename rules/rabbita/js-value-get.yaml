@@ -4,14 +4,8 @@ description: |
   keys, they become the first hop to dangerous JavaScript gadgets.
 patterns:
   - shape: |
-      _value.get_with_string(_key)
-    metavars:
-      subtree: [_value, _key]
+      __.get_with_string(__)
   - shape: |
-      _value.get_with_index(_index)
-    metavars:
-      subtree: [_value, _index]
+      __.get_with_index(__)
   - shape: |
-      _value.get_with_symbol(_symbol)
-    metavars:
-      subtree: [_value, _symbol]
+      __.get_with_symbol(__)

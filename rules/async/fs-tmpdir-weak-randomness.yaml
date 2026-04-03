@@ -6,8 +6,6 @@ patterns:
   - shape: |
       @fs.tmpdir()
   - shape: |
-      @fs.tmpdir(prefix=_prefix)
-    metavars:
-      subtree: [_prefix]
+      @fs.tmpdir(prefix=__)
   - shape: |
       @fs.tmpdir(prefix~)

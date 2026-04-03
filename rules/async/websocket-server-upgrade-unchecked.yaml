@@ -5,6 +5,4 @@ description: |
   cross-site WebSocket hijacking.
 patterns:
   - shape: |
-      @websocket.from_http_server(_request, _conn)
-    metavars:
-      subtree: [_request, _conn]
+      @websocket.from_http_server(__, __)

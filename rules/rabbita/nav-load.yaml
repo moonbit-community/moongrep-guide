@@ -4,6 +4,4 @@ description: |
   open redirects or even `javascript:` execution.
 patterns:
   - shape: |
-      @nav.load(_url)
-    metavars:
-      subtree: [_url]
+      @nav.load(__)

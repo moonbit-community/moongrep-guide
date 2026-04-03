@@ -5,18 +5,10 @@ description: |
   execution, navigation, or network requests.
 patterns:
   - shape: |
-      _value.apply(_args)
-    metavars:
-      subtree: [_value, _args]
+      __.apply(__)
   - shape: |
-      _value.apply_with_string(_name, _args)
-    metavars:
-      subtree: [_value, _name, _args]
+      __.apply_with_string(__, __)
   - shape: |
-      _value.apply_with_index(_index, _args)
-    metavars:
-      subtree: [_value, _index, _args]
+      __.apply_with_index(__, __)
   - shape: |
-      _value.apply_with_symbol(_symbol, _args)
-    metavars:
-      subtree: [_value, _symbol, _args]
+      __.apply_with_symbol(__, __)

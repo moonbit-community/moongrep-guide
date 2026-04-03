@@ -4,6 +4,4 @@ description: |
   will eagerly clobber the target file before writing command output.
 patterns:
   - shape: |
-      @process.redirect_to_file(_path, truncate=true)
-    metavars:
-      subtree: [_path]
+      @process.redirect_to_file(__, truncate=true)

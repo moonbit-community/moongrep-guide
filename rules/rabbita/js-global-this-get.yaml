@@ -4,6 +4,4 @@ description: |
   access to dangerous globals such as `eval`, `Function`, `open`, or `fetch`.
 patterns:
   - shape: |
-      @js.globalThis.get_with_string(_name)
-    metavars:
-      subtree: [_name]
+      @js.globalThis.get_with_string(__)

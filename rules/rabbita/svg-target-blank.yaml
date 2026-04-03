@@ -4,6 +4,4 @@ description: |
   protection as HTML links to avoid reverse tabnabbing.
 patterns:
   - shape: |
-      @svg.node("a", @svg.Attrs::build().href(_url).target("_blank"), _children)
-    metavars:
-      subtree: [_url, _children]
+      @svg.node("a", @svg.Attrs::build().href(__).target("_blank"), __)

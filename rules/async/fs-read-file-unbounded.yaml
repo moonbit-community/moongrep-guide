@@ -4,6 +4,4 @@ description: |
   to attacker-controlled large files or special files, this can exhaust memory.
 patterns:
   - shape: |
-      @fs.read_file(_path)
-    metavars:
-      subtree: [_path]
+      @fs.read_file(__)

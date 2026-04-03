@@ -5,14 +5,8 @@ description: |
   pollution.
 patterns:
   - shape: |
-      _value.set_with_string(_key, _payload)
-    metavars:
-      subtree: [_value, _key, _payload]
+      __.set_with_string(__, __)
   - shape: |
-      _value.set_with_index(_index, _payload)
-    metavars:
-      subtree: [_value, _index, _payload]
+      __.set_with_index(__, __)
   - shape: |
-      _value.set_with_symbol(_symbol, _payload)
-    metavars:
-      subtree: [_value, _symbol, _payload]
+      __.set_with_symbol(__, __)

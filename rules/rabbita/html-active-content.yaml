@@ -5,38 +5,20 @@ description: |
   dangerous navigation, or third-party content loading.
 patterns:
   - shape: |
-      @html.script(src=_src, _children)
-    metavars:
-      subtree: [_src, _children]
+      @html.script(src=__, __)
   - shape: |
-      @html.script(src~, _children)
-    metavars:
-      subtree: [_children]
+      @html.script(src~, __)
   - shape: |
-      @html.Attrs::build().srcdoc(_html)
-    metavars:
-      subtree: [_html]
+      @html.Attrs::build().srcdoc(__)
   - shape: |
-      @html.iframe(src=_url)
-    metavars:
-      subtree: [_url]
+      @html.iframe(src=__)
   - shape: |
-      @html.fencedframe(src=_url)
-    metavars:
-      subtree: [_url]
+      @html.fencedframe(src=__)
   - shape: |
-      @html.object(attrs=@html.Attrs::build().data(_url).type_(_mime), _children)
-    metavars:
-      subtree: [_url, _mime, _children]
+      @html.object(attrs=@html.Attrs::build().data(__).type_(__), __)
   - shape: |
-      @html.embed(attrs=@html.Attrs::build().src(_url).type_(_mime))
-    metavars:
-      subtree: [_url, _mime]
+      @html.embed(attrs=@html.Attrs::build().src(__).type_(__))
   - shape: |
-      @html.base(href=_base)
-    metavars:
-      subtree: [_base]
+      @html.base(href=__)
   - shape: |
-      @html.meta(http_equiv="refresh", content="0;url=" + _url)
-    metavars:
-      subtree: [_url]
+      @html.meta(http_equiv="refresh", content="0;url=" + __)

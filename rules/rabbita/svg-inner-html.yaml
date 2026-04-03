@@ -4,6 +4,4 @@ description: |
   active content when the SVG string is untrusted.
 patterns:
   - shape: |
-      @svg.Attrs::build().inner_html(_svg)
-    metavars:
-      subtree: [_svg]
+      @svg.Attrs::build().inner_html(__)

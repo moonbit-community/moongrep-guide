@@ -5,18 +5,10 @@ description: |
   dangerous builtins such as `Function`.
 patterns:
   - shape: |
-      _ctor.new(_args)
-    metavars:
-      subtree: [_ctor, _args]
+      __.new(__)
   - shape: |
-      _value.new_with_string(_name, _args)
-    metavars:
-      subtree: [_value, _name, _args]
+      __.new_with_string(__, __)
   - shape: |
-      _value.new_with_index(_index, _args)
-    metavars:
-      subtree: [_value, _index, _args]
+      __.new_with_index(__, __)
   - shape: |
-      _value.new_with_symbol(_symbol, _args)
-    metavars:
-      subtree: [_value, _symbol, _args]
+      __.new_with_symbol(__, __)

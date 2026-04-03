@@ -5,18 +5,10 @@ description: |
   responses.
 patterns:
   - shape: |
-      @http.get(_url, expect=Text(_handler))
-    metavars:
-      subtree: [_url, _handler]
+      @http.get(__, expect=Text(__))
   - shape: |
-      @http.post(_url, _body, expect=Text(_handler))
-    metavars:
-      subtree: [_url, _body, _handler]
+      @http.post(__, __, expect=Text(__))
   - shape: |
-      @http.patch(_url, _body, expect=Text(_handler))
-    metavars:
-      subtree: [_url, _body, _handler]
+      @http.patch(__, __, expect=Text(__))
   - shape: |
-      @http.delete(_url, expect=Text(_handler))
-    metavars:
-      subtree: [_url, _handler]
+      @http.delete(__, expect=Text(__))
