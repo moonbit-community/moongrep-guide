@@ -1,10 +1,15 @@
 ///|
-fn load_rules(rules_root : String) -> Array[RuleSpec] raise {
+fn invalid_rule(path~ : String, info~ : String) -> @spec.RuleBundleError {
+  @spec.invalid_rule(path~, info~)
+}
+
+///|
+pub fn load_rules(rules_root : String) -> Array[@spec.RuleSpec] raise {
   let files = collect_rule_files(rules_root)
   if files.is_empty() {
-    raise InvalidRule(path=rules_root, info="no YAML rule files found")
+    raise invalid_rule(path=rules_root, info="no YAML rule files found")
   }
-  let rules : Array[RuleSpec] = []
+  let rules : Array[@spec.RuleSpec] = []
   for file in files {
     let source = @fs.read_file_to_string(file)
     rules.push(parse_rule_source(file, rules_root, source))
@@ -44,16 +49,16 @@ fn parse_rule_source(
   path : String,
   rules_root : String,
   source : String,
-) -> RuleSpec raise {
+) -> @spec.RuleSpec raise {
   let docs = @yaml.Yaml::load_from_string(source)
   if docs.length() != 1 {
-    raise InvalidRule(
+    raise invalid_rule(
       path~,
       info="rule file must contain exactly one YAML document",
     )
   }
   guard docs[0] is @yaml.Yaml::Map(doc) else {
-    raise InvalidRule(path~, info="top-level YAML document must be a mapping")
+    raise invalid_rule(path~, info="top-level YAML document must be a mapping")
   }
   ensure_allowed_keys(path, "top-level rule", doc, [
     "package", "description", "patterns",
@@ -62,13 +67,13 @@ fn parse_rule_source(
   let description = expect_description(doc, path)
   let patterns_yaml = expect_yaml_array(doc, path, "patterns")
   if patterns_yaml.is_empty() {
-    raise InvalidRule(path~, info="patterns must not be empty")
+    raise invalid_rule(path~, info="patterns must not be empty")
   }
-  let patterns : Array[RulePatternSpec] = []
+  let patterns : Array[@spec.RulePatternSpec] = []
   for index in 0..<patterns_yaml.length() {
     let pattern_yaml = patterns_yaml[index]
     guard pattern_yaml is @yaml.Yaml::Map(pattern_map) else {
-      raise InvalidRule(path~, info="patterns[\{index}] must be a mapping")
+      raise invalid_rule(path~, info="patterns[\{index}] must be a mapping")
     }
     ensure_allowed_keys(path, "pattern[\{index}]", pattern_map, [
       "shape", "metavars", "guard",
@@ -106,7 +111,7 @@ fn ensure_allowed_keys(
 ) -> Unit raise {
   for entry in map.iter() {
     if !allowed.contains(entry.0) {
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="\{context} contains unsupported key \{entry.0}",
       )
@@ -122,8 +127,8 @@ fn expect_yaml_string(
 ) -> String raise {
   match map.get(key) {
     Some(@yaml.Yaml::String(value)) => value
-    Some(_) => raise InvalidRule(path~, info="\{key} must be a string")
-    None => raise InvalidRule(path~, info="missing required key \{key}")
+    Some(_) => raise invalid_rule(path~, info="\{key} must be a string")
+    None => raise invalid_rule(path~, info="missing required key \{key}")
   }
 }
 
@@ -135,8 +140,8 @@ fn expect_yaml_array(
 ) -> Array[@yaml.Yaml] raise {
   match map.get(key) {
     Some(@yaml.Yaml::Array(values)) => values
-    Some(_) => raise InvalidRule(path~, info="\{key} must be an array")
-    None => raise InvalidRule(path~, info="missing required key \{key}")
+    Some(_) => raise invalid_rule(path~, info="\{key} must be an array")
+    None => raise invalid_rule(path~, info="missing required key \{key}")
   }
 }
 
@@ -147,8 +152,8 @@ fn expect_description(
 ) -> String raise {
   match map.get("description") {
     Some(@yaml.Yaml::String(value)) => value
-    Some(_) => raise InvalidRule(path~, info="description must be a string")
-    None => raise InvalidRule(path~, info="missing required key description")
+    Some(_) => raise invalid_rule(path~, info="description must be a string")
+    None => raise invalid_rule(path~, info="missing required key description")
   }
 }
 
@@ -163,7 +168,7 @@ fn expect_pattern_guard(
     Some(@yaml.Yaml::String(value)) => {
       let guard_source = value.trim().to_string()
       if guard_source == "" {
-        raise InvalidRule(
+        raise invalid_rule(
           path~,
           info="patterns[\{pattern_index}].guard must not be blank",
         )
@@ -172,7 +177,7 @@ fn expect_pattern_guard(
       Some(guard_source)
     }
     Some(_) =>
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}].guard must be a string",
       )
@@ -203,7 +208,7 @@ fn expect_metavars(
       (subtree, identifier)
     }
     Some(_) =>
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}].metavars must be a mapping",
       )
@@ -224,13 +229,13 @@ fn expect_metavar_bucket(
       let metavars : Array[String] = []
       for index in 0..<values.length() {
         guard values[index] is @yaml.Yaml::String(meta_name) else {
-          raise InvalidRule(
+          raise invalid_rule(
             path~,
             info="patterns[\{pattern_index}].metavars.\{bucket}[\{index}] must be a string",
           )
         }
         if metavars.contains(meta_name) {
-          raise InvalidRule(
+          raise invalid_rule(
             path~,
             info="patterns[\{pattern_index}].metavars.\{bucket} contains duplicate metavar \{meta_name}",
           )
@@ -240,7 +245,7 @@ fn expect_metavar_bucket(
       metavars
     }
     Some(_) =>
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}].metavars.\{bucket} must be an array",
       )
@@ -256,7 +261,7 @@ fn ensure_metavar_buckets_disjoint(
 ) -> Unit raise {
   for meta_name in identifier {
     if subtree.contains(meta_name) {
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}].metavars contains duplicate metavar \{meta_name}",
       )
@@ -286,18 +291,18 @@ fn ensure_metavars_safe(
   metavars : Array[String],
 ) -> Unit raise {
   for meta_name in metavars {
-    if is_builtin_ignore_metavar_name(meta_name) {
-      raise InvalidRule(
+    if @spec.is_builtin_ignore_metavar_name(meta_name) {
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because it is a built-in ignore placeholder",
       )
     } else if meta_name == "file" || meta_name == "hits" || meta_name == "loc" {
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because it conflicts with generated matcher locals",
       )
     } else if meta_name.has_prefix("__moongrep_") {
-      raise InvalidRule(
+      raise invalid_rule(
         path~,
         info="patterns[\{pattern_index}] cannot declare metavar \{meta_name} because names starting with __moongrep_ are reserved for generated matcher locals",
       )
@@ -321,7 +326,7 @@ fn validate_guard_source(
     ).tokens
     |> @handrolled_parser.parse()
   if reports is [err, ..] {
-    raise InvalidRule(
+    raise invalid_rule(
       path~,
       info="patterns[\{pattern_index}].guard is not a valid MoonBit expression: \{err.to_json().stringify(indent=2)}",
     )
@@ -332,7 +337,7 @@ fn validate_guard_source(
 fn rule_id_from_path(path : String, rules_root : String) -> String raise {
   let prefix = "\{rules_root}/"
   if !path.has_prefix(prefix) {
-    raise InvalidRule(
+    raise invalid_rule(
       path~,
       info="rule path is outside rules root \{rules_root}",
     )
@@ -343,6 +348,6 @@ fn rule_id_from_path(path : String, rules_root : String) -> String raise {
   } else if relative.has_suffix(".yml") {
     relative[0:relative.length() - 4].to_string()
   } else {
-    raise InvalidRule(path~, info="unsupported rule file suffix")
+    raise invalid_rule(path~, info="unsupported rule file suffix")
   }
 }

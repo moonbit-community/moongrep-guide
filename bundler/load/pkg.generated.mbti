@@ -1,0 +1,18 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moongrep-guide/bundler/load"
+
+import {
+  "moonbit-community/moongrep-guide/bundler/spec",
+}
+
+// Values
+pub fn load_rules(String) -> Array[@spec.RuleSpec] raise
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

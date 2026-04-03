@@ -1,0 +1,5 @@
+import {
+  "moonbit-community/moongrep-guide/bundler/emit",
+  "moonbit-community/moongrep-guide/bundler/load",
+  "moonbitlang/x/fs",
+}

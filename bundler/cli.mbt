@@ -1,21 +1,25 @@
 ///|
+fn[T] fatal(message : String, code? : Int = 1) -> T {
+  println(message)
+  @sys.exit(code)
+  panic()
+}
+
+///|
 fn main {
-  let (rules_root, output_path) = match @sys.get_cli_args() {
-    [_] => (default_rules_root, default_output_path)
-    [_, rules_root] => (rules_root, default_output_path)
-    [_, rules_root, output_path] => (rules_root, output_path)
-    otherwise => {
-      println("invalid cli arguments: \{otherwise}")
-      panic()
-    }
+  let args = @sys.get_cli_args()
+  let argv = match args {
+    [_] => []
+    [_, ..] => args[1:].to_array()
+    _ => []
+  }
+  let (rules_root, output_path) = parse_bundle_args(argv) catch {
+    err => fatal(err.to_string(), code=2)
   }
   try {
-    write_bundle(rules_root~, output_path~)
+    @bundle.write_bundle(rules_root, output_path)
     println("generated \{output_path} from \{rules_root}")
   } catch {
-    err => {
-      println(err)
-      panic()
-    }
+    err => fatal(err.to_string())
   }
 }

@@ -1,23 +1,9 @@
 ///|
-fn is_builtin_ignore_metavar_name(name : String) -> Bool {
-  if name.length() < 2 {
-    false
-  } else {
-    for ch in name.iter() {
-      if ch != '_' {
-        return false
-      }
-    }
-    true
-  }
-}
-
-///|
 fn emit_builtin_or_declared_metavar(
   name : String,
   ctx : PatternEmitContext,
 ) -> String? {
-  if is_builtin_ignore_metavar_name(name) {
+  if @spec.is_builtin_ignore_metavar_name(name) {
     Some("_")
   } else if ctx.declared_metavars.contains(name) {
     Some(record_binding(ctx, name))

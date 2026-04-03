@@ -1,0 +1,7 @@
+import {
+  "moonbit-community/moongrep-guide/bundler/spec",
+  "moonbit-community/yaml",
+  "moonbitlang/parser/handrolled_parser",
+  "moonbitlang/parser/lexer",
+  "moonbitlang/x/fs",
+}

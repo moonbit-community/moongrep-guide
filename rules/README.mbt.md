@@ -224,6 +224,12 @@ You can also override both positional arguments:
 moon run bundler <rules-root> <output-path>
 ```
 
+To inspect the CLI contract directly:
+
+```bash
+moon run bundler --help
+```
+
 ## Worked Examples
 
 ### Repeated subtree equality

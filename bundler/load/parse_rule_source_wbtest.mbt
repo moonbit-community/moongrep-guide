@@ -1,4 +1,15 @@
 ///|
+fn assert_invalid_rule(
+  err : Error,
+  path_content : String,
+  info_content : String,
+) -> Unit raise {
+  let message = err.to_string()
+  assert_true(message.contains(path_content))
+  assert_true(message.contains(info_content))
+}
+
+///|
 test "parse rule source reads description" {
   let source =
     #|package: moonbit-community/example
@@ -31,10 +42,10 @@ test "parse rule source rejects legacy describle key" {
     "references/rules/example/test.yaml", "references/rules", source,
   )
   match result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(info, content="top-level rule contains unsupported key describle")
-    }
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "top-level rule contains unsupported key describle",
+      )
     _ => fail("expected legacy describle key to be rejected")
   }
 }
@@ -68,23 +79,17 @@ test "parse rule source rejects legacy metavar bucket keys" {
     "references/rules/example/test.yaml", "references/rules", legacy_identifier_source,
   )
   match legacy_subtree_result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(
-        info,
-        content="patterns[0].metavars contains unsupported key structural",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "patterns[0].metavars contains unsupported key structural",
       )
-    }
     _ => fail("expected legacy structural key to be rejected")
   }
   match legacy_identifier_result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(
-        info,
-        content="patterns[0].metavars contains unsupported key nameonly",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "patterns[0].metavars contains unsupported key nameonly",
       )
-    }
     _ => fail("expected legacy nameonly key to be rejected")
   }
 }
@@ -319,13 +324,10 @@ test "reject reserved metavars that conflict with generated locals" {
     "references/rules/example/test.yaml", "references/rules", source,
   )
   match result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(
-        info,
-        content="patterns[0] cannot declare metavar file because it conflicts with generated matcher locals",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "patterns[0] cannot declare metavar file because it conflicts with generated matcher locals",
       )
-    }
     _ => fail("expected generated matcher local conflict")
   }
 }
@@ -346,13 +348,10 @@ test "reject reserved generated-local prefix in metavars" {
     "references/rules/example/test.yaml", "references/rules", source,
   )
   match result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(
-        info,
-        content="patterns[0] cannot declare metavar __moongrep_counter because names starting with __moongrep_ are reserved for generated matcher locals",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "patterns[0] cannot declare metavar __moongrep_counter because names starting with __moongrep_ are reserved for generated matcher locals",
       )
-    }
     _ => fail("expected generated matcher local prefix conflict")
   }
 }
@@ -384,23 +383,17 @@ test "reject built-in ignore placeholder declarations" {
     "references/rules/example/test.yaml", "references/rules", identifier_source,
   )
   match subtree_result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(
-        info,
-        content="patterns[0] cannot declare metavar __ because it is a built-in ignore placeholder",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "patterns[0] cannot declare metavar __ because it is a built-in ignore placeholder",
       )
-    }
     _ => fail("expected built-in ignore placeholder subtree rejection")
   }
   match identifier_result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="references/rules/example/test.yaml")
-      inspect(
-        info,
-        content="patterns[0] cannot declare metavar ____ because it is a built-in ignore placeholder",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "patterns[0] cannot declare metavar ____ because it is a built-in ignore placeholder",
       )
-    }
     _ => fail("expected built-in ignore placeholder identifier rejection")
   }
 }

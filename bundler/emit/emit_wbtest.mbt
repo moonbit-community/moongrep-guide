@@ -1,4 +1,15 @@
 ///|
+fn assert_invalid_rule(
+  err : Error,
+  path_content : String,
+  info_content : String,
+) -> Unit raise {
+  let message = err.to_string()
+  assert_true(message.contains(path_content))
+  assert_true(message.contains(info_content))
+}
+
+///|
 test "emit bundle source builds package-local matcher file" {
   let source = emit_bundle_source([
     {
@@ -142,13 +153,10 @@ test "reject conflicting rule matcher function names" {
     },
   ])
   match result {
-    Err(InvalidRule(path~, info~)) => {
-      inspect(path, content="example/a_b")
-      inspect(
-        info,
-        content="rule matcher function name conflict: example/a-b and example/a_b both map to example_a_b",
+    Err(err) =>
+      assert_invalid_rule(
+        err, "example/a_b", "rule matcher function name conflict: example/a-b and example/a_b both map to example_a_b",
       )
-    }
     _ => fail("expected rule matcher function name conflict")
   }
 }
