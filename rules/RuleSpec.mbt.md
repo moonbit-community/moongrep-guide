@@ -133,6 +133,17 @@ Current supported AST positions are:
 - `Binder`
 - `Pattern::Var`
 
+Names made only of two or more underscores, such as `__`, `___`, and `____`,
+are special ignore placeholders:
+
+- it must not be declared under `metavars`
+- in the supported positions above, it matches anything in that one position
+- it does not bind a value for equality checks or guards
+- repeated occurrences are independent wildcards
+- in non-supported positions, it is treated literally as that identifier or
+  label text
+- this rule is separate from MoonBit's own special handling of `_`
+
 Current non-supported examples include:
 
 - method names such as `.push`
@@ -237,13 +248,15 @@ Additional notes:
 
 The following names are reserved and must not be declared as metavars:
 
+- any name consisting only of two or more underscores
 - `file`
 - `hits`
 - `loc`
 - any name beginning with `__moongrep_`
 
 These names are reserved because generated matcher code uses them for function
-parameters, local bindings, and synthesized helper names.
+parameters, local bindings, synthesized helper names, and built-in placeholder
+semantics.
 
 ## Error Conditions
 

@@ -300,3 +300,113 @@ test "emit matcher source uses unique helper names per guarded identifier patter
     ),
   )
 }
+
+///|
+test "emit matcher source treats built-in ignore placeholder as expr wildcard" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/ignore-expr",
+      package_name: "moonbit-community/example",
+      description: "ignore expr rule",
+      patterns: [
+        {
+          shape: "foo(__)",
+          subtree_metavars: [],
+          identifier_metavars: [],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"value\": _"))
+  assert_false(source.contains("\"value\": \"__\""))
+  assert_false(source.contains("meta___"))
+}
+
+///|
+test "emit matcher source treats built-in ignore placeholder as Var wildcard" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/ignore-var",
+      package_name: "moonbit-community/example",
+      description: "ignore assignment target",
+      patterns: [
+        {
+          shape: "____ = value",
+          subtree_metavars: [],
+          identifier_metavars: [],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"var\": _"))
+  assert_false(source.contains("@greptools.normalize_identifier_name("))
+  assert_false(source.contains("meta_____"))
+}
+
+///|
+test "emit matcher source treats repeated built-in ignore placeholders independently" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/ignore-binder",
+      package_name: "moonbit-community/example",
+      description: "ignore repeated binder",
+      patterns: [
+        {
+          shape: "for __ = start; ____ < limit; _____ = next { body }",
+          subtree_metavars: [],
+          identifier_metavars: [],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_false(source.contains("} if "))
+  assert_false(source.contains("\"name\": \"__\""))
+  assert_false(source.contains("\"name\": \"____\""))
+  assert_false(source.contains("\"name\": \"_____\""))
+}
+
+///|
+test "emit matcher source treats built-in ignore placeholder as pattern wildcard" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/ignore-pattern",
+      package_name: "moonbit-community/example",
+      description: "ignore pattern",
+      patterns: [
+        {
+          shape: "match value { __ => body }",
+          subtree_metavars: [],
+          identifier_metavars: [],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"pattern\": _"))
+  assert_false(source.contains("\"name\": \"___\""))
+  assert_false(source.contains("meta____"))
+}
+
+///|
+test "emit matcher source keeps built-in ignore placeholder literal in unsupported positions" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/ignore-literal-method",
+      package_name: "moonbit-community/example",
+      description: "literal method name",
+      patterns: [
+        {
+          shape: "foo.__()",
+          subtree_metavars: [],
+          identifier_metavars: [],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"name\": \"__\""))
+  assert_false(source.contains("\"method_name\": _"))
+}

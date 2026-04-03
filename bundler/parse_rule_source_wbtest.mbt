@@ -356,3 +356,51 @@ test "reject reserved generated-local prefix in metavars" {
     _ => fail("expected generated matcher local prefix conflict")
   }
 }
+
+///|
+test "reject built-in ignore placeholder declarations" {
+  let subtree_source =
+    #|package: moonbit-community/example
+    #|description: invalid built-in placeholder
+    #|patterns:
+    #|  - shape: |
+    #|      foo(__)
+    #|    metavars:
+    #|      subtree:
+    #|        - __
+  let identifier_source =
+    #|package: moonbit-community/example
+    #|description: invalid built-in placeholder
+    #|patterns:
+    #|  - shape: |
+    #|      ____ = value
+    #|    metavars:
+    #|      identifier:
+    #|        - ____
+  let subtree_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", subtree_source,
+  )
+  let identifier_result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", identifier_source,
+  )
+  match subtree_result {
+    Err(InvalidRule(path~, info~)) => {
+      inspect(path, content="references/rules/example/test.yaml")
+      inspect(
+        info,
+        content="patterns[0] cannot declare metavar __ because it is a built-in ignore placeholder",
+      )
+    }
+    _ => fail("expected built-in ignore placeholder subtree rejection")
+  }
+  match identifier_result {
+    Err(InvalidRule(path~, info~)) => {
+      inspect(path, content="references/rules/example/test.yaml")
+      inspect(
+        info,
+        content="patterns[0] cannot declare metavar ____ because it is a built-in ignore placeholder",
+      )
+    }
+    _ => fail("expected built-in ignore placeholder identifier rejection")
+  }
+}
