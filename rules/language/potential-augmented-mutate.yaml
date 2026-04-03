@@ -28,3 +28,33 @@ patterns:
       variable = variable / __
     metavars:
       identifier: [variable]
+  - shape: |
+      record.field = record.field + __
+    metavars:
+      subtree: [record]
+      identifier: [field]
+  - shape: |
+      record.field = __ + record.field
+    metavars:
+      subtree: [record]
+      identifier: [field]
+  - shape: |
+      record.field = record.field * __
+    metavars:
+      subtree: [record]
+      identifier: [field]
+  - shape: |
+      record.field = __ * record.field
+    metavars:
+      subtree: [record]
+      identifier: [field]
+  - shape: |
+      record.field = record.field - __
+    metavars:
+      subtree: [record]
+      identifier: [field]
+  - shape: |
+      record.field = record.field / __
+    metavars:
+      subtree: [record]
+      identifier: [field]

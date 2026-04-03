@@ -449,6 +449,79 @@ test "language/potential-augmented-mutate: detects basic arithmetic updates" {
     #|  total = total / 2
     #|}
   assert_single_potential_augmented_mutate_hit(source)
+  // test for mutable field
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(0)
+    #|  foo.val = foo.val + 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(@ref.Ref(0))
+    #|  foo.val.val = foo.val.val + 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(0)
+    #|  foo.val = foo.val * 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(@ref.Ref(0))
+    #|  foo.val.val = foo.val.val * 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(0)
+    #|  foo.val = 1 + foo.val
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(@ref.Ref(0))
+    #|  foo.val.val = 1 + foo.val.val
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(0)
+    #|  foo.val = 1 * foo.val
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(@ref.Ref(0))
+    #|  foo.val.val = 1 * foo.val.val
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(0)
+    #|  foo.val = foo.val - 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(@ref.Ref(0))
+    #|  foo.val.val = foo.val.val - 1
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(0)
+    #|  foo.val = foo.val / 2
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
+  let source =
+    #|fn main {
+    #|  let foo = @ref.Ref(@ref.Ref(0))
+    #|  foo.val.val = foo.val.val / 2
+    #|}
+  assert_single_potential_augmented_mutate_hit(source)
 }
 
 ///|

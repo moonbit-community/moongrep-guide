@@ -7043,6 +7043,402 @@ fn language_potential_augmented_mutate(
       })
       true
     }
+    // rule: language/potential-augmented-mutate pattern 6
+    {
+      "kind": "Expr::Mutate",
+      "loc": loc,
+      "children": {
+        "field": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "+", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": {
+              "kind": "Expr::Field",
+              "children": {
+                "record": record,
+                "accessor": {
+                  "kind": "Accessor::Label",
+                  "children": { "value": field, .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "record": meta_record_2,
+        "accessor": {
+          "kind": "Accessor::Label",
+          "children": { "value": meta_field_2, .. },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(field)
+      is Some(__moongrep_identifier_name_meta_field_1) &&
+      @greptools.normalize_identifier_name(meta_field_2)
+      is Some(__moongrep_identifier_name_meta_field_2) &&
+      @greptools.normalize_structural_json(record) ==
+      @greptools.normalize_structural_json(meta_record_2) &&
+      __moongrep_identifier_name_meta_field_1 ==
+      __moongrep_identifier_name_meta_field_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 6,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 7
+    {
+      "kind": "Expr::Mutate",
+      "loc": loc,
+      "children": {
+        "field": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "+", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": _,
+            "rhs": {
+              "kind": "Expr::Field",
+              "children": {
+                "record": record,
+                "accessor": {
+                  "kind": "Accessor::Label",
+                  "children": { "value": field, .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "record": meta_record_2,
+        "accessor": {
+          "kind": "Accessor::Label",
+          "children": { "value": meta_field_2, .. },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(field)
+      is Some(__moongrep_identifier_name_meta_field_1) &&
+      @greptools.normalize_identifier_name(meta_field_2)
+      is Some(__moongrep_identifier_name_meta_field_2) &&
+      @greptools.normalize_structural_json(record) ==
+      @greptools.normalize_structural_json(meta_record_2) &&
+      __moongrep_identifier_name_meta_field_1 ==
+      __moongrep_identifier_name_meta_field_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 7,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 8
+    {
+      "kind": "Expr::Mutate",
+      "loc": loc,
+      "children": {
+        "field": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "*", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": {
+              "kind": "Expr::Field",
+              "children": {
+                "record": record,
+                "accessor": {
+                  "kind": "Accessor::Label",
+                  "children": { "value": field, .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "record": meta_record_2,
+        "accessor": {
+          "kind": "Accessor::Label",
+          "children": { "value": meta_field_2, .. },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(field)
+      is Some(__moongrep_identifier_name_meta_field_1) &&
+      @greptools.normalize_identifier_name(meta_field_2)
+      is Some(__moongrep_identifier_name_meta_field_2) &&
+      @greptools.normalize_structural_json(record) ==
+      @greptools.normalize_structural_json(meta_record_2) &&
+      __moongrep_identifier_name_meta_field_1 ==
+      __moongrep_identifier_name_meta_field_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 8,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 9
+    {
+      "kind": "Expr::Mutate",
+      "loc": loc,
+      "children": {
+        "field": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "*", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": _,
+            "rhs": {
+              "kind": "Expr::Field",
+              "children": {
+                "record": record,
+                "accessor": {
+                  "kind": "Accessor::Label",
+                  "children": { "value": field, .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            ..
+          },
+          ..
+        },
+        "record": meta_record_2,
+        "accessor": {
+          "kind": "Accessor::Label",
+          "children": { "value": meta_field_2, .. },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(field)
+      is Some(__moongrep_identifier_name_meta_field_1) &&
+      @greptools.normalize_identifier_name(meta_field_2)
+      is Some(__moongrep_identifier_name_meta_field_2) &&
+      @greptools.normalize_structural_json(record) ==
+      @greptools.normalize_structural_json(meta_record_2) &&
+      __moongrep_identifier_name_meta_field_1 ==
+      __moongrep_identifier_name_meta_field_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 9,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 10
+    {
+      "kind": "Expr::Mutate",
+      "loc": loc,
+      "children": {
+        "field": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "-", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": {
+              "kind": "Expr::Field",
+              "children": {
+                "record": record,
+                "accessor": {
+                  "kind": "Accessor::Label",
+                  "children": { "value": field, .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "record": meta_record_2,
+        "accessor": {
+          "kind": "Accessor::Label",
+          "children": { "value": meta_field_2, .. },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(field)
+      is Some(__moongrep_identifier_name_meta_field_1) &&
+      @greptools.normalize_identifier_name(meta_field_2)
+      is Some(__moongrep_identifier_name_meta_field_2) &&
+      @greptools.normalize_structural_json(record) ==
+      @greptools.normalize_structural_json(meta_record_2) &&
+      __moongrep_identifier_name_meta_field_1 ==
+      __moongrep_identifier_name_meta_field_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 10,
+        loc,
+      })
+      true
+    }
+    // rule: language/potential-augmented-mutate pattern 11
+    {
+      "kind": "Expr::Mutate",
+      "loc": loc,
+      "children": {
+        "field": {
+          "kind": "Expr::Infix",
+          "children": {
+            "op": {
+              "kind": "Var",
+              "children": {
+                "name": {
+                  "kind": "LongIdent::Ident",
+                  "children": { "value": "/", .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "lhs": {
+              "kind": "Expr::Field",
+              "children": {
+                "record": record,
+                "accessor": {
+                  "kind": "Accessor::Label",
+                  "children": { "value": field, .. },
+                  ..
+                },
+                ..
+              },
+              ..
+            },
+            "rhs": _,
+            ..
+          },
+          ..
+        },
+        "record": meta_record_2,
+        "accessor": {
+          "kind": "Accessor::Label",
+          "children": { "value": meta_field_2, .. },
+          ..
+        },
+        "augmented_by": Null,
+        ..
+      },
+      ..
+    } if @greptools.normalize_identifier_name(field)
+      is Some(__moongrep_identifier_name_meta_field_1) &&
+      @greptools.normalize_identifier_name(meta_field_2)
+      is Some(__moongrep_identifier_name_meta_field_2) &&
+      @greptools.normalize_structural_json(record) ==
+      @greptools.normalize_structural_json(meta_record_2) &&
+      __moongrep_identifier_name_meta_field_1 ==
+      __moongrep_identifier_name_meta_field_2 => {
+      hits.push(MatchHit::{
+        file,
+        rule_id: "language/potential-augmented-mutate",
+        package_name: "moonbitlang/core",
+        description: "This assignment mutates a variable by combining it with another value.\nPrefer augmented assignment such as `+=`, `-=`, `*=`, `/=` to make the\nin-place update explicit.\n",
+        pattern_index: 11,
+        loc,
+      })
+      true
+    }
     _ => true
   }
 }

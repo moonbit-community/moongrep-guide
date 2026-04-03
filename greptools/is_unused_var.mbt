@@ -1,4 +1,8 @@
 ///|
+/// Returns whether `name` has no live identifier use inside `ast`.
+///
+/// The check follows lexical shadowing for supported binding forms, so uses
+/// that are hidden by a rebinding of the same name do not count.
 pub fn is_unused_var(ast : Json, name : String) -> Bool {
   !contains_ident_with_shadow(ast, name, false)
 }

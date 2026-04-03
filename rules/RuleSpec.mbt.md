@@ -132,6 +132,7 @@ Current supported AST positions are:
 - `Var`
 - `Binder`
 - `Pattern::Var`
+- `Label`
 
 Names made only of two or more underscores, such as `__`, `___`, and `____`,
 are special ignore placeholders:
@@ -141,13 +142,11 @@ are special ignore placeholders:
 - it does not bind a value for equality checks or guards
 - repeated occurrences are independent wildcards
 - in non-supported positions, it is treated literally as that identifier or
-  label text
+  other source-level text
 - this rule is separate from MoonBit's own special handling of `_`
 
 Current non-supported examples include:
 
-- method names such as `.push`
-- labels
 - constructor names
 - arbitrary string-valued fields
 - any position that is not one of the supported AST node kinds above
@@ -166,8 +165,8 @@ A `subtree` metavar binds the matched AST subtree as raw `Json`.
 Consequences:
 
 - the guard receives that metavar as `Json`
-- repeating the same `subtree` metavar in one pattern requires raw AST
-  equality across all occurrences
+- repeating the same `subtree` metavar in one pattern requires structural AST
+  equality across all occurrences after removing `loc` fields recursively
 - the equality check is performed in generated matcher code before the guard
 
 Example:
@@ -180,16 +179,17 @@ patterns:
 ```
 
 This can match repeated non-trivial subtrees such as `items[i] == items[i]`
-because the whole expression subtree is compared structurally.
+because the whole expression subtree is compared structurally rather than by
+source location.
 
-`subtree` is usually the wrong choice when the same source-level variable
-name appears once as a binder and later as an identifier expression, because
-those are different AST node kinds and therefore not structurally equal.
+`subtree` is usually the wrong choice when the same source-level name appears
+once as a binder and later as an identifier expression or label, because those
+are different AST node kinds and therefore not structurally equal.
 
 ## `identifier` Semantics
 
-An `identifier` metavar binds by normalized simple identifier name rather than by
-raw AST equality.
+An `identifier` metavar binds by normalized identifier or label name rather
+than by raw AST equality.
 
 Current normalization succeeds only for:
 
@@ -197,6 +197,7 @@ Current normalization succeeds only for:
 - `Binder`
 - simple identifier expressions represented as `Expr::Ident`
 - `Pattern::Var`
+- `Label`
 
 If normalization succeeds:
 
@@ -211,7 +212,8 @@ If normalization fails for any occurrence:
 
 This is the intended tool for cases where the same logical name appears across
 different AST node kinds, such as loop-variable binders and later identifier
-uses.
+uses, or repeated field and method labels in expressions such as
+`record.field = record.field + value` and `receiver.method()`.
 
 ## Guard Semantics
 
@@ -330,7 +332,8 @@ patterns:
 Semantics:
 
 - `_expr` binds as `Json`
-- both occurrences must be structurally equal AST JSON
+- both occurrences must be structurally equal AST JSON after removing `loc`
+  fields recursively
 - `x == x` may match
 - `items[i] == items[i]` may match
 

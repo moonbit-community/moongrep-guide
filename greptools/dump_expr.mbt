@@ -1,4 +1,8 @@
 ///|
+/// Parses a MoonBit expression snippet and returns its JSON AST form.
+///
+/// The input is parsed as a single expression with comments enabled. Parsing
+/// failures abort with the formatted parser reports.
 pub fn dump_expr_json_repr(expr : String) -> Json raise {
   let (expr, reports) = @lexer.tokens_from_string(
       expr,

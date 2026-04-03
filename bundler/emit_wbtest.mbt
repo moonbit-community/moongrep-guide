@@ -171,7 +171,9 @@ test "emit matcher source checks duplicate equality before guard" {
     },
   ])
   assert_true(
-    source.contains("} if left == meta_left_2 && (left != pair) => {"),
+    source.contains(
+      "} if @greptools.normalize_structural_json(left) == @greptools.normalize_structural_json(meta_left_2) && (left != pair) => {",
+    ),
   )
   assert_false(source.contains("\"pair\": pair"))
   assert_false(source.contains("\"left\": left"))
@@ -262,6 +264,71 @@ test "emit matcher source captures identifier metavars in Var targets" {
   assert_true(
     source.contains(
       "@greptools.normalize_identifier_name(meta_variable_2) is Some(__moongrep_identifier_name_meta_variable_2)",
+    ),
+  )
+}
+
+///|
+test "emit matcher source captures identifier metavars in field Labels" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/mutate-field",
+      package_name: "moonbit-community/example",
+      description: "field mutate identifier rule",
+      patterns: [
+        {
+          shape: "record.field = record.field + value",
+          subtree_metavars: ["record", "value"],
+          identifier_metavars: ["field"],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"value\": field"))
+  assert_true(
+    source.contains(
+      "@greptools.normalize_identifier_name(field) is Some(__moongrep_identifier_name_meta_field_1)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "@greptools.normalize_identifier_name(meta_field_2) is Some(__moongrep_identifier_name_meta_field_2)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "@greptools.normalize_structural_json(record) == @greptools.normalize_structural_json(meta_record_2)",
+    ),
+  )
+  assert_true(
+    source.contains(
+      "__moongrep_identifier_name_meta_field_1 == __moongrep_identifier_name_meta_field_2",
+    ),
+  )
+}
+
+///|
+test "emit matcher source captures identifier metavars in method Labels" {
+  let source = emit_matcher_source([
+    {
+      rule_id: "example/dot-apply",
+      package_name: "moonbit-community/example",
+      description: "method label identifier rule",
+      patterns: [
+        {
+          shape: "receiver.method()",
+          subtree_metavars: ["receiver"],
+          identifier_metavars: ["method"],
+          pattern_guard: None,
+        },
+      ],
+    },
+  ])
+  assert_true(source.contains("\"method_name\": method"))
+  assert_true(
+    source.contains(
+      "@greptools.normalize_identifier_name(method) is Some(__moongrep_identifier_name_meta_method_1)",
     ),
   )
 }
@@ -391,12 +458,12 @@ test "emit matcher source treats built-in ignore placeholder as pattern wildcard
 }
 
 ///|
-test "emit matcher source keeps built-in ignore placeholder literal in unsupported positions" {
+test "emit matcher source treats built-in ignore placeholder as Label wildcard" {
   let source = emit_matcher_source([
     {
-      rule_id: "example/ignore-literal-method",
+      rule_id: "example/ignore-label",
       package_name: "moonbit-community/example",
-      description: "literal method name",
+      description: "ignore label",
       patterns: [
         {
           shape: "foo.__()",
@@ -407,6 +474,6 @@ test "emit matcher source keeps built-in ignore placeholder literal in unsupport
       ],
     },
   ])
-  assert_true(source.contains("\"name\": \"__\""))
-  assert_false(source.contains("\"method_name\": _"))
+  assert_true(source.contains("\"method_name\": _"))
+  assert_false(source.contains("\"name\": \"__\""))
 }

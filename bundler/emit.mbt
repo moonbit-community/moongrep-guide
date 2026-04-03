@@ -351,13 +351,13 @@ fn emit_duplicate_condition(
       let first = if pattern.identifier_metavars.contains(binding.meta_name) {
         emit_identifier_value_name(binding.meta_name, 1)
       } else {
-        binding.bind_names[0]
+        "@greptools.normalize_structural_json(\{binding.bind_names[0]})"
       }
       for index in 1..<binding.bind_names.length() {
         let other = if pattern.identifier_metavars.contains(binding.meta_name) {
           emit_identifier_value_name(binding.meta_name, index + 1)
         } else {
-          binding.bind_names[index]
+          "@greptools.normalize_structural_json(\{binding.bind_names[index]})"
         }
         conditions.push("\{first} == \{other}")
       }

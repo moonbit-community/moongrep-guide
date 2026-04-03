@@ -110,7 +110,8 @@ The exact supported positions are listed in [RuleSpec.mbt.md](RuleSpec.mbt.md).
 ### 3. Choose `subtree` or `identifier`
 
 Use `subtree` when you want the full matched AST subtree as `Json`, or when
-repeating a metavar should mean "the subtree is structurally identical".
+repeating a metavar should mean "the subtree is structurally identical,
+ignoring source locations".
 
 ```yaml
 patterns:

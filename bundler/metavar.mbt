@@ -74,6 +74,8 @@ fn recognize_metavar(node : Json, ctx : PatternEmitContext) -> String? {
       },
       ..
     } => emit_builtin_or_declared_metavar(name, ctx)
+    { "kind": "Label", "children": { "name": String(name), .. }, .. } =>
+      emit_builtin_or_declared_metavar(name, ctx)
     _ => None
   }
 }

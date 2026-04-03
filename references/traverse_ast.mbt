@@ -5,6 +5,13 @@ pub suberror AstTraverseError {
 }
 
 ///|
+/// Walks a JSON AST in pre-order and visits each structural node.
+///
+/// The callback is invoked before children are traversed. Returning `false`
+/// skips the current node's subtree; returning `true` continues recursively.
+///
+/// Raises `InvalidNode` or `InvalidChildren` when the JSON does not match the
+/// expected MoonBit AST object shape.
 pub fn[C] traverse_ast_json_repr(
   ast : Json,
   callback : (C, Json) -> Bool raise,
@@ -35,6 +42,13 @@ pub fn[C] traverse_ast_json_repr(
 }
 
 ///|
+/// Parses `source` as a MoonBit program and traverses each top-level impl AST.
+///
+/// Each parsed top-level item is converted to JSON and then visited with
+/// `traverse_ast_json_repr`, so the callback sees the same pre-order walk and
+/// subtree-pruning behavior.
+///
+/// Parsing failures abort with the first formatted parser report.
 pub fn[C] traverse_top_impls(
   name~ : String,
   source : String,
