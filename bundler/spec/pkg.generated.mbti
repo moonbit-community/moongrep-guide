@@ -13,6 +13,11 @@ pub suberror RuleBundleError {
 pub fn RuleBundleError::unwrap_invalid_rule(Self) -> (String, String)
 
 // Types and methods
+pub(all) enum RuleDefinitionSpec {
+  Structural(Array[RulePatternSpec])
+  Taint(TaintRuleSpec)
+}
+
 pub(all) struct RulePatternSpec {
   shape : String
   subtree_metavars : Array[String]
@@ -25,7 +30,13 @@ pub(all) struct RuleSpec {
   rule_id : String
   package_name : String
   description : String
-  patterns : Array[RulePatternSpec]
+  definition : RuleDefinitionSpec
+}
+
+pub(all) struct TaintRuleSpec {
+  sources : Array[RulePatternSpec]
+  sinks : Array[RulePatternSpec]
+  sanitizers : Array[RulePatternSpec]
 }
 
 // Type aliases

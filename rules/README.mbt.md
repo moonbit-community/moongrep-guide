@@ -19,6 +19,11 @@ Rule ids come from the rule file path relative to the rules root, with the
 suffix removed. For example, `rules/rabbita/nav-load.yaml` becomes
 `rabbita/nav-load`.
 
+Each rule file currently uses exactly one of these top-level modes:
+
+- `patterns`: structural subtree matching
+- `taint`: intraprocedural taint modeling compiled to the `taint` package
+
 ## Mental Model
 
 Write rules against the shape of a single AST subtree, not against a whole file.
@@ -34,6 +39,15 @@ That means:
 - Multiple entries under `patterns` are OR-ed together.
 - All matched patterns in one rule share the same `package` and `description`.
 - `guard` is for extra logic after the structural shape already matched.
+
+For taint rules:
+
+- `taint.sources` marks matching calls as returning tainted values
+- `taint.sinks` reports a hit when the position marked by `__SOURCE__` is tainted
+- `taint.sanitizers` clears taint from the position marked by `__SOURCE__`
+- taint clause `metavars` follow the same `subtree` / `identifier` rules as structural patterns
+- taint clauses do not support `guard`
+- `__SOURCE__` is reserved for taint sink/sanitizer target positions and must not be declared under `metavars`
 
 If you need the exact matcher semantics, read [RuleSpec.mbt.md](RuleSpec.mbt.md).
 

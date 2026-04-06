@@ -3,7 +3,8 @@ fn emit_builtin_or_declared_metavar(
   name : String,
   ctx : PatternEmitContext,
 ) -> String? {
-  if @spec.is_builtin_ignore_metavar_name(name) {
+  if ctx.special_wildcards.contains(name) ||
+    @spec.is_builtin_ignore_metavar_name(name) {
     Some("_")
   } else if ctx.declared_metavars.contains(name) {
     Some(record_binding(ctx, name))

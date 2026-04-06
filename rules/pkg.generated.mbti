@@ -3,14 +3,24 @@ package "moonbit-community/moongrep-guide/rules"
 
 import {
   "moonbit-community/moongrep-guide/greptools",
+  "moonbit-community/moongrep-guide/taint",
 }
 
 // Values
 pub let moongrep_rules_table : Map[String, (String, Json, Array[@greptools.MatchHit]) -> Bool raise]
 
+pub let moongrep_taint_rules : Array[BundledTaintRule]
+
 // Errors
 
 // Types and methods
+pub struct BundledTaintRule {
+  rule_id : String
+  package_name : String
+  description : String
+  sink_ids : Array[String]
+  spec : @taint.TaintSpec
+}
 
 // Type aliases
 

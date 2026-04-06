@@ -48,7 +48,9 @@ fn find_rule_hits(
   hits : Array[@greptools.MatchHit],
 ) -> Unit raise {
   @greptools.traverse_top_impls(name~, source, context=hits, (hits, ast) => {
-    apply_bundled_rules(name, ast, hits)
+    let keep_traversing = apply_bundled_rules(name, ast, hits)
+    apply_bundled_taint_rules(name, ast, hits)
+    keep_traversing
   })
 }
 

@@ -9220,3 +9220,6 @@ pub let moongrep_rules_table : Map[
   "rabbita/dom-dangerous-attribute-write": rabbita_dom_dangerous_attribute_write,
   "async/websocket-server-upgrade-unchecked": async_websocket_server_upgrade_unchecked,
 }
+
+///|
+pub let moongrep_taint_rules : Array[BundledTaintRule] = []

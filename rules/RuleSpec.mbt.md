@@ -40,7 +40,9 @@ Only these keys are accepted:
 
 - `package` (required): YAML string
 - `description` (required): YAML string
-- `patterns` (required): non-empty YAML array
+- exactly one of:
+  `patterns` (non-empty YAML array)
+  `taint` (YAML mapping)
 
 Any other top-level key is rejected.
 
@@ -49,7 +51,7 @@ requiring them to be YAML strings. `description` is stored verbatim in the
 generated `MatchHit`; if YAML block-scalar syntax preserves a trailing newline,
 that newline is preserved in the stored value.
 
-### Pattern Objects
+### Structural Pattern Objects
 
 Each entry in `patterns` must be a mapping.
 
@@ -60,6 +62,31 @@ Only these keys are accepted:
 - `guard` (optional): YAML string
 
 Any other key inside a pattern object is rejected.
+
+### Taint Rule Objects
+
+`taint` must be a mapping.
+
+Only these keys are accepted:
+
+- `sources` (required): non-empty YAML array
+- `sinks` (required): non-empty YAML array
+- `sanitizers` (optional): YAML array, defaults to empty
+
+Each taint clause object currently accepts:
+
+- `shape` (required): YAML string
+- `metavars` (optional): same schema and semantics as structural rules
+
+`guard` is currently rejected for taint clauses.
+
+Additional taint-specific validation:
+
+- `__SOURCE__` is reserved for sink / sanitizer target positions
+- taint `sources` must not contain `__SOURCE__`
+- taint `sinks` and `sanitizers` must contain exactly one `__SOURCE__`
+- the current implementation only accepts call shapes rooted at
+  `Expr::Apply` or `Expr::DotApply`
 
 ### `metavars`
 
@@ -292,6 +319,7 @@ The generated bundle exports:
 
 ```moonbit nocheck
 pub let moongrep_rules_table : Map[String, (String, Json, Array[MatchHit]) -> Bool raise]
+pub let moongrep_taint_rules : Array[BundledTaintRule]
 ```
 
 For each rule matcher function:
@@ -314,6 +342,9 @@ Each emitted hit contains:
 - `description` from YAML `description`
 - zero-based `pattern_index`
 - `loc` of the matched root subtree
+
+For taint rules, `pattern_index` is the zero-based sink index inside
+`taint.sinks`.
 
 ## Normative Examples
 

@@ -40,9 +40,22 @@ pub fn RulePatternSpec::declared_metavars(
 }
 
 ///|
+pub(all) struct TaintRuleSpec {
+  sources : Array[RulePatternSpec]
+  sinks : Array[RulePatternSpec]
+  sanitizers : Array[RulePatternSpec]
+}
+
+///|
+pub(all) enum RuleDefinitionSpec {
+  Structural(Array[RulePatternSpec])
+  Taint(TaintRuleSpec)
+}
+
+///|
 pub(all) struct RuleSpec {
   rule_id : String
   package_name : String
   description : String
-  patterns : Array[RulePatternSpec]
+  definition : RuleDefinitionSpec
 }

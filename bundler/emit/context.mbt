@@ -7,5 +7,6 @@ priv struct BindingRecord {
 ///|
 priv struct PatternEmitContext {
   declared_metavars : Array[String]
+  special_wildcards : Array[String]
   bindings : Array[BindingRecord]
 }

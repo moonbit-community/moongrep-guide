@@ -10,6 +10,22 @@ fn assert_invalid_rule(
 }
 
 ///|
+fn structural_patterns(rule : @spec.RuleSpec) -> Array[@spec.RulePatternSpec] {
+  match rule.definition {
+    @spec.RuleDefinitionSpec::Structural(patterns) => patterns
+    @spec.RuleDefinitionSpec::Taint(_) => panic()
+  }
+}
+
+///|
+fn taint_rule_spec(rule : @spec.RuleSpec) -> @spec.TaintRuleSpec {
+  match rule.definition {
+    @spec.RuleDefinitionSpec::Structural(_) => panic()
+    @spec.RuleDefinitionSpec::Taint(taint) => taint
+  }
+}
+
+///|
 test "parse rule source reads description" {
   let source =
     #|package: moonbit-community/example
@@ -105,8 +121,9 @@ test "parse rule source defaults omitted metavars to empty" {
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].subtree_metavars, content="[]")
-  inspect(rule.patterns[0].identifier_metavars, content="[]")
+  let patterns = structural_patterns(rule)
+  inspect(patterns[0].subtree_metavars, content="[]")
+  inspect(patterns[0].identifier_metavars, content="[]")
 }
 
 ///|
@@ -128,8 +145,9 @@ test "parse rule source stores trimmed pattern guard" {
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].pattern_guard, content="Some(\"bar != foo\")")
-  inspect(rule.patterns[0].identifier_metavars, content="[]")
+  let patterns = structural_patterns(rule)
+  inspect(patterns[0].pattern_guard, content="Some(\"bar != foo\")")
+  inspect(patterns[0].identifier_metavars, content="[]")
 }
 
 ///|
@@ -147,8 +165,9 @@ test "parse rule source defaults omitted identifier metavars to empty" {
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].subtree_metavars, content="[\"foo\", \"bar\"]")
-  inspect(rule.patterns[0].identifier_metavars, content="[]")
+  let patterns = structural_patterns(rule)
+  inspect(patterns[0].subtree_metavars, content="[\"foo\", \"bar\"]")
+  inspect(patterns[0].identifier_metavars, content="[]")
 }
 
 ///|
@@ -167,8 +186,9 @@ test "parse rule source stores identifier metavars" {
   let rule = parse_rule_source(
     "references/rules/example/test.yaml", "references/rules", source,
   )
-  inspect(rule.patterns[0].subtree_metavars, content="[\"foo\"]")
-  inspect(rule.patterns[0].identifier_metavars, content="[\"bar\"]")
+  let patterns = structural_patterns(rule)
+  inspect(patterns[0].subtree_metavars, content="[\"foo\"]")
+  inspect(patterns[0].identifier_metavars, content="[\"bar\"]")
 }
 
 ///|
@@ -395,5 +415,114 @@ test "reject built-in ignore placeholder declarations" {
         err, "references/rules/example/test.yaml", "patterns[0] cannot declare metavar ____ because it is a built-in ignore placeholder",
       )
     _ => fail("expected built-in ignore placeholder identifier rejection")
+  }
+}
+
+///|
+test "parse rule source stores taint clause metavars" {
+  let source =
+    #|package: moonbit-community/example
+    #|description: taint rule
+    #|taint:
+    #|  sources:
+    #|    - shape: |
+    #|        source_factory(user)
+    #|      metavars:
+    #|        subtree:
+    #|          - user
+    #|  sinks:
+    #|    - shape: |
+    #|        sink(handler, __SOURCE__)
+    #|      metavars:
+    #|        identifier:
+    #|          - handler
+  let rule = parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  let taint = taint_rule_spec(rule)
+  inspect(taint.sources[0].subtree_metavars, content="[\"user\"]")
+  inspect(taint.sources[0].identifier_metavars, content="[]")
+  inspect(taint.sinks[0].subtree_metavars, content="[]")
+  inspect(taint.sinks[0].identifier_metavars, content="[\"handler\"]")
+  assert_true(taint.sanitizers.is_empty())
+}
+
+///|
+test "parse rule source rejects mixed patterns and taint" {
+  let source =
+    #|package: moonbit-community/example
+    #|description: mixed rule
+    #|patterns:
+    #|  - shape: |
+    #|      foo(bar)
+    #|taint:
+    #|  sources:
+    #|    - shape: |
+    #|        source()
+    #|  sinks:
+    #|    - shape: |
+    #|        sink(__SOURCE__)
+  let result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  match result {
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "rule must contain exactly one of patterns or taint",
+      )
+    _ => fail("expected mixed patterns/taint to be rejected")
+  }
+}
+
+///|
+test "parse rule source rejects taint guard" {
+  let source =
+    #|package: moonbit-community/example
+    #|description: taint guard
+    #|taint:
+    #|  sources:
+    #|    - shape: |
+    #|        source()
+    #|      guard: |
+    #|        true
+    #|  sinks:
+    #|    - shape: |
+    #|        sink(__SOURCE__)
+  let result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  match result {
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "taint.sources[0] contains unsupported key guard",
+      )
+    _ => fail("expected taint guard rejection")
+  }
+}
+
+///|
+test "parse rule source rejects reserved taint source placeholder metavars" {
+  let source =
+    #|package: moonbit-community/example
+    #|description: taint metavar
+    #|taint:
+    #|  sources:
+    #|    - shape: |
+    #|        source(value)
+    #|      metavars:
+    #|        subtree:
+    #|          - __SOURCE__
+    #|  sinks:
+    #|    - shape: |
+    #|        sink(__SOURCE__)
+  let result = try? parse_rule_source(
+    "references/rules/example/test.yaml", "references/rules", source,
+  )
+  match result {
+    Err(err) =>
+      assert_invalid_rule(
+        err, "references/rules/example/test.yaml", "taint.sources[0] cannot declare metavar __SOURCE__ because it is reserved for taint source targets",
+      )
+    _ => fail("expected __SOURCE__ metavar rejection")
   }
 }
